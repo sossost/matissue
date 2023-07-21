@@ -1,30 +1,40 @@
 "use client";
 
-import { useCallback, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";
-import Image from "next/image";
+import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 
 import Logo from "@/app/components/header/Logo";
 import Button from "@/app/components/UI/Button";
+import LoadingModal from "@/app/components/UI/LoadingModal";
+
+import darkModeAtom from "@/app/store/darkModeAtom";
+import useBirthForm from "@/app/hooks/useBirthForm";
+import useSignup, { SignupValues } from "@/app/hooks/useSignup";
+import useShowPassword from "@/app/hooks/useShowPassword";
 
 import {
   AuthContainer,
   AuthFormWrapper,
   AuthNavBox,
   BirthdayInput,
-  BirthdayWrapper,
+  BirthDayInputWrapper,
   ErrorMessageText,
+  PasswordInputWrapper,
   StyledInput,
   StyledLabel,
   UnderLineLinkDiv,
 } from "@/app/styles/auth/auth.style";
-import LoadingModal from "@/app/components/UI/LoadingModal";
-import { useRecoilValue } from "recoil";
-import darkModeAtom from "@/app/store/darkModeAtom";
-import useBirthForm from "@/app/hooks/useBirthForm";
-import useSignup, { SignupValues } from "@/app/hooks/useSignup";
+import {
+  dayValidation,
+  emailValidation,
+  monthValidation,
+  passwordValidation,
+  userIdValidation,
+  usernameValidation,
+  yearValidation,
+} from "@/app/constants/validation.constants";
 
 const SignupClient = () => {
   const {
@@ -56,9 +66,7 @@ const SignupClient = () => {
     formState: { errors },
   });
 
-  const [showPassword, setShowPassword] = useState<boolean>(false);
-  const [showPasswordConfirm, setShowPasswordConfirm] =
-    useState<boolean>(false);
+  const { ShowIcon, showPassword, showPasswordConfirm } = useShowPassword();
 
   const isDarkMode = useRecoilValue(darkModeAtom);
   const router = useRouter();
@@ -74,26 +82,13 @@ const SignupClient = () => {
       <AuthFormWrapper>
         <Logo />
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div id="user_id_input">
+          {/* 아이디 인풋 박스 */}
+          <UserIdInputBox>
             <StyledLabel htmlFor="user_id">아이디</StyledLabel>
             <StyledInput
               id="user_id"
               disabled={isLoading}
-              {...register("user_id", {
-                required: "아이디를 입력하세요.",
-                pattern: {
-                  value: /^[A-Za-z0-9]+$/,
-                  message: "아이디는 영어와 숫자만 가능합니다.",
-                },
-                minLength: {
-                  value: 4,
-                  message: "아이디는 최소 4글자 이상이여야 합니다.",
-                },
-                maxLength: {
-                  value: 12,
-                  message: "아이디는 최대 12글자까지 허용됩니다.",
-                },
-              })}
+              {...register("user_id", userIdValidation)}
               placeholder="아이디를 입력하세요."
             />
             {errors.user_id && (
@@ -101,20 +96,16 @@ const SignupClient = () => {
                 {errors.user_id.message?.toString()}
               </ErrorMessageText>
             )}
-          </div>
-          <div id="email_input">
+          </UserIdInputBox>
+
+          {/* 이메일 인풋 박스 */}
+          <EmailInputBox>
             <StyledLabel htmlFor="email">이메일</StyledLabel>
             <StyledInput
               id="email"
               type="email"
               disabled={isLoading}
-              {...register("email", {
-                required: "이메일을 입력하세요.",
-                pattern: {
-                  value: /\S+@\S+\.\S+/,
-                  message: "이메일 형식에 맞지 않습니다.",
-                },
-              })}
+              {...register("email", emailValidation)}
               placeholder="이메일을 입력하세요."
             />
             {errors.email && (
@@ -122,24 +113,16 @@ const SignupClient = () => {
                 {errors.email.message?.toString()}
               </ErrorMessageText>
             )}
-          </div>
-          <div id="username_input">
+          </EmailInputBox>
+
+          {/* 닉네임 인풋 박스 */}
+          <UsernameInputBox>
             <StyledLabel htmlFor="username">닉네임</StyledLabel>
             <StyledInput
               id="username"
               type="text"
               disabled={isLoading}
-              {...register("username", {
-                required: "닉네임을 입력하세요.",
-                minLength: {
-                  value: 2,
-                  message: "닉네임은 최소 2글자 이상이여야 합니다.",
-                },
-                maxLength: {
-                  value: 8,
-                  message: "닉네임은 최대 8글자까지 허용됩니다.",
-                },
-              })}
+              {...register("username", usernameValidation)}
               placeholder="닉네임을 입력하세요."
             />
             {errors.username && (
@@ -147,59 +130,29 @@ const SignupClient = () => {
                 {errors.username.message?.toString()}
               </ErrorMessageText>
             )}
-          </div>
-          <div id="password_input">
+          </UsernameInputBox>
+
+          {/* 패스워드 인풋 박스 */}
+          <PasswordInputBox>
             <StyledLabel htmlFor="password">비밀번호</StyledLabel>
-            <div className="relative">
-              <ShowIconBox
-                isDarkMode={isDarkMode}
-                onClick={() => {
-                  setShowPassword(!showPassword);
-                }}
-              >
-                <Image
-                  src="/images/auth/showIcon.svg"
-                  height={16}
-                  width={18}
-                  alt="showIcon"
-                />
-              </ShowIconBox>
+            <PasswordInputWrapper>
+              <ShowIcon />
               <StyledInput
                 id="password"
                 type={showPassword ? "text" : "password"}
                 disabled={isLoading}
-                {...register("password", {
-                  required: "비밀번호를 입력해주세요.",
-                  pattern: {
-                    value:
-                      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()-_=+])[A-Za-z\!@#$%^&*()-_=+]{8,}/,
-                    message:
-                      "비밀번호는 영문 대소문자, 숫자, 특수문자 조합으로 8자 이상 입력해야합니다.",
-                  },
-                })}
+                {...register("password", passwordValidation)}
                 placeholder="비밀번호를 입력하세요."
               />
-            </div>
+            </PasswordInputWrapper>
             {errors.password && (
               <ErrorMessageText>
                 {errors.password.message?.toString()}
               </ErrorMessageText>
             )}
-            <SpaceDiv />
+            <br />
             <div className="relative">
-              <ShowIconBox
-                isDarkMode={isDarkMode}
-                onClick={() => {
-                  setShowPasswordConfirm(!showPasswordConfirm);
-                }}
-              >
-                <Image
-                  src="/images/auth/showIcon.svg"
-                  height={16}
-                  width={18}
-                  alt="showIcon"
-                />
-              </ShowIconBox>
+              <ShowIcon />
               <StyledInput
                 id="password_confirm"
                 type={showPasswordConfirm ? "text" : "password"}
@@ -220,26 +173,19 @@ const SignupClient = () => {
                 </ErrorMessageText>
               )}
             </div>
-          </div>
-          <div id="birthdate_input">
+          </PasswordInputBox>
+
+          {/* 생년월일 인풋 박스 */}
+          <BirthDayInputBox>
             <StyledLabel>생년월일</StyledLabel>
-            <BirthdayWrapper>
+            <BirthDayInputWrapper>
               <BirthdayInput
                 id="year"
                 isYear={true}
                 type="number"
                 autoComplete="year"
                 disabled={isLoading}
-                {...register("year", {
-                  required: "년, ",
-                  pattern: {
-                    value: /^(19[0-9][0-9]|20[0-2][0-3])$/,
-                    message: "년, ",
-                  },
-                  minLength: 2,
-                  min: 1900,
-                  max: 2023,
-                })}
+                {...register("year", yearValidation)}
                 maxLength={4}
                 ref={BirthForm.yearInputRef}
                 onChange={BirthForm.yearChangeHandler}
@@ -251,14 +197,7 @@ const SignupClient = () => {
                 type="number"
                 autoComplete="month"
                 disabled={isLoading}
-                {...register("month", {
-                  required: "월, ",
-                  pattern: {
-                    value: /^(0[1-9]|1[0-2])$/,
-                    message: "월, ",
-                  },
-                  minLength: 2,
-                })}
+                {...register("month", monthValidation)}
                 maxLength={2}
                 ref={BirthForm.monthInputRef}
                 onChange={BirthForm.monthChangeHandler}
@@ -270,34 +209,27 @@ const SignupClient = () => {
                 type="number"
                 autoComplete="day"
                 disabled={isLoading}
-                {...register("day", {
-                  required: "일",
-                  pattern: {
-                    value: /^(0[1-9]|[1-2][0-9]|3[0-1])$/,
-                    message: "일",
-                  },
-                })}
+                {...register("day", dayValidation)}
                 maxLength={2}
                 ref={BirthForm.dayInputRef}
                 onChange={BirthForm.dayChangeHandler}
                 value={BirthForm.dayValue || ""}
                 placeholder="DD"
               />
-            </BirthdayWrapper>
-            {errors.year || errors.month || errors.day ? (
+            </BirthDayInputWrapper>
+            {(errors.year || errors.month || errors.day) && (
               <ErrorMessageText>
                 생년월일 형식을 올바르게 입력해주세요.(ex 2000.01.01)
               </ErrorMessageText>
-            ) : (
-              ""
             )}
-          </div>
-          <div id="form_submit_button">
-            <Button disabled={isLoading} fullWidth isBgColor type="submit">
-              회원가입
-            </Button>
-          </div>
+          </BirthDayInputBox>
+
+          {/* 회원가입 버튼 */}
+          <Button disabled={isLoading} fullWidth isBgColor type="submit">
+            회원가입
+          </Button>
         </form>
+
         <AuthNavBox>
           <div>이미 아이디가 있으신가요?</div>
           <UnderLineLinkDiv
@@ -317,22 +249,8 @@ const SignupClient = () => {
 
 export default SignupClient;
 
-const SpaceDiv = styled.div`
-  display: block;
-  height: 1rem;
-`;
-
-const ShowIconBox = styled.div<{ isDarkMode: boolean }>`
-  position: absolute;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.5rem;
-  top: 1.1rem;
-  right: 1.1rem;
-  cursor: pointer;
-  filter: ${(props) =>
-    props.isDarkMode
-      ? "invert(89%) sepia(27%) saturate(436%) hue-rotate(334deg) brightness(105%) contrast(104%)"
-      : "invert(18%) sepia(10%) saturate(2848%) hue-rotate(357deg) brightness(103%) contrast(82%)"};
-`;
+const UserIdInputBox = styled.div``;
+const EmailInputBox = styled.div``;
+const UsernameInputBox = styled.div``;
+const PasswordInputBox = styled.div``;
+const BirthDayInputBox = styled.div``;
