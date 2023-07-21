@@ -1,32 +1,19 @@
 import { useCallback, useRef } from "react";
 import {
-  FieldErrors,
   FieldValues,
-  UseFormRegister,
   UseFormResetField,
   UseFormSetValue,
   UseFormWatch,
 } from "react-hook-form";
 import { toast } from "react-hot-toast";
-import { SignupValues } from "./useSignup";
 
 type useBirthFormProps = {
-  watch: UseFormWatch<SignupValues>;
-  resetField: UseFormResetField<SignupValues>;
-  setValue: UseFormSetValue<SignupValues>;
-  register: UseFormRegister<SignupValues>;
-  formState: { errors: FieldErrors<SignupValues> };
-  isLoading: boolean;
+  watch: UseFormWatch<FieldValues>;
+  resetField: UseFormResetField<FieldValues>;
+  setValue: UseFormSetValue<FieldValues>;
 };
 
-const useBirthForm = ({
-  watch,
-  resetField,
-  setValue,
-  register,
-  formState: { errors },
-  isLoading,
-}: useBirthFormProps) => {
+const useBirthForm = ({ watch, resetField, setValue }: useBirthFormProps) => {
   const yearInputRef = useRef<HTMLInputElement>(null);
   const monthInputRef = useRef<HTMLInputElement>(null);
   const dayInputRef = useRef<HTMLInputElement>(null);

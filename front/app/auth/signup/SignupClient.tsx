@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 
@@ -18,8 +18,6 @@ import {
   AuthContainer,
   AuthFormWrapper,
   AuthNavBox,
-  BirthdayInput,
-  BirthDayInputWrapper,
   ErrorMessageText,
   PasswordInputWrapper,
   StyledInput,
@@ -27,14 +25,12 @@ import {
   UnderLineLinkDiv,
 } from "@/app/styles/auth/auth.style";
 import {
-  dayValidation,
   emailValidation,
-  monthValidation,
   passwordValidation,
   userIdValidation,
   usernameValidation,
-  yearValidation,
 } from "@/app/constants/validation.constants";
+import BirthDayForm from "@/app/components/auth/BirthDayForm";
 
 const SignupClient = () => {
   const {
@@ -44,7 +40,7 @@ const SignupClient = () => {
     setValue,
     handleSubmit,
     formState: { errors },
-  } = useForm<SignupValues>({
+  } = useForm<FieldValues>({
     defaultValues: {
       user_id: "",
       username: "",
@@ -61,9 +57,6 @@ const SignupClient = () => {
     watch,
     resetField,
     setValue,
-    register,
-    isLoading,
-    formState: { errors },
   });
 
   const { ShowIcon, showPassword, showPasswordConfirm } = useShowPassword();
@@ -72,8 +65,8 @@ const SignupClient = () => {
   const router = useRouter();
 
   /** auth 폼 제출 핸들러 */
-  const onSubmit: SubmitHandler<SignupValues> = (data) => {
-    signup(data);
+  const onSubmit: SubmitHandler<FieldValues> = (data) => {
+    signup(data as SignupValues);
   };
 
   return (
@@ -152,7 +145,7 @@ const SignupClient = () => {
             )}
             <br />
             <div className="relative">
-              <ShowIcon />
+              <ShowIcon isPasswordConfirm={true} />
               <StyledInput
                 id="password_confirm"
                 type={showPasswordConfirm ? "text" : "password"}
@@ -177,51 +170,12 @@ const SignupClient = () => {
 
           {/* 생년월일 인풋 박스 */}
           <BirthDayInputBox>
-            <StyledLabel>생년월일</StyledLabel>
-            <BirthDayInputWrapper>
-              <BirthdayInput
-                id="year"
-                isYear={true}
-                type="number"
-                autoComplete="year"
-                disabled={isLoading}
-                {...register("year", yearValidation)}
-                maxLength={4}
-                ref={BirthForm.yearInputRef}
-                onChange={BirthForm.yearChangeHandler}
-                value={BirthForm.yearValue || ""}
-                placeholder="YYYY"
-              />
-              <BirthdayInput
-                id="month"
-                type="number"
-                autoComplete="month"
-                disabled={isLoading}
-                {...register("month", monthValidation)}
-                maxLength={2}
-                ref={BirthForm.monthInputRef}
-                onChange={BirthForm.monthChangeHandler}
-                value={BirthForm.monthValue || ""}
-                placeholder="MM"
-              />
-              <BirthdayInput
-                id="day"
-                type="number"
-                autoComplete="day"
-                disabled={isLoading}
-                {...register("day", dayValidation)}
-                maxLength={2}
-                ref={BirthForm.dayInputRef}
-                onChange={BirthForm.dayChangeHandler}
-                value={BirthForm.dayValue || ""}
-                placeholder="DD"
-              />
-            </BirthDayInputWrapper>
-            {(errors.year || errors.month || errors.day) && (
-              <ErrorMessageText>
-                생년월일 형식을 올바르게 입력해주세요.(ex 2000.01.01)
-              </ErrorMessageText>
-            )}
+            <BirthDayForm
+              isLoading={isLoading}
+              BirthForm={BirthForm}
+              register={register}
+              errors={errors}
+            />
           </BirthDayInputBox>
 
           {/* 회원가입 버튼 */}
