@@ -10,12 +10,14 @@ const useShowPassword = () => {
   const [showPasswordConfirm, setShowPasswordConfirm] =
     useState<boolean>(false);
 
-  const ShowIcon = () => {
+  const ShowIcon = ({ isPasswordConfirm }: { isPasswordConfirm?: boolean }) => {
     return (
       <ShowIconWrapper
         isDarkMode={isDarkMode}
         onClick={() => {
-          setShowPassword(!showPassword);
+          isPasswordConfirm
+            ? setShowPasswordConfirm(!showPasswordConfirm)
+            : setShowPassword(!showPassword);
         }}
       >
         <Image
