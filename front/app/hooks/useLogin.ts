@@ -1,10 +1,11 @@
-import { useQueryClient } from "@tanstack/react-query";
-import Cookies from "js-cookie";
 import { useState } from "react";
-import { axiosBase } from "../api/axios";
-import getCurrentUser from "../api/user";
+import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
+import Cookies from "js-cookie";
+
+import getCurrentUser from "../api/user";
+import { axiosBase } from "../api/axios";
 
 const useLogin = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -15,10 +16,12 @@ const useLogin = () => {
   const login = async (data: { user_id: string; password: string }) => {
     setIsLoading(true);
     try {
+      // 로그인 요청하여 session-id를 받아옴
       const response = await axiosBase.post("users/login", data);
       const sessionId = response.data.session_id;
       Cookies.set("session-id", sessionId);
 
+      // 로그인 후 현재 유저 정보를 받아와서 캐시에 저장
       const currentUser = await getCurrentUser();
       client.setQueryData(["currentUser"], currentUser);
 

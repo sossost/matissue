@@ -1,11 +1,16 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import styled from "styled-components";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { useRecoilValue } from "recoil";
 
 import Logo from "@/app/components/header/Logo";
 import Button from "@/app/components/UI/Button";
 import LoadingModal from "@/app/components/UI/LoadingModal";
+
+import useLogin from "@/app/hooks/useLogin";
+import darkModeAtom from "@/app/store/darkModeAtom";
 
 import {
   AuthChangeBox,
@@ -15,15 +20,12 @@ import {
   StyledInput,
   UnderLineLinkDiv,
 } from "@/app/styles/auth/auth.style";
-import styled from "styled-components";
-import { useRecoilValue } from "recoil";
-import darkModeAtom from "@/app/store/darkModeAtom";
-import useLogin from "@/app/hooks/useLogin";
 
 const LoginClient = () => {
-  const isDarkMode = useRecoilValue(darkModeAtom);
+  const router = useRouter();
 
   const { isLoading, login } = useLogin();
+  const isDarkMode = useRecoilValue(darkModeAtom);
 
   const { register, handleSubmit } = useForm<{
     user_id: string;
@@ -34,8 +36,6 @@ const LoginClient = () => {
       password: "",
     },
   });
-
-  const router = useRouter();
 
   /** auth 폼 제출 핸들러 */
   const onSubmit: SubmitHandler<{ user_id: string; password: string }> = async (
