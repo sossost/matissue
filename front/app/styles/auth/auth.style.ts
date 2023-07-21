@@ -69,7 +69,11 @@ export const StyledInput = styled.input<StyledInputProps>`
   }
 `;
 
-export const BirthdayWrapper = styled.div`
+export const PasswordInputWrapper = styled.div`
+  position: relative;
+`;
+
+export const BirthDayInputWrapper = styled.div`
   display: flex;
   justify-content: space-between;
 `;
