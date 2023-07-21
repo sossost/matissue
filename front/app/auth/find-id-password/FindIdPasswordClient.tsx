@@ -1,11 +1,19 @@
 "use client";
 
 import { axiosBase } from "@/app/api/axios";
+import styled, { css } from "styled-components";
+import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { toast } from "react-hot-toast";
+import { useRecoilValue } from "recoil";
+
 import Button from "@/app/components/UI/Button";
 import LoadingModal from "@/app/components/UI/LoadingModal";
 import BirthDayForm from "@/app/components/auth/BirthDayForm";
 import ConfirmModal from "@/app/components/auth/ConfirmModal";
 import Logo from "@/app/components/header/Logo";
+
 import useBirthForm from "@/app/hooks/useBirthForm";
 import darkModeAtom from "@/app/store/darkModeAtom";
 import {
@@ -15,14 +23,7 @@ import {
   StyledInput,
   StyledLabel,
 } from "@/app/styles/auth/auth.style";
-import { useRouter } from "next/navigation";
-import { useCallback, useRef, useState } from "react";
-import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
-import { toast } from "react-hot-toast";
-import { useRecoilValue } from "recoil";
-import styled, { css } from "styled-components";
-
-type Variant = "아이디" | "비밀번호";
+import useVariantSelector from "@/app/hooks/useVariantSelector";
 
 const FindIdPasswordClient = () => {
   const router = useRouter();
@@ -37,7 +38,8 @@ const FindIdPasswordClient = () => {
   } = useForm<FieldValues>();
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [variant, setVariant] = useState<Variant>("아이디");
+  const { variant, VariantSelector } = useVariantSelector();
+
   const [message, setMessage] = useState<string>("");
   const isDarkMode = useRecoilValue(darkModeAtom);
 
@@ -101,27 +103,7 @@ const FindIdPasswordClient = () => {
       )}
       <AuthFormWrapper>
         <Logo />
-        <VariantWrapper>
-          <VariantBox>
-            <VariantBoxItem
-              active={variant === "아이디"}
-              onClick={() => {
-                setVariant("아이디");
-              }}
-            >
-              아이디 찾기
-            </VariantBoxItem>
-            <VariantBoxItem
-              active={variant === "비밀번호"}
-              onClick={() => {
-                setVariant("비밀번호");
-              }}
-            >
-              비밀번호 찾기
-            </VariantBoxItem>
-          </VariantBox>
-          <VariantNoticeBar variant={variant} isDarkMode={isDarkMode} />
-        </VariantWrapper>
+        <VariantSelector />
         <form onSubmit={handleSubmit(onSubmit)}>
           {variant === "비밀번호" && (
             <div id="user_id_input">
@@ -193,40 +175,6 @@ const FindIdPasswordClient = () => {
     </AuthContainer>
   );
 };
-const VariantWrapper = styled.div`
-  width: 100%;
-`;
-
-const VariantBox = styled.div`
-  font-size: 16px;
-  width: 100%;
-  display: flex;
-`;
-
-const VariantBoxItem = styled.div<{ active: boolean }>`
-  width: 50%;
-  padding: 1rem;
-  text-align: center;
-  cursor: pointer;
-  font-weight: 400;
-
-  ${(props) =>
-    props.active &&
-    css`
-      font-weight: 600;
-    `};
-`;
-
-const VariantNoticeBar = styled.div<{ variant: Variant; isDarkMode: boolean }>`
-  width: 50%;
-  border-bottom: 0.3rem solid
-    ${(props) =>
-      props.isDarkMode ? props.theme.lightYellow : props.theme.yellow};
-  transform: translateX(
-    ${(props) => (props.variant === "아이디" ? "0" : "100%")}
-  );
-  transition: transform 0.3s;
-`;
 
 const BirthDayInputBox = styled.div``;
 
