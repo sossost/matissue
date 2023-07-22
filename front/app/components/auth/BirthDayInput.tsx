@@ -5,32 +5,31 @@ import {
   yearValidation,
 } from "@/app/constants/validation.constants";
 import {
-  BirthDayInputWrapper,
-  BirthDayInput,
   StyledLabel,
-  ErrorMessageText,
+  InputErrorText,
+  StyledInput,
 } from "@/app/styles/auth/auth.style";
+import styled from "styled-components";
 
-type BirthDayFormProps = {
+type BirthDayInputProps = {
   isLoading: boolean;
   BirthForm: any;
   register: UseFormRegister<FieldValues>;
   errors: FieldErrors<FieldValues>;
 };
 
-const BirthDayForm = ({
+const BirthDayInput = ({
   isLoading,
   BirthForm,
   register,
   errors,
-}: BirthDayFormProps) => {
+}: BirthDayInputProps) => {
   return (
-    <>
+    <Container>
       <StyledLabel>생년월일</StyledLabel>
-      <BirthDayInputWrapper>
-        <BirthDayInput
+      <Wrapper>
+        <YearInput
           id="year"
-          isYear={true}
           type="number"
           autoComplete="year"
           disabled={isLoading}
@@ -41,7 +40,7 @@ const BirthDayForm = ({
           value={BirthForm.yearValue || ""}
           placeholder="YYYY"
         />
-        <BirthDayInput
+        <MonthInput
           id="month"
           type="number"
           autoComplete="month"
@@ -53,7 +52,7 @@ const BirthDayForm = ({
           value={BirthForm.monthValue || ""}
           placeholder="MM"
         />
-        <BirthDayInput
+        <DayInput
           id="day"
           type="number"
           autoComplete="day"
@@ -65,14 +64,37 @@ const BirthDayForm = ({
           value={BirthForm.dayValue || ""}
           placeholder="DD"
         />
-      </BirthDayInputWrapper>
+      </Wrapper>
       {(errors.year || errors.month || errors.day) && (
-        <ErrorMessageText>
+        <InputErrorText>
           생년월일 형식을 올바르게 입력해주세요.(ex 2000.01.01)
-        </ErrorMessageText>
+        </InputErrorText>
       )}
-    </>
+    </Container>
   );
 };
 
-export default BirthDayForm;
+export default BirthDayInput;
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const Wrapper = styled.div`
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+`;
+
+const YearInput = styled(StyledInput)`
+  flex: 2;
+`;
+
+const MonthInput = styled(StyledInput)`
+  flex: 1;
+`;
+
+const DayInput = styled(StyledInput)`
+  flex: 1;
+`;

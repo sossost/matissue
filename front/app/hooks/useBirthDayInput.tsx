@@ -7,13 +7,17 @@ import {
 } from "react-hook-form";
 import { toast } from "react-hot-toast";
 
-type useBirthFormProps = {
+type useBirthDayInputProps = {
   watch: UseFormWatch<FieldValues>;
   resetField: UseFormResetField<FieldValues>;
   setValue: UseFormSetValue<FieldValues>;
 };
 
-const useBirthForm = ({ watch, resetField, setValue }: useBirthFormProps) => {
+const useBirtDayInput = ({
+  watch,
+  resetField,
+  setValue,
+}: useBirthDayInputProps) => {
   const yearInputRef = useRef<HTMLInputElement>(null);
   const monthInputRef = useRef<HTMLInputElement>(null);
   const dayInputRef = useRef<HTMLInputElement>(null);
@@ -117,4 +121,4 @@ const useBirthForm = ({ watch, resetField, setValue }: useBirthFormProps) => {
   };
 };
 
-export default useBirthForm;
+export default useBirtDayInput;
