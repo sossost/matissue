@@ -7,17 +7,14 @@ import darkModeAtom from "../store/darkModeAtom";
 const useShowPassword = () => {
   const isDarkMode = useRecoilValue(darkModeAtom);
   const [showPassword, setShowPassword] = useState<boolean>(false);
-  const [showPasswordConfirm, setShowPasswordConfirm] =
-    useState<boolean>(false);
+  useState<boolean>(false);
 
-  const ShowIcon = ({ isPasswordConfirm }: { isPasswordConfirm?: boolean }) => {
+  const ShowIcon = () => {
     return (
       <ShowIconWrapper
         isDarkMode={isDarkMode}
         onClick={() => {
-          isPasswordConfirm
-            ? setShowPasswordConfirm(!showPasswordConfirm)
-            : setShowPassword(!showPassword);
+          setShowPassword(!showPassword);
         }}
       >
         <Image
@@ -33,7 +30,6 @@ const useShowPassword = () => {
   return {
     ShowIcon,
     showPassword,
-    showPasswordConfirm,
   };
 };
 

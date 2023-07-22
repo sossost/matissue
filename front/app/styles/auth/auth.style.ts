@@ -4,11 +4,6 @@ type StyledInputProps = {
   disabled?: boolean;
 };
 
-type BirthdayInputProps = {
-  disabled?: boolean;
-  isYear?: boolean;
-};
-
 export const AuthContainer = styled.div<{ isDarkMode: boolean }>`
   margin-top: 3.2rem;
   margin-left: auto;
@@ -50,7 +45,7 @@ export const StyledLabel = styled.label`
   padding-left: 0.5rem;
 `;
 
-export const StyledInput = styled.input<StyledInputProps>`
+export const StyledInput = styled.input<{ disabled: boolean | undefined }>`
   appearance: none;
   padding: 0.6rem 1.2rem;
   font-size: 16px;
@@ -61,8 +56,8 @@ export const StyledInput = styled.input<StyledInputProps>`
   border-radius: 1.5rem;
   outline: none;
   &:focus {
-  opacity: ${(props) => props.disabled && "0.5"};
-  cursor: ${(props) => props.disabled && "default"};
+    opacity: ${(props) => (props.disabled ? "0.5" : "1")};
+    cursor: ${(props) => (props.disabled ? "default" : "text")};
 
   &:placeholder {
     color: #999;
@@ -73,17 +68,7 @@ export const PasswordInputWrapper = styled.div`
   position: relative;
 `;
 
-export const BirthDayInputWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-`;
-
-export const BirthDayInput = styled(StyledInput)<BirthdayInputProps>`
-  width: ${(props) => (props.isYear ? "16rem" : "8rem")};
-  }
-`;
-
-export const ErrorMessageText = styled.span`
+export const InputErrorText = styled.span`
   display: inline-block;
   padding: 0.3rem 1.3rem 0 1.3rem;
   font-size: 13px;
