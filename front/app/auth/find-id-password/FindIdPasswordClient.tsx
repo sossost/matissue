@@ -10,16 +10,16 @@ import { useRecoilValue } from "recoil";
 
 import Button from "@/app/components/UI/Button";
 import LoadingModal from "@/app/components/UI/LoadingModal";
-import BirthDayForm from "@/app/components/auth/BirthDayForm";
+import BirthDayInput from "@/app/components/auth/BirthDayInput";
 import ConfirmModal from "@/app/components/auth/ConfirmModal";
 import Logo from "@/app/components/header/Logo";
 
-import useBirthForm from "@/app/hooks/useBirthForm";
+import useBirtDayInput from "@/app/hooks/useBirthDayInput";
 import darkModeAtom from "@/app/store/darkModeAtom";
 import {
   AuthContainer,
   AuthFormWrapper,
-  ErrorMessageText,
+  InputErrorText,
   StyledInput,
   StyledLabel,
 } from "@/app/styles/auth/auth.style";
@@ -43,7 +43,7 @@ const FindIdPasswordClient = () => {
   const [message, setMessage] = useState<string>("");
   const isDarkMode = useRecoilValue(darkModeAtom);
 
-  const BirthForm = useBirthForm({
+  const BirthForm = useBirtDayInput({
     watch,
     resetField,
     setValue,
@@ -129,9 +129,9 @@ const FindIdPasswordClient = () => {
                 placeholder="아이디를 입력하세요."
               />
               {errors.user_id && (
-                <ErrorMessageText>
+                <InputErrorText>
                   {errors.user_id.message?.toString()}
-                </ErrorMessageText>
+                </InputErrorText>
               )}
             </div>
           )}
@@ -152,16 +152,16 @@ const FindIdPasswordClient = () => {
                 placeholder="이메일을 입력하세요."
               />
               {errors.email && (
-                <ErrorMessageText>
+                <InputErrorText>
                   {errors.email.message?.toString()}
-                </ErrorMessageText>
+                </InputErrorText>
               )}
             </div>
           )}
 
           {/* 생년월일 인풋 박스 */}
           <BirthDayInputBox>
-            <BirthDayForm
+            <BirthDayInput
               isLoading={isLoading}
               BirthForm={BirthForm}
               register={register}
