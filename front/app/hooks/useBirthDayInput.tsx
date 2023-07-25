@@ -81,15 +81,12 @@ const useBirtDayInput = ({
       birthError();
       return;
     }
-    if (
-      (+monthValue === 1 || 3 || 5 || 7 || 8 || 10 || 12) &&
-      (0 > +day || +day > 32)
-    ) {
+    if ([1, 3, 5, 7, 8, 12].includes(+monthValue) && (0 > +day || +day > 32)) {
       resetField("day");
       birthError();
       dayInputRef.current?.focus();
       return;
-    } else if ((+monthValue === 4 || 6 || 9 || 11) && (0 > +day || +day > 31)) {
+    } else if ([4, 6, 9, 11].includes(+monthValue) && (0 > +day || +day > 31)) {
       resetField("day");
       birthError();
       dayInputRef.current?.focus();
