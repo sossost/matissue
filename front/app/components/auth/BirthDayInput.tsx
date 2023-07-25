@@ -13,7 +13,17 @@ import styled from "styled-components";
 
 type BirthDayInputProps = {
   isLoading: boolean;
-  BirthForm: any;
+  BirthForm: {
+    yearInputRef: React.RefObject<HTMLInputElement>;
+    monthInputRef: React.RefObject<HTMLInputElement>;
+    dayInputRef: React.RefObject<HTMLInputElement>;
+    yearChangeHandler: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    monthChangeHandler: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    dayChangeHandler: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    yearValue: string;
+    monthValue: string;
+    dayValue: string;
+  };
   register: UseFormRegister<FieldValues>;
   errors: FieldErrors<FieldValues>;
 };
