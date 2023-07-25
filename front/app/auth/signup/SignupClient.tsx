@@ -156,5 +156,3 @@ const SignupClient = () => {
 };
 
 export default SignupClient;
-
-const PasswordInputBox = styled.div``;
