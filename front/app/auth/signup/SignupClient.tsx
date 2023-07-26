@@ -3,11 +3,9 @@
 import { useRouter } from "next/navigation";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { useRecoilValue } from "recoil";
-import styled from "styled-components";
 
 import darkModeAtom from "@/app/store/darkModeAtom";
 import useBirtDayInput from "@/app/hooks/useBirthDayInput";
-import useSignup, { SignupValues } from "@/app/hooks/useSignup";
 import { Input } from "@/app/components/common/Input";
 import { PasswordInput } from "@/app/components/auth/PasswordInput";
 
@@ -15,7 +13,6 @@ import {
   AuthContainer,
   AuthFormWrapper,
   AuthNavBox,
-  UnderLineLinkDiv,
 } from "@/app/styles/auth/auth.style";
 import {
   emailValidation,
@@ -28,8 +25,28 @@ import Logo from "@/app/components/header/Logo";
 import Button from "@/app/components/UI/Button";
 import LoadingModal from "@/app/components/UI/LoadingModal";
 import BirthDayInput from "@/app/components/auth/BirthDayInput";
+import Link from "next/link";
+import { useState } from "react";
+import { toast } from "react-hot-toast";
+import { signup } from "@/app/api/auth";
+
+export interface SignupValues {
+  user_id: string;
+  username: string;
+  email: string;
+  password: string;
+  password_confirm?: string;
+  img: string;
+  year: string;
+  month: string;
+  day: string;
+}
 
 const SignupClient = () => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const isDarkMode = useRecoilValue(darkModeAtom);
+  const router = useRouter();
   const {
     register,
     watch,
@@ -37,31 +54,24 @@ const SignupClient = () => {
     setValue,
     handleSubmit,
     formState: { errors },
-  } = useForm<FieldValues>({
-    defaultValues: {
-      user_id: "",
-      username: "",
-      email: "",
-      password: "",
-      password_confirm: "",
-      year: "",
-      month: "",
-      day: "",
-    },
-  });
-  const { isLoading, signup } = useSignup();
+  } = useForm<FieldValues>();
   const BirthForm = useBirtDayInput({
     watch,
     resetField,
     setValue,
   });
 
-  const isDarkMode = useRecoilValue(darkModeAtom);
-  const router = useRouter();
-
   /** auth 폼 제출 핸들러 */
-  const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    signup(data as SignupValues);
+  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+    setIsLoading(true);
+    try {
+      await signup(data);
+      router.push("/auth/signup/complete");
+    } catch (error: any) {
+      toast.error(error.response.data.detail);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -127,6 +137,7 @@ const SignupClient = () => {
           </PasswordInput>
 
           <BirthDayInput
+            label="생년월일"
             isLoading={isLoading}
             BirthForm={BirthForm}
             register={register}
@@ -140,13 +151,9 @@ const SignupClient = () => {
 
         <AuthNavBox>
           <div>이미 아이디가 있으신가요?</div>
-          <UnderLineLinkDiv
-            onClick={() => {
-              router.push("/auth/login");
-            }}
-          >
+          <Link href="/auth/login" style={{ textDecorationLine: "underline" }}>
             로그인하기
-          </UnderLineLinkDiv>
+          </Link>
         </AuthNavBox>
         <br />
         <br />

@@ -26,6 +26,7 @@ type BirthDayInputProps = {
   };
   register: UseFormRegister<FieldValues>;
   errors: FieldErrors<FieldValues>;
+  label: string;
 };
 
 const BirthDayInput = ({
@@ -33,10 +34,11 @@ const BirthDayInput = ({
   BirthForm,
   register,
   errors,
+  label,
 }: BirthDayInputProps) => {
   return (
     <Container>
-      <StyledLabel>생년월일</StyledLabel>
+      <StyledLabel>{label}</StyledLabel>
       <Wrapper>
         <YearInput
           id="year"
