@@ -22,3 +22,11 @@ export const signup = async (data: FieldValues) => {
 
   await axiosBase.post("users/", userData);
 };
+
+export const findUserId = async (data: FieldValues) => {
+  await axiosBase.post("email/forgot-id/", data);
+};
+
+export const findPassword = async (data: FieldValues) => {
+  await axiosBase.post("email/forgot-password/", data);
+};
