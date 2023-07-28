@@ -1,6 +1,6 @@
 "use client";
 
-import { axiosBase } from "@/app/api/axios";
+import { verifyEmail } from "@/app/api/auth";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 import { toast } from "react-hot-toast";
@@ -11,17 +11,19 @@ const VerifyEmail = () => {
   const verifyCode = searchParams?.get("code");
 
   useEffect(() => {
-    if (verifyCode) {
-      axiosBase
-        .get(`email/verify?code=${verifyCode}`)
-        .then((res) => {
+    const verify = async () => {
+      if (verifyCode) {
+        try {
+          await verifyEmail(verifyCode);
           toast.success("가입이 완료되었습니다.");
-        })
-        .catch((err: any) => {
-          toast.error(err.reponse.data.detail);
-        })
-        .finally(() => router.replace("/"));
-    }
+        } catch (error: any) {
+          toast.error(error.reponse.data.detail);
+        } finally {
+          router.replace("/");
+        }
+      }
+    };
+    verify();
   }, []);
 
   return <></>;

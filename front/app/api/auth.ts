@@ -30,3 +30,7 @@ export const findUserId = async (data: FieldValues) => {
 export const findPassword = async (data: FieldValues) => {
   await axiosBase.post("email/forgot-password/", data);
 };
+
+export const verifyEmail = async (verifyCode: string) => {
+  axiosBase.get(`email/verify?code=${verifyCode}`);
+};
