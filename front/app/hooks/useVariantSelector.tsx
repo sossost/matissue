@@ -1,48 +1,62 @@
-import { useState, useRef } from "react";
+"use client";
+
+import { useState, useRef, useCallback } from "react";
 import { useRecoilValue } from "recoil";
 import styled, { css } from "styled-components";
 import darkModeAtom from "../store/darkModeAtom";
+import React from "react";
 
-type Variant = "아이디" | "비밀번호";
+interface VariantSelectorProps<T extends string, U extends string> {
+  variant1: T;
+  variant2: U;
+  initialVariant: T | U;
+}
 
-const useVariantSelector = () => {
-  const [variant, setVariant] = useState<Variant>("아이디");
-  const prevVariantRef = useRef<Variant>("아이디"); // useRef로 이전 variant 관리
+const useVariantSelector = <T extends string, U extends string>({
+  variant1,
+  variant2,
+  initialVariant,
+}: VariantSelectorProps<T, U>) => {
+  const [selectedVariant, setSelectedVariant] = useState<T | U>(initialVariant);
+  const prevVariantRef = useRef<T | U>(initialVariant); // useRef로 이전 variant 관리
   const isDarkMode = useRecoilValue(darkModeAtom);
 
-  const handleClick = (newVariant: Variant) => {
+  const handleClick = (newVariant: T | U) => {
     // 이전 variant를 저장하기 전에 현재 variant를 업데이트
-    setVariant(newVariant);
+    setSelectedVariant(newVariant);
     // 이전 variant 업데이트
-    prevVariantRef.current = newVariant === "비밀번호" ? "아이디" : "비밀번호";
+    prevVariantRef.current = newVariant === variant2 ? variant1 : variant2;
   };
 
-  const VariantSelector = () => {
+  // eslint-disable-next-line react/display-name
+  const VariantSelector = useCallback(() => {
     return (
       <VariantWrapper>
         <VariantBox>
           <VariantBoxItem
-            active={variant === "아이디"}
-            onClick={() => handleClick("아이디")}
+            active={selectedVariant === variant1}
+            onClick={() => handleClick(variant1)}
           >
-            아이디 찾기
+            {variant1}
           </VariantBoxItem>
           <VariantBoxItem
-            active={variant === "비밀번호"}
-            onClick={() => handleClick("비밀번호")}
+            active={selectedVariant === variant2}
+            onClick={() => handleClick(variant2)}
           >
-            비밀번호 찾기
+            {variant2}
           </VariantBoxItem>
         </VariantBox>
         <VariantNoticeBar
-          variant={variant}
+          selectedVariant={selectedVariant}
+          variant1={variant1}
+          variant2={variant2}
           prevVariant={prevVariantRef.current} // useRef로 저장한 이전 variant 사용
           isDarkMode={isDarkMode}
         />
       </VariantWrapper>
     );
-  };
-  return { VariantSelector, variant };
+  }, [isDarkMode, selectedVariant]);
+  return { VariantSelector, selectedVariant };
 };
 
 export default useVariantSelector;
@@ -72,9 +86,11 @@ const VariantBoxItem = styled.div<{ active: boolean }>`
 `;
 
 const VariantNoticeBar = styled.div<{
-  variant: Variant;
-  prevVariant: Variant;
   isDarkMode: boolean;
+  variant1: string;
+  variant2: string;
+  prevVariant: string;
+  selectedVariant: string;
 }>`
   width: 50%;
   height: 0.3rem;
@@ -83,9 +99,11 @@ const VariantNoticeBar = styled.div<{
   border-radius: 999rem;
 
   animation: ${(props) =>
-    props.variant === "아이디" && props.prevVariant === "비밀번호"
+    props.selectedVariant === props.variant1 &&
+    props.prevVariant === props.variant2
       ? "slide-left 0.3s forwards"
-      : props.variant === "비밀번호" && props.prevVariant === "아이디"
+      : props.selectedVariant === props.variant2 &&
+        props.prevVariant === props.variant1
       ? "slide-right 0.3s forwards"
       : "none"};
 

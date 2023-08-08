@@ -11,11 +11,10 @@ import useBirtDayInput from "@/app/hooks/useBirthDayInput";
 import darkModeAtom from "@/app/store/darkModeAtom";
 import useVariantSelector from "@/app/hooks/useVariantSelector";
 
-import Button from "@/app/components/UI/Button";
+import { Input } from "@/app/components/common/Input";
 import LoadingModal from "@/app/components/UI/LoadingModal";
 import BirthDayInput from "@/app/components/auth/BirthDayInput";
 import Logo from "@/app/components/header/Logo";
-import { Input } from "@/app/components/common/Input";
 
 import { AuthContainer, AuthFormWrapper } from "@/app/styles/auth/auth.style";
 import {
@@ -36,7 +35,14 @@ const FindIdPasswordClient = () => {
     formState: { errors },
   } = useForm<FieldValues>();
   const { message, setMessage, EmailSentModal } = useEmailSentModal();
-  const { variant, VariantSelector } = useVariantSelector();
+  const { selectedVariant, VariantSelector } = useVariantSelector<
+    "아이디 찾기",
+    "비밀번호 찾기"
+  >({
+    variant1: "아이디 찾기",
+    variant2: "비밀번호 찾기",
+    initialVariant: "아이디 찾기",
+  });
   const isDarkMode = useRecoilValue(darkModeAtom);
   const BirthForm = useBirtDayInput({
     watch,
@@ -50,7 +56,7 @@ const FindIdPasswordClient = () => {
 
     const birthDate = data.year + "-" + data.month + "-" + data.day;
 
-    if (variant === "아이디") {
+    if (selectedVariant === "아이디 찾기") {
       const userData = {
         email: data.email,
         birth_date: birthDate,
@@ -67,7 +73,7 @@ const FindIdPasswordClient = () => {
       }
     }
 
-    if (variant === "비밀번호") {
+    if (selectedVariant === "비밀번호 찾기") {
       const userData = {
         user_id: data.user_id,
         birth_date: birthDate,
@@ -92,7 +98,7 @@ const FindIdPasswordClient = () => {
         <Logo />
         <VariantSelector />
         <form onSubmit={handleSubmit(onSubmit)}>
-          {variant === "비밀번호" && (
+          {selectedVariant === "비밀번호 찾기" && (
             <Input label="아이디">
               <Input.TextField
                 id="user_id"
@@ -104,7 +110,7 @@ const FindIdPasswordClient = () => {
             </Input>
           )}
 
-          {variant === "아이디" && (
+          {selectedVariant === "아이디 찾기" && (
             <Input label="이메일">
               <Input.TextField
                 id="email"
@@ -124,8 +130,6 @@ const FindIdPasswordClient = () => {
             register={register}
             errors={errors}
           />
-
-          <Button isBgColor={true}>{variant} 찾기</Button>
         </form>
       </AuthFormWrapper>
     </AuthContainer>
