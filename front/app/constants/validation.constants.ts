@@ -1,3 +1,5 @@
+import { FieldValues, UseFormWatch } from "react-hook-form";
+
 export const userIdValidation = {
   required: "아이디를 입력하세요.",
   pattern: {
@@ -42,6 +44,17 @@ export const passwordValidation = {
     message:
       "비밀번호는 영문 대소문자, 숫자, 특수문자 조합으로 8자 이상 입력해야합니다.",
   },
+};
+
+export const passwordConfirmValidation = (watch: UseFormWatch<FieldValues>) => {
+  return {
+    required: "비밀번호를 한번더 입력해주세요.",
+    validate: (val: string | undefined) => {
+      if (watch("password") != val) {
+        return "비밀번호가 일치하지 않습니다.";
+      }
+    },
+  };
 };
 
 export const yearValidation = {

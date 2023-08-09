@@ -2,6 +2,11 @@
 
 import { useQuery } from "@tanstack/react-query";
 import styled from "styled-components";
+import darkModeAtom from "@/app/store/darkModeAtom";
+import getCurrentUser from "@/app/api/user";
+import useMovingContentByScrolling from "@/app/hooks/useMovingContentByScrolling";
+import { User } from "@/app/types";
+import { useRecoilValue } from "recoil";
 
 import Logo from "./Logo";
 import SearchBar from "./SearchBar";
@@ -9,13 +14,7 @@ import UserMenu from "./UserMenu";
 import CategoryBar from "./CategoryBar";
 import HamburgerBtn from "./mobile/HamburgerBtn";
 import SearchBtn from "./mobile/SearchBtn";
-
-import getCurrentUser from "@/app/api/user";
-import useMovingContentByScrolling from "@/app/hooks/useMovingContentByScrolling";
-import { User } from "@/app/types";
 import DarkmodeBtn from "./DarkModeBtn";
-import { useRecoilValue } from "recoil";
-import darkModeAtom from "@/app/store/darkModeAtom";
 
 const Header = ({ initialCurrentUser }: { initialCurrentUser: User }) => {
   // 레시피 조회페이지일 경우, 스크롤 감지하여 헤더를 숨기는 커스텀훅
@@ -23,18 +22,18 @@ const Header = ({ initialCurrentUser }: { initialCurrentUser: User }) => {
   const isDarkMode = useRecoilValue(darkModeAtom);
 
   // 로그인된 유저정보를 받아옴
-  const {
-    data: currentUser,
-    isLoading,
-    isError,
-  } = useQuery<User>(["currentUser"], () => getCurrentUser(), {
-    refetchOnWindowFocus: false,
-    retry: 0,
-    // 서버사이드에서 받아온 미리 유저정보를 기본값으로 넣어서 새로고침시 유저메뉴 바로띄움
-    initialData: initialCurrentUser,
-    // 5분마다 유저정보를 요청해서 세션만료시 로그아웃
-    refetchInterval: 300000,
-  });
+  const { data: currentUser, isLoading } = useQuery<User>(
+    ["currentUser"],
+    () => getCurrentUser(),
+    {
+      refetchOnWindowFocus: false,
+      retry: 0,
+      // 서버사이드에서 미리 받아온 유저정보를 기본값으로 넣어서 새로고침시 유저메뉴 바로띄움
+      initialData: initialCurrentUser,
+      // 5분마다 유저정보를 요청해서 세션만료시 로그아웃
+      refetchInterval: 300000,
+    }
+  );
 
   return (
     <HeaderLayout isHeaderVisible={isHeaderVisible} isDarkMode={isDarkMode}>

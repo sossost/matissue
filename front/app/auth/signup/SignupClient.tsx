@@ -16,6 +16,7 @@ import {
 } from "@/app/styles/auth/auth.style";
 import {
   emailValidation,
+  passwordConfirmValidation,
   passwordValidation,
   userIdValidation,
   usernameValidation,
@@ -123,14 +124,10 @@ const SignupClient = () => {
             <PasswordInput.TextField
               id="password_confirm"
               disabled={isLoading}
-              {...register("password_confirm", {
-                required: "비밀번호를 한번더 입력해주세요.",
-                validate: (val: string | undefined) => {
-                  if (watch("password") != val) {
-                    return "비밀번호가 일치하지 않습니다.";
-                  }
-                },
-              })}
+              {...register(
+                "password_confirm",
+                passwordConfirmValidation(watch)
+              )}
               placeholder="비밀번호를 한번더 입력하세요."
               errors={errors}
             />

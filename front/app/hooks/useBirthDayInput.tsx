@@ -26,8 +26,6 @@ const useBirtDayInput = ({
   const monthValue = watch("month");
   const dayValue = watch("day");
 
-  console.log(yearValue, +monthValue, dayValue);
-
   const birthError = useCallback(() => {
     return toast.error("올바른 생년월일을 입력하세요.");
   }, []);

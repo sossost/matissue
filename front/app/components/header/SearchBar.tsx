@@ -1,13 +1,14 @@
 "use client";
 
-import { useRouter, useSearchParams } from "next/navigation";
 import React, { ChangeEvent, useState, useEffect, useRef } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import styled from "styled-components";
 import Image from "next/image";
 import { useRecoilState, useRecoilValue } from "recoil";
 import darkModeAtom from "@/app/store/darkModeAtom";
-import RecentSearchItem from "./RecentSearchItem";
 import recentSearchAtom from "@/app/store/recentSearchAtom";
+
+import RecentSearchItem from "./RecentSearchItem";
 
 /** 헤더 검색바 컴포넌트 */
 const SearchBar = () => {
@@ -49,8 +50,8 @@ const SearchBar = () => {
     if (e.key === "Enter" && searchQuery.length !== 0) {
       setShowRecentSearches(false);
       const newSearches = [searchQuery, ...recentSearches]
-        .slice(0, 10)
-        .filter((item, index, self) => self.indexOf(item) === index);
+        .filter((item, index, self) => self.indexOf(item) === index)
+        .slice(0, 10);
       localStorage.setItem("searches", JSON.stringify(newSearches));
       setRecentSearches(newSearches);
       router.push(`/recipes/search?query=${encodeURIComponent(searchQuery)}`);
@@ -194,7 +195,7 @@ const RecentSearchesList = styled.ul<{ isDarkMode: boolean }>`
   position: absolute;
   box-sizing: border-box;
   z-index: 999;
-  top: 3.5rem;
+  top: 3.2rem;
   left: -0.2rem;
   background-color: ${(props) =>
     props.isDarkMode ? props.theme.lightNavy : "#fff"};
