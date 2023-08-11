@@ -66,72 +66,6 @@
 - [Redoc](https://matissue-1jim.onrender.com/redoc)
 ![슬라이드15](https://github.com/limeorange/MatIssue/assets/78308684/ff85d4e3-9087-4adc-9b1a-f66fb2f1ce00)
 
-## 🫐 팀 컨벤션
-![슬라이드16](https://github.com/limeorange/MatIssue/assets/78308684/164d11fa-f2fd-471d-9917-3544566b7019)
-![슬라이드17](https://github.com/limeorange/MatIssue/assets/78308684/fcbb81ac-f751-4716-b4ec-f452f233f2a1)
-
-### ✔️ 커밋 컨벤션
-- `Feat`: 새로운 기능 추가
-- `Fix`: 버그 수정
-- `Docs`: 문서 변경
-- `Design`: CSS 등 사용자 UI 디자인 변경
-- `Style`: 코드 포맷팅, 세미콜론 누락, 코드 변경이 없는 경우
-- `Refactor`: 코드 리팩토링
-- `Test`: 테스트 코드 추가, 리팩토링 테스트 코드 추가
-- `Chore`: 빌드 작업, 패키지 매니저 수정
-- `Comment`: 필요한 주석 추가 및 변경
-- `Rename`: 파일 또는 폴더 명을 수정하거나 옮기는 작업만인 경우
-- `Remove`: 파일을 삭제하는 작업만 수행한 경우
-- `!BREAKING CHANGE`: 커다란 API 변경의 경우
-- `!HOTFIX`: 급하게 치명적인 버그를 고쳐야 하는 경우
-
-### ✔️ 컴포넌트 내 코드 작성 구조
-```tsx
-import { useEffect, useState, useRef } from "react";
-import route from "next/navigate"
-
-// file-scope constant
-const ONE = 1;
-const MY_NAME = "YOONSU";
-
-const Page = (props) => {
-	const { a, b, c } = props
-
-  // state
-  const [state, setState] = useState();
-
-	// constant
-	const route = useRoute();
-	const ref = useRef();
-
-  // handler
-  const buttonClickHandler = () => {
-    console.log("click");
-  };
-
-  // useEffect
-  useEffect(() => {
-    console.log("useEffect");
-  }, []);
-
-  return <></>;
-};
-export default Page;
-``` 
-
-### ✔️ Git Branch 관리
-
-```
-master
-├── dev-fe
-│   ├── feature/user
-│   │   │feature/postList
-│   │   │ feature/main
-│   │   │ feature/ViewPage
-│___│___└── feature/my-page
-```
-feature/(기능명)으로 개인 작업 브랜치 생성, 기능구현 후 dev에 PR
-
 ### ✔️ 협업 툴
 
 - [Figma](https://www.figma.com/file/1T0YMmCs1tyNQ3ud32OELi?embed_host=notion&kind=&node-id=0-1&t=kZbDFgIjnFHXUPtm-0&type=design&viewer=1) : 초반 기획시 빠른 레이아웃을 잡기 위해 사용
@@ -144,7 +78,7 @@ feature/(기능명)으로 개인 작업 브랜치 생성, 기능구현 후 dev�
 
 ## 🍆 배포
 ### ✔️ Front-End
-- pm2를 이용한 서버 오픈 및 nginx를 활용한 배포
+- Vercel
 
 ### ✔️ 서버 실행 방법
 ```bash
