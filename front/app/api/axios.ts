@@ -5,7 +5,7 @@ axios.defaults.withCredentials = true;
 
 // Axios 인스턴스 생성
 export const axiosBase = axios.create({
-  baseURL: "https://kdt-sw-4-team10.elicecoding.com/api/",
+  baseURL: process.env.NEXT_PUBLIC_API_URL,
   headers: {
     "Content-Type": "application/json",
   },
