@@ -9,7 +9,7 @@ import RecipeComments from "./RecipeCommentList";
 import RecipeCommentInput from "./RecipeCommentInput";
 
 interface CommentProps {
-  currentUser: User;
+  currentUser: User | undefined;
   comments: Comments[];
   recipe_id: string;
 }
