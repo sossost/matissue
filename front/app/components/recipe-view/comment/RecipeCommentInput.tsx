@@ -6,6 +6,8 @@ import Image from "next/image";
 import { axiosBase } from "@/app/api/axios";
 import { useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
+import { useRecoilValue } from "recoil";
+import authModalAtom from "@/app/store/modalAtom";
 
 /** 댓글 props type 지정 => id, text */
 type CommentProps = {
@@ -17,13 +19,9 @@ const RecipeCommentInput = ({ recipe_id }: CommentProps) => {
   const [isCommenting, setIsCommenting] = useState(false);
   const [commentText, setCommentText] = useState("");
   const [activatedButton, setActivatedButton] = useState(false);
+  const isAuthModal = useRecoilValue(authModalAtom);
 
   const client = useQueryClient();
-
-  /** 댓글창 클릭시 상태 업데이트 핸들러 */
-  const boxClickHandler = () => {
-    setIsCommenting(true);
-  };
 
   /** 작성하는 댓글 내용 업데이트 핸들러 */
   const commentInputHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -53,11 +51,14 @@ const RecipeCommentInput = ({ recipe_id }: CommentProps) => {
   };
 
   return (
-    <CommentContainer isCommenting={isCommenting} onClick={boxClickHandler}>
+    <CommentContainer isCommenting={isCommenting}>
       <InputTextArea
         value={commentText}
         onChange={commentInputHandler}
         placeholder="댓글을 입력해주세요"
+        onFocus={() => setIsCommenting(true)}
+        onBlur={() => setIsCommenting(false)}
+        disabled={isAuthModal}
       />
       {/* 제출 버튼 아이콘 */}
       <SubmitButton disabled={!activatedButton} onClick={commentSubmitHandler}>
@@ -104,11 +105,17 @@ const CommentContainer = styled.div<{ isCommenting: boolean }>`
 /** 댓글 입력 텍스트 */
 const InputTextArea = styled.textarea`
   outline: none;
+  border: none;
   width: 100%;
-  color: #9ca3af;
   font-size: 15.5px;
   resize: none;
   padding-right: 0.5rem;
+  background-color: transparent;
+
+  &:focus {
+    outline: none;
+    border: none;
+  }
 
   ::-webkit-scrollbar {
     width: 1rem;

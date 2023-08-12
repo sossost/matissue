@@ -18,45 +18,60 @@ const ConfirmModal = ({
   showCancelButton = true, // 추가: 기본값은 true로 설정
 }: ConfirmModalProps) => {
   return (
-    <ModalWrapper>
-      <ModalContent>
-        <div>{icon}</div>
-        <ModalMessage>{message}</ModalMessage>
-        <ModalActions>
-          <ConfirmButton>
-            <Button
-              type="button"
-              isBorderColor={true}
-              fullWidth={true}
-              fullHeight={true}
-              isHoverColor={true}
-              onClick={onConfirm}
-            >
-              확인
-            </Button>
-          </ConfirmButton>
-          {showCancelButton && ( // 추가: showCancelButton이 true인 경우에만 취소 버튼 표시
-            <CancelButton>
+    <>
+      <BackdropWrapper />
+      <ModalWrapper>
+        <ModalContent>
+          <div>{icon}</div>
+          <ModalMessage>{message}</ModalMessage>
+          <ModalActions>
+            <ConfirmButton>
               <Button
                 type="button"
-                isBgColor={true}
+                isBorderColor={true}
                 fullWidth={true}
                 fullHeight={true}
-                isBorderColor={false}
-                isHoverColor={false}
-                onClick={onCancel}
+                isHoverColor={true}
+                onClick={onConfirm}
               >
-                취소
+                확인
               </Button>
-            </CancelButton>
-          )}
-        </ModalActions>
-      </ModalContent>
-    </ModalWrapper>
+            </ConfirmButton>
+            {showCancelButton && ( // 추가: showCancelButton이 true인 경우에만 취소 버튼 표시
+              <CancelButton>
+                <Button
+                  type="button"
+                  isBgColor={true}
+                  fullWidth={true}
+                  fullHeight={true}
+                  isBorderColor={false}
+                  isHoverColor={false}
+                  onClick={onCancel}
+                >
+                  취소
+                </Button>
+              </CancelButton>
+            )}
+          </ModalActions>
+        </ModalContent>
+      </ModalWrapper>
+    </>
   );
 };
 
 export default ConfirmModal;
+
+const BackdropWrapper = styled.div`
+  position: fixed;
+  z-index: 9998;
+  inset: 0px;
+  background: #000000;
+  opacity: 50%;
+
+  transition-property: opacity;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+`;
 
 const ModalWrapper = styled.div`
   position: fixed;
@@ -68,7 +83,7 @@ const ModalWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 99;
+  z-index: 9999;
 `;
 
 const ModalContent = styled.div`

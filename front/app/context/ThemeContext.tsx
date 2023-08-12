@@ -98,6 +98,7 @@ function StyledTheme({ children }: Props) {
       }
 
       textarea {
+        color : ${isDarkMode ? white : brown};
         background-color: ${isDarkMode ? lightNavy : white};
         border : ${isDarkMode ? "0.05rem" : "0.1rem"} solid ${grey};
         &:focus {

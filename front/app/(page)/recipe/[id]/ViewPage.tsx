@@ -2,8 +2,6 @@
 
 import IngredientList from "@/app/components/recipe-view/IngredientList";
 import ProgressBar from "@/app/components/recipe-view/sticky-sidebar/ProgressBar";
-import RecipeCommentInput from "@/app/components/recipe-view/comment/RecipeCommentInput";
-import RecipeComments from "@/app/components/recipe-view/comment/RecipeCommentList";
 import RecipeInfo from "@/app/components/recipe-view/RecipeInfo";
 import RecipeScrap from "@/app/components/recipe-view/scrap/RecipeScrap";
 import RecipeSteps from "@/app/components/recipe-view/RecipeStepList";
@@ -31,6 +29,8 @@ import MiniWriterProfile from "@/app/components/recipe-view/sticky-sidebar/MiniW
 import LoginConfirmModal from "@/app/components/UI/LoginConfirmModal";
 import { useRecoilState } from "recoil";
 import darkModeAtom from "@/app/store/darkModeAtom";
+import SubTitle from "@/app/components/UI/SubTitle";
+import Comment from "@/app/components/recipe-view/comment/Comment";
 
 /** 레시피 데이터 Props */
 type RecipeDataProps = {
@@ -106,10 +106,6 @@ const RecipeDetail = (props: RecipeDataProps) => {
       initialData: props.initialCurrentChef,
     }
   );
-
-  // 댓글 개수
-  const commentCount =
-    Array.isArray(comments) && comments.length > 0 ? comments.length : 0;
 
   const router = useRouter();
 
@@ -334,7 +330,7 @@ const RecipeDetail = (props: RecipeDataProps) => {
 
         {/* 요리 정보 (인원, 시간, 난이도, 종류) */}
         <div id="heading1">
-          <Subtitle isDarkMode={isDarkMode}>요리 정보</Subtitle>
+          <SubTitle>요리 정보</SubTitle>
           <RecipeInfo
             recipe_category={recipe_category}
             recipe_info={recipe_info}
@@ -343,25 +339,25 @@ const RecipeDetail = (props: RecipeDataProps) => {
 
         {/* 재료 준비 목록 */}
         <div id="heading2">
-          <Subtitle isDarkMode={isDarkMode}>재료 준비</Subtitle>
+          <SubTitle>재료 준비</SubTitle>
           <IngredientList recipe_ingredients={recipe_ingredients} />
         </div>
 
         {/* 요리 과정 */}
         <div id="heading3">
-          <Subtitle isDarkMode={isDarkMode}>요리 과정</Subtitle>
+          <SubTitle>요리 과정</SubTitle>
           <RecipeSteps recipe_sequence={recipe_sequence}></RecipeSteps>
         </div>
 
         {/* 요리팁 */}
         <div id="heading4">
-          <Subtitle isDarkMode={isDarkMode}>요리팁</Subtitle>
+          <SubTitle>요리팁</SubTitle>
           <RecipeTip>{recipe_tip}</RecipeTip>
         </div>
 
         {/* 요리 동영상 */}
         <div id="heading5">
-          <Subtitle isDarkMode={isDarkMode}>요리 동영상</Subtitle>
+          <SubTitle>요리 동영상</SubTitle>
           <RecipeVideo recipe_video={recipe_video}></RecipeVideo>
         </div>
 
@@ -414,24 +410,11 @@ const RecipeDetail = (props: RecipeDataProps) => {
         </LikeScrapShareWrapper>
 
         {/* 댓글 */}
-        <div>
-          <Subtitle isDarkMode={isDarkMode}>
-            댓글
-            <CommentIcon>
-              <Image
-                src="/images/recipe-view/comment.svg"
-                alt="댓글 아이콘"
-                width={22}
-                height={22}
-              ></Image>
-            </CommentIcon>
-            {commentCount}
-          </Subtitle>
-          <RecipeComments comments={comments} />
-          <div onClick={loginConfirmModalHandler}>
-            <RecipeCommentInput recipe_id={recipe_id} />
-          </div>
-        </div>
+        <Comment
+          currentUser={currentUser}
+          comments={comments}
+          recipe_id={recipe_id}
+        />
       </ViewPageContainer>
     </>
   );
@@ -626,34 +609,9 @@ const Description = styled.div`
   font-size: 16px;
 `;
 
-/** 레시피 소제목 H2 */
-const Subtitle = styled.h2<{ isDarkMode: boolean }>`
-  display: flex;
-  font-size: 18px;
-  color: ${(props) => (props.isDarkMode ? props.theme.yellow : "#b08038")};
-  font-weight: 500;
-  margin-top: 2.5rem;
-  margin-bottom: 1rem;
-
-  @media (min-width: 1024px) {
-    font-size: 20px;
-  }
-`;
-
 /** 요리팁 Div */
 const RecipeTip = styled.div`
   font-size: 1.6rem;
-`;
-
-/** 댓글 아이콘 Div */
-const CommentIcon = styled.div`
-  margin-left: 0.5rem;
-  margin-right: 0.2rem;
-  margin-top: 0.1rem;
-
-  @media (min-width: 1024px) {
-    margin-top: 0.3rem;
-  }
 `;
 
 /** 공유하기 아이콘 Button */

@@ -23,9 +23,7 @@ const RecipeComment = ({
   comment_text,
   comment_id,
   comment_like,
-  comment_parent,
   created_at,
-  updated_at,
   comment_nickname,
   comment_profile_img,
 }: RecipeCommentProps) => {
@@ -370,7 +368,6 @@ const CommentContentsWrapper = styled.div`
 /** 작성자 닉네임 Span */
 const AuthorName = styled.span`
   font-size: 14.8px;
-  color: #6f6f6f;
   font-weight: 500;
   margin-right: 0.8rem;
 
@@ -380,8 +377,7 @@ const AuthorName = styled.span`
 `;
 
 const CreatedTime = styled.span`
-  font-size: 11px;
-  color: #afafaf;
+  font-size: 10px;
 
   @media (min-width: 1024px) {
     font-size: 14px;
@@ -403,7 +399,6 @@ const ProfileImageWrapper = styled.div`
 const AuthorDotsWrapper = styled.div`
   display: flex;
   justify-content: space-between;
-  margin-bottom: 0.5rem;
 `;
 
 /** 댓글 수정, 삭제 아이콘 감싸는 Div */
@@ -417,7 +412,6 @@ const ThreeDotsImageWrapper = styled.div`
 /** 댓글 내용 Div */
 const CommentText = styled.div`
   font-size: 14.5px;
-  color: #6f6f6f;
   width: 100%;
 
   @media (min-width: 1024px) {

@@ -5,6 +5,7 @@ import Recoil from "./context/RecoilContext";
 import ReactQuery from "./context/ReactQueryContext";
 import Script from "next/script";
 import StyledTheme from "./context/ThemeContext";
+import ModalContext from "./context/ModalContext";
 
 export const metadata = {
   title: "맛이슈",
@@ -43,10 +44,13 @@ export default async function RootLayout({
       </head>
       <StyledComponentsRegistry>
         <body>
-          <ToasterContext />
           <Recoil>
             <ReactQuery>
-              <StyledTheme>{children}</StyledTheme>
+              <StyledTheme>
+                <ToasterContext />
+                <ModalContext />
+                {children}
+              </StyledTheme>
             </ReactQuery>
           </Recoil>
         </body>
