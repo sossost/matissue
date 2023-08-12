@@ -1,8 +1,6 @@
 ## 🍳 맛이슈 (MatIssue) : "세상의 모든 맛있는 이슈를 담다"
-<a href="https://www.matissue.com">
-  <img src="https://github.com/limeorange/MatIssue/assets/78308684/72f4ac32-0747-4605-b069-cebd397b122f" alt="logo" width="350">
-</a>
-<div>로고 클릭 시 <a href="https://www.matissue.com">맛이슈 홈페이지</a>로 이동합니다 🚕 =3</div>
+<a href="https://www.matissue.com">matissue.com</a>
+
 
 ## 🍎 프로젝트 주제 및 기획
 <h2>
@@ -35,8 +33,6 @@
 11. 모바일 사용자를 위한 **반응형 페이지** 제공 -->
 
 ## 🍊 팀원 소개
-![슬라이드4](https://github.com/limeorange/MatIssue/assets/78308684/7a10fe9c-9d24-4192-80a7-65f429c593f2)
-![슬라이드5](https://github.com/limeorange/MatIssue/assets/78308684/5690e395-fd31-4d20-8f74-0f74ef691264)
 
 ### ✔️ Front-End
 - 장윤수 (FE 팀장)
