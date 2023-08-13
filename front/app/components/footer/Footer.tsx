@@ -4,6 +4,7 @@ import styled from "styled-components";
 import Logo from "../header/Logo";
 import { useRecoilValue } from "recoil";
 import darkModeAtom from "@/app/store/darkModeAtom";
+import Link from "next/link";
 
 const Footer = () => {
   const isDarkMode = useRecoilValue(darkModeAtom);
@@ -24,10 +25,19 @@ const Footer = () => {
         <FooterAllRightsReserved>
           © 2023 맛이슈. All rights reserved.
         </FooterAllRightsReserved>
-        맛이슈는 레시피 공유, 요리 팁 및 관련 정보를 제공하는 온라인
-        커뮤니티입니다. 모든 레시피 및 콘텐츠는 사용자들 간의 공유를 통해
-        생성되었으며, 맛이슈는 그 내용에 대한 책임을 지지 않습니다. 자세한
-        내용은 이용약관을 참조해주세요.
+        <FooterAllRightsReserved>
+          이 프로젝트는 포트폴리오 목적으로 제작되었습니다. 상업적인 용도로
+          사용하지 않을 것이며, 기존 사이트
+          <Link
+            href="https://wtable.co.kr/"
+            style={{ fontSize: "16px", fontWeight: "bold", color: "blue" }}
+          >
+            (우리의 식탁)
+          </Link>
+          에서 자료를 가져와 활용하였습니다. 이 프로젝트의 목적은 개인적인
+          학습과 기술 데모를 위한 것입니다. 원작자가 아닌 다른 소스로부터 자료를
+          가져왔음을 밝힙니다.
+        </FooterAllRightsReserved>
       </FooterWrapper>
     </FooterContainer>
   );
