@@ -13,18 +13,6 @@ const Footer = () => {
     <FooterContainer isDarkMode={isDarkMode}>
       <FooterWrapper>
         <Logo />
-        <FooterTextBox>
-          팀장 : 신유빈 | 팀원 : 김동균 송호준 이나현 이수현 임정훈 장윤수
-          <br />
-          주소: 서울특별시 성동구 아차산로 17길 48 | 전화번호 : 010-1234-5678 |
-          이메일 : matissue@gmx.com
-        </FooterTextBox>
-        <FooterAllRightsReserved>
-          개인정보 보호정책 | 이용약관 | 문의하기
-        </FooterAllRightsReserved>
-        <FooterAllRightsReserved>
-          © 2023 맛이슈. All rights reserved.
-        </FooterAllRightsReserved>
         <FooterAllRightsReserved>
           이 프로젝트는 포트폴리오 목적으로 제작되었습니다. 상업적인 용도로
           사용하지 않을 것이며, 기존 사이트
