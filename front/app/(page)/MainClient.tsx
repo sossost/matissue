@@ -10,11 +10,28 @@ import MainNewest from "../components/main-page/MainNewest";
 import styled from "styled-components";
 import { Recipe } from "../types";
 import MainMobileCategory from "../components/main-page/mobile/MainMobileCategory";
+import dynamic from "next/dynamic";
 
 /** 유저경험을 향상시키기위해 메인화면에서 가장 위에 보이는 bestRecipes만 서버사이드 렌더링
  * 상대적으로 아래있는 다른 컴포넌트들은 클라이언트사이드 렌더링으로 진행
  * */
 const MainPageClient = ({ bestRecipes }: { bestRecipes: Recipe[] }) => {
+  const MainFridge = dynamic(
+    () => import("../components/main-page/MainFridge"),
+    { ssr: false }
+  );
+  const MainAlone = dynamic(() => import("../components/main-page/MainAlone"), {
+    ssr: false,
+  });
+  const MainVegetarian = dynamic(
+    () => import("../components/main-page/MainVegetarian"),
+    { ssr: false }
+  );
+  const MainNewest = dynamic(
+    () => import("../components/main-page/MainNewest"),
+    { ssr: false }
+  );
+
   return (
     <>
       <Banner />

@@ -26,7 +26,7 @@ const MainBest = ({ initialBestRecipes }: { initialBestRecipes: Recipe[] }) => {
       recipes={bestRecipes}
       isLoading={isLoading}
       isError={isError}
-      isFilter={true}
+      isFilter={false}
       categoryUrl="/recipes/category/best?category=best"
     />
   );
