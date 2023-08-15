@@ -15,6 +15,7 @@ import { Input } from "@/app/components/common/Input";
 import LoadingModal from "@/app/components/UI/LoadingModal";
 import BirthDayInput from "@/app/components/auth/BirthDayInput";
 import Logo from "@/app/components/header/Logo";
+import Button from "@/app/components/UI/Button";
 
 import { AuthContainer, AuthFormWrapper } from "@/app/styles/auth/auth.style";
 import {
@@ -130,6 +131,7 @@ const FindIdPasswordClient = () => {
             register={register}
             errors={errors}
           />
+          <Button isBgColor={true}>{selectedVariant}</Button>
         </form>
       </AuthFormWrapper>
     </AuthContainer>

@@ -2,10 +2,6 @@
 
 import Banner from "../components/main-page/Banner/Banner";
 import MainBest from "../components/main-page/MainBest";
-import MainFridge from "../components/main-page/MainFridge";
-import MainAlone from "../components/main-page/MainAlone";
-import MainVegetarian from "../components/main-page/MainVegetarian";
-import MainNewest from "../components/main-page/MainNewest";
 
 import styled from "styled-components";
 import { Recipe } from "../types";
