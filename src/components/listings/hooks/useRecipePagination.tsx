@@ -28,7 +28,7 @@ const useRecipePagination = ({ recipesLength }: UseRecipePaginationProps) => {
     setCurrentPage(currentPage + 1);
   };
 
-  const handleSliceByPage = (recipes: Recipe[]) => {
+  const sliceRecipesByPage = (recipes: Recipe[]) => {
     return recipes.slice(
       contentsPerPage * (currentPage - 1),
       contentsPerPage * currentPage
@@ -66,8 +66,7 @@ const useRecipePagination = ({ recipesLength }: UseRecipePaginationProps) => {
   };
 
   return {
-    contentsPerPage,
-    handleSliceByPage,
+    sliceRecipesByPage,
     LeftSlideButton,
     RightSlideButton,
   };
