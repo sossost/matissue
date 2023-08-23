@@ -40,7 +40,7 @@ const MainListingRecipe = ({
   categoryUrl,
 }: MainListingRecipeProps) => {
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [filter, setFilter] = useState<"일간" | "주간" | "월간">("월간");
+  const [filter, setFilter] = useState<"day" | "week" | "month">("day");
   const [filteredRecipes, setFilteredRecipes] = useState<Recipe[]>(recipes);
   const isDarkMode = useRecoilValue(darkModeAtom);
 
@@ -67,39 +67,15 @@ const MainListingRecipe = ({
 
   // 일간, 주간 ,월간 필터링 useEffect 훅
   useEffect(() => {
-    if (filter === "일간") {
-      const startOfDay = currentDate.startOf("day");
-      const endOfDay = currentDate.endOf("day");
+    const filteredRecipes = recipes.filter((recipe) => {
+      const postData = dayjs(recipe.created_at);
+      return postData.isBetween(
+        currentDate.startOf(filter),
+        currentDate.endOf(filter)
+      );
+    });
 
-      const dailyRecipes = recipes.filter((recipe: Recipe) => {
-        const postDate = dayjs(recipe.created_at);
-        return postDate.isBetween(startOfDay, endOfDay);
-      });
-
-      setFilteredRecipes(dailyRecipes);
-    }
-    if (filter === "주간") {
-      const startOfWeek = currentDate.startOf("week");
-      const endOfWeek = currentDate.endOf("week");
-
-      const weeklyRecipes = recipes.filter((recipe: Recipe) => {
-        const postDate = dayjs(recipe.created_at);
-        return postDate.isBetween(startOfWeek, endOfWeek);
-      });
-
-      setFilteredRecipes(weeklyRecipes);
-    }
-    if (filter === "월간") {
-      const startOfMonth = currentDate.startOf("month");
-      const endOfMonth = currentDate.endOf("month");
-
-      const monthlyRecipes = recipes.filter((recipe: Recipe) => {
-        const postDate = dayjs(recipe.created_at);
-        return postDate.isBetween(startOfMonth, endOfMonth);
-      });
-
-      setFilteredRecipes(monthlyRecipes);
-    }
+    setFilteredRecipes(filteredRecipes);
   }, [filter]);
 
   return (
@@ -121,9 +97,9 @@ const MainListingRecipe = ({
                 isDarkMode={isDarkMode}
                 id="month"
                 onClick={() => {
-                  setFilter("월간");
+                  setFilter("month");
                 }}
-                clicked={filter === "월간"}
+                clicked={filter === "month"}
               >
                 월간
               </StyledItem>
@@ -134,9 +110,9 @@ const MainListingRecipe = ({
                 isDarkMode={isDarkMode}
                 id="week"
                 onClick={() => {
-                  setFilter("주간");
+                  setFilter("week");
                 }}
-                clicked={filter === "주간"}
+                clicked={filter === "week"}
               >
                 주간
               </StyledItem>
@@ -147,9 +123,9 @@ const MainListingRecipe = ({
                 isDarkMode={isDarkMode}
                 id="day"
                 onClick={() => {
-                  setFilter("일간");
+                  setFilter("day");
                 }}
-                clicked={filter === "일간"}
+                clicked={filter === "day"}
               >
                 일간
               </StyledItem>
