@@ -1,30 +1,23 @@
 "use client";
 
-import { Recipe } from "@/src/types";
-import { useQuery } from "@tanstack/react-query";
+import { useNewestRecipesQuery } from "@/src/hooks/useRecipesQuery";
 
 import MainListingRecipe from "../listings/MainListingRecipe";
-
-import { getAllRecipes } from "@/src/app/api/recipe";
+import LoadingRecipe from "../UI/LoadingRecipe";
+import NonDataCrying from "../UI/NonDataCrying";
 
 const MainNewest = () => {
-  const {
-    data: allRecipes,
-    isLoading,
-    isError,
-  } = useQuery<Recipe[]>(["recipes"], () => getAllRecipes(), {
-    retry: 0,
-    initialData: [],
-  });
+  const newestRecipes = useNewestRecipesQuery();
+
+  if (newestRecipes.isLoading) return <LoadingRecipe />;
+
+  if (newestRecipes.isError) return <NonDataCrying />;
 
   return (
     <MainListingRecipe
-      title="최신 레시피"
-      recipes={allRecipes}
-      isLoading={isLoading}
-      isError={isError}
+      variant="newest"
+      recipes={newestRecipes.data}
       isFilter={false}
-      categoryUrl="/recipes/category/newest?category=newest"
     />
   );
 };
