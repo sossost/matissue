@@ -9,14 +9,12 @@ import NonDataCrying from "../UI/NonDataCrying";
 const MainBest = () => {
   const bestRecipes = useBestRecipesQuery();
 
-  if (bestRecipes.isLoading) return <LoadingRecipe />;
-
-  if (bestRecipes.isError) return <NonDataCrying />;
-
   return (
     <MainListingRecipe
       variant="best"
       recipes={bestRecipes.data}
+      isLoading={bestRecipes.isLoading}
+      isError={bestRecipes.isError}
       isFilter={false}
     />
   );
