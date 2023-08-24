@@ -5,6 +5,7 @@ import {
   getRecipesByLastest,
   getRecipesByPopularity,
   getRecipesBySingle,
+  getRecipesByVegetarian,
 } from "../app/api/recipe";
 
 export const useBestRecipesQuery = () => {
@@ -39,6 +40,18 @@ export const useSingleRecipesQuery = () => {
     isLoading,
     isError,
   } = useQuery<Recipe[]>([queryKey.singleRecipes], getRecipesBySingle);
+
+  return { data, isLoading, isError };
+};
+
+export const useVegetarianRecipesQuery = () => {
+  const fallback = [] as Recipe[];
+
+  const {
+    data = fallback,
+    isLoading,
+    isError,
+  } = useQuery<Recipe[]>([queryKey.singleRecipes], getRecipesByVegetarian);
 
   return { data, isLoading, isError };
 };
