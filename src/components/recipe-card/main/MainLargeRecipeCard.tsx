@@ -1,62 +1,35 @@
 "use client";
 
-import { getRecipeById } from "@/src/app/api/recipe";
-import darkModeAtom from "@/src/store/darkModeAtom";
-import { Recipe } from "@/src/types";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import styled from "styled-components";
+import { Recipe } from "@/src/types";
 import { useRecoilValue } from "recoil";
-import styled, { keyframes } from "styled-components";
+import darkModeAtom from "@/src/store/darkModeAtom";
+
+import ImageContainer from "../../UI/ImageContainer";
+import LikeCounter from "../LikeCounter";
+import CommentCounter from "../CommentCounter";
 
 const LargeRecipeCard = ({ recipe }: { recipe: Recipe }) => {
-  const [showImage, setShowImage] = useState(false);
   const isDarkMode = useRecoilValue(darkModeAtom);
-
-  useEffect(() => {
-    setShowImage(true);
-  }, [recipe]);
-
   const router = useRouter();
 
   return (
     <SlideContainer>
       <CardContainer
         isDarkMode={isDarkMode}
-        className={showImage ? "show" : ""}
         onClick={() => router.push(`/recipe/${recipe.recipe_id}`)}
       >
-        <ImageWrapper>
-          <Image
-            src={recipe.recipe_thumbnail}
-            alt={recipe.recipe_title}
-            fill
-            style={{ objectFit: "cover" }}
-          />
-        </ImageWrapper>
+        <ImageContainer imageUrl={recipe.recipe_thumbnail} sizes="280" />
+
         <TextContainer>
-          <RecipeTitleBox>
-            <h2>{recipe.recipe_title}</h2>
-          </RecipeTitleBox>
+          <RecipeTitle>{recipe.recipe_title}</RecipeTitle>
           <RecipeInfoBox>
-            <AuthorBox>
-              <h3>{recipe.user_nickname}</h3>
-            </AuthorBox>
+            <RecipeAuthor>{recipe.user_nickname}</RecipeAuthor>
+
             <IconWrapper>
-              <Image
-                src="/images/recipe-view/heart_full.svg"
-                alt="게시물 좋아요 이미지"
-                height={12}
-                width={16}
-              />
-              <span>{recipe.recipe_like.length}&nbsp;&nbsp;</span>
-              <Image
-                src="/images/recipe-view/comment.svg"
-                alt="게시물 댓글 이미지"
-                width={16}
-                height={24}
-              />
-              <span>{recipe.comments.length.toLocaleString()}</span>
+              <LikeCounter likes={recipe.recipe_like} width={16} />
+              <CommentCounter comments={recipe.comments} width={16} />
             </IconWrapper>
           </RecipeInfoBox>
         </TextContainer>
@@ -66,17 +39,6 @@ const LargeRecipeCard = ({ recipe }: { recipe: Recipe }) => {
 };
 
 export default LargeRecipeCard;
-
-const fadeIn = keyframes`
-  from {
-    opacity: 0;
-    transform: translateX(-100%);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-`;
 
 const SlideContainer = styled.div`
   overflow: hidden;
@@ -95,15 +57,6 @@ const CardContainer = styled.div<{ isDarkMode: boolean }>`
     props.isDarkMode ? props.theme.deepNavy : props.theme.white};
   border-radius: 1.6rem;
   cursor: pointer;
-
-  opacity: 0;
-  transform: translateX(100%);
-  animation: ${fadeIn} 0.5s ease-in-out forwards;
-`;
-
-const ImageWrapper = styled.div`
-  position: relative;
-  padding-top: 100%;
 `;
 
 const TextContainer = styled.div`
@@ -114,19 +67,16 @@ const TextContainer = styled.div`
   line-height: 1.6rem;
 `;
 
-const RecipeTitleBox = styled.div`
+const RecipeTitle = styled.h2`
   display: flex;
   width: 100%;
   font-size: 18px;
   font-weight: 500;
-
-  & h2 {
-    text-align: start;
-    width: 100%;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
+  text-align: start;
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 const RecipeInfoBox = styled.div`
@@ -139,7 +89,7 @@ const RecipeInfoBox = styled.div`
   color: #6f6f6f;
 `;
 
-const AuthorBox = styled.div`
+const RecipeAuthor = styled.p`
   display: flex;
   align-items: center;
   gap: 0.4rem;
