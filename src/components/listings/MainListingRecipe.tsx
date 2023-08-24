@@ -37,7 +37,7 @@ const MainListingRecipe = ({
   const { filteredRecipes, DayFilter } = useDayFilter(recipes);
 
   // 레시피 페이지네이션 커스텀 훅
-  const { handleSliceByPage, LeftSlideButton, RightSlideButton } =
+  const { sliceRecipesByPage, LeftSlideButton, RightSlideButton } =
     useRecipePagination({
       recipesLength: isFilter ? filteredRecipes.length : recipes.length,
     });
@@ -53,10 +53,10 @@ const MainListingRecipe = ({
 
         <ListingRecipeContainer>
           {isFilter
-            ? handleSliceByPage(filteredRecipes).map((item: Recipe) => (
+            ? sliceRecipesByPage(filteredRecipes).map((item: Recipe) => (
                 <RecipeCard key={item.recipe_id} recipe={item} />
               ))
-            : handleSliceByPage(recipes).map((item: Recipe) => (
+            : sliceRecipesByPage(recipes).map((item: Recipe) => (
                 <RecipeCard key={item.recipe_id} recipe={item} />
               ))}
           {isFilter && filteredRecipes.length === 0 && <NonRecipeCrying />}
