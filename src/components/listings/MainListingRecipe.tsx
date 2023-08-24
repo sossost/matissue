@@ -13,6 +13,7 @@ import RecipeCard from "../recipe-card/RecipeCard";
 import NonRecipeCrying from "../UI/NonRecipeCrying";
 import MainMobileListingRecipe from "./MainMobileListingRecipe";
 import useRecipePagination from "./hooks/useRecipePagination";
+import RecipeCardSkeleton from "../recipe-card/RecipeCardSkeleton";
 
 const CATEGORY_TYPE = {
   best: { title: "베스트 레시피", url: "/recipes/category/best?category=best" },
@@ -25,12 +26,16 @@ const CATEGORY_TYPE = {
 type MainListingRecipeProps = {
   variant: "best" | "newest";
   recipes: Recipe[];
+  isLoading?: boolean;
+  isError?: boolean;
   isFilter: boolean;
 };
 
 const MainListingRecipe = ({
   variant,
   recipes,
+  isLoading = false,
+  isError = false,
   isFilter,
 }: MainListingRecipeProps) => {
   // 월간, 주간, 일간 필터 커스텀 훅
@@ -52,7 +57,9 @@ const MainListingRecipe = ({
         </StyledRowTitleBox>
 
         <ListingRecipeContainer>
-          {isFilter
+          {isLoading
+            ? [...new Array(8)].map((_, i) => <RecipeCardSkeleton key={i} />)
+            : isFilter
             ? sliceRecipesByPage(filteredRecipes).map((item: Recipe) => (
                 <RecipeCard key={item.recipe_id} recipe={item} />
               ))
