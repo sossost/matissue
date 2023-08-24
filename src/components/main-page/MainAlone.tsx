@@ -1,154 +1,85 @@
 "use client";
 
-import { getRecipesBySingle } from "@/src/app/api/recipe";
+import { useEffect, useState } from "react";
+import styled from "styled-components";
+import shuffleRecipes from "@/src/utils/shuffleRecipes";
+import { useSingleRecipesQuery } from "@/src/hooks/useRecipesQuery";
 import {
   StyledContainer,
   StyledContentsArea,
-  StyledSubTitle,
-  StyledTitle,
-  StyledTitleBox,
 } from "@/src/styles/main/main.style";
 import { Recipe } from "@/src/types";
-import shuffleRecipes from "@/src/utils/shuffleRecipes";
-import { useQuery } from "@tanstack/react-query";
-import Image from "next/image";
-import { useRouter } from "next/navigation";
-import styled from "styled-components";
+
+import MainMobileListingRecipe from "../listings/MainMobileListingRecipe";
 import LoadingRecipe from "../UI/LoadingRecipe";
 import NonDataCrying from "../UI/NonDataCrying";
 import NonRecipeCrying from "../UI/NonRecipeCrying";
-import { useEffect, useState } from "react";
-import MainMobileListingRecipe from "../listings/MainMobileListingRecipe";
+import MainTitleBox from "./MainTitleBox";
+import MainAloneRecipeCard from "./MainAloneRecipeCard";
 
 const MainAlone = () => {
-  const {
-    data: singleRecipes,
-    isLoading,
-    isError,
-  } = useQuery<Recipe[]>(["singleRecipes"], () => getRecipesBySingle(), {
-    retry: 0,
-    initialData: [],
-  });
-
+  const singleRecipes = useSingleRecipesQuery();
+  const [shuffledRecipes, setShuffledRecipes] = useState<Recipe[]>([]);
   const [isDesktop, setIsDesktop] = useState<boolean>(false);
 
+  // 미디어 쿼리를 사용하여 화면 크기에 따라 상태를 설정
   useEffect(() => {
     const mediaQuery = window.matchMedia("(min-width: 1024px)");
-    setIsDesktop(mediaQuery.matches); // 초기 렌더링 시 미디어 쿼리 결과에 따라 상태를 설정
+    setIsDesktop(mediaQuery.matches);
 
     const handleResize = () => {
-      setIsDesktop(mediaQuery.matches); // 화면 크기 변경 시 미디어 쿼리 결과에 따라 상태를 업데이트
+      setIsDesktop(mediaQuery.matches);
     };
 
-    mediaQuery.addListener(handleResize); // 화면 크기 변경 이벤트 리스너 등록
+    mediaQuery.addListener(handleResize);
 
     return () => {
-      mediaQuery.removeListener(handleResize); // 컴포넌트 언마운트 시 이벤트 리스너 제거
+      mediaQuery.removeListener(handleResize);
     };
   }, []);
 
-  const router = useRouter();
+  // 레시피 데이터가 변경되면 레시피를 섞어서 상태에 저장
+  useEffect(() => {
+    setShuffledRecipes(shuffleRecipes(singleRecipes.data));
+  }, [singleRecipes.data]);
 
-  const shuffledRecipes = shuffleRecipes(singleRecipes);
-
-  if (isLoading) {
+  if (singleRecipes.isLoading) {
     return <LoadingRecipe />;
+  }
+
+  if (singleRecipes.isError) {
+    return <NonDataCrying />;
+  }
+
+  if (singleRecipes.data.length < 5) {
+    <NonRecipeCrying />;
   }
 
   return (
     <StyledContainer>
       <StyledContentsArea>
-        <StyledTitleBox>
-          <StyledTitle>혼먹 자취생 레시피</StyledTitle>
-          <StyledSubTitle>
-            자취생이 해먹을수 있는 색다른 추천 레시피들
-          </StyledSubTitle>
-        </StyledTitleBox>
-        {isError ? (
-          <NonDataCrying />
-        ) : singleRecipes.length < 5 && !isError ? (
-          <NonRecipeCrying />
-        ) : (
-          <RecipeContainer>
-            {isDesktop ? (
-              <>
-                <RecipeImageWrapperBase
-                  onClick={() =>
-                    router.push(`/recipe/${shuffledRecipes?.[0].recipe_id}`)
-                  }
-                >
-                  <SquareImageWrapper>
-                    <Image
-                      src={shuffledRecipes?.[0].recipe_thumbnail}
-                      alt="ingredient"
-                      fill
-                      style={{ objectFit: "cover" }}
-                    />
-                  </SquareImageWrapper>
-                  <TitleOnImage>
-                    {shuffledRecipes?.[0].recipe_title}
-                  </TitleOnImage>
-                </RecipeImageWrapperBase>
-                <RecipeImageWrapper2
-                  onClick={() =>
-                    router.push(`/recipe/${shuffledRecipes?.[1].recipe_id}`)
-                  }
-                >
-                  <SquareImageWrapper>
-                    <Image
-                      src={shuffledRecipes?.[1].recipe_thumbnail}
-                      alt="ingredient"
-                      fill
-                      style={{ objectFit: "cover" }}
-                    />
-                  </SquareImageWrapper>
-                  <TitleOnImage>
-                    {shuffledRecipes?.[1].recipe_title}
-                  </TitleOnImage>
-                </RecipeImageWrapper2>
-                <RecipeImageWrapper3
-                  onClick={() =>
-                    router.push(`/recipe/${shuffledRecipes?.[2].recipe_id}`)
-                  }
-                >
-                  <SquareImageWrapper>
-                    <Image
-                      src={shuffledRecipes?.[2].recipe_thumbnail}
-                      alt="ingredient"
-                      fill
-                      style={{ objectFit: "cover" }}
-                    />
-                  </SquareImageWrapper>
-                  <TitleOnImage>
-                    {shuffledRecipes?.[2].recipe_title}
-                  </TitleOnImage>
-                </RecipeImageWrapper3>
-                <RecipeImageWrapper4
-                  onClick={() =>
-                    router.push(`/recipe/${shuffledRecipes?.[3].recipe_id}`)
-                  }
-                >
-                  <SquareImageWrapper>
-                    <Image
-                      src={shuffledRecipes?.[3].recipe_thumbnail}
-                      alt="ingredient"
-                      fill
-                      style={{ objectFit: "cover" }}
-                    />
-                  </SquareImageWrapper>
-                  <TitleOnImage>
-                    {shuffledRecipes?.[3].recipe_title}
-                  </TitleOnImage>
-                </RecipeImageWrapper4>
-              </>
-            ) : (
-              <MainMobileListingRecipe
-                recipes={singleRecipes}
-                url="/recipes/category/honmuk?category=honmuk"
-              />
-            )}
-          </RecipeContainer>
-        )}
+        <MainTitleBox
+          title="혼먹 자취생 레시피"
+          subTitle="자취생이 해먹을수 있는 새다른 추천 레시피들"
+        />
+        <RecipeContainer>
+          {isDesktop ? (
+            <>
+              {shuffledRecipes.slice(0, 4).map((recipe, index) => (
+                <MainAloneRecipeCard
+                  key={recipe.recipe_id}
+                  recipe={recipe}
+                  index={index}
+                />
+              ))}
+            </>
+          ) : (
+            <MainMobileListingRecipe
+              recipes={singleRecipes.data}
+              url="/recipes/category/honmuk?category=honmuk"
+            />
+          )}
+        </RecipeContainer>
       </StyledContentsArea>
     </StyledContainer>
   );
