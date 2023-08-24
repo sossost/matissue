@@ -76,7 +76,8 @@ const SearchBar = () => {
         <Image
           src="/images/searchIcon.svg"
           width={18}
-          height={18}
+          height={24}
+          priority
           alt="searchIcon"
         />
         <SearchBarInputWrapper>

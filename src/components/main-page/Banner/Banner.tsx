@@ -85,6 +85,7 @@ const Banner = () => {
                     alt="banner"
                     width={450}
                     height={280}
+                    priority
                   />
                 </ImageWrapper>
               </ImageArea>

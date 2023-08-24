@@ -4,7 +4,6 @@ import Banner from "../../components/main-page/Banner/Banner";
 import MainBest from "../../components/main-page/MainBest";
 
 import styled from "styled-components";
-import { Recipe } from "../../types";
 import MainMobileCategory from "../../components/main-page/mobile/MainMobileCategory";
 import dynamic from "next/dynamic";
 
