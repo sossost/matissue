@@ -88,9 +88,12 @@ const UserMenu = ({ currentUser }: { currentUser: User }) => {
               src={currentUser ? currentUser.img : "/images/profileIcon.png"}
               width={36}
               height={36}
-              style={{ objectFit: "cover", backgroundColor: "#fff9ea" }}
+              style={{
+                objectFit: "cover",
+                backgroundColor: "#fff9ea",
+                borderRadius: "9999px",
+              }}
               alt="profile_icon"
-              className="rounded-[100px]"
             />
           </ProfileButton>
         </>
