@@ -1,3 +1,5 @@
+"use client";
+
 import { Recipe } from "@/src/types";
 import Image from "next/image";
 import { useState } from "react";
