@@ -1,3 +1,5 @@
+"use client";
+
 import { Recipe } from "@/src/types";
 import styled from "styled-components";
 
