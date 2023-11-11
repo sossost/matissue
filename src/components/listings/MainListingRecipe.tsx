@@ -69,6 +69,7 @@ export default MainListingRecipe;
 
 const StyledContainer = tw.div`
   flex
+  relative
   w-full
   p-4
   lg:items-center
