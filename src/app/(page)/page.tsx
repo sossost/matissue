@@ -1,5 +1,5 @@
 import tw from "tailwind-styled-components";
-import { getRecipesByPopularity } from "../api/recipe";
+import { getRequest } from "../api/utils/getRequest";
 
 import Banner from "@/src/components/main-page/Banner/Banner";
 import MainMobileCategory from "@/src/components/main-page/mobile/MainMobileCategory";
@@ -10,7 +10,10 @@ import MainNewest from "@/src/components/main-page/MainNewest";
 import MainListingRecipe from "@/src/components/listings/MainListingRecipe";
 
 const Home = async () => {
-  const bestRecipes = await getRecipesByPopularity();
+  const bestRecipes = await getRequest({
+    url: "recipes/popularity",
+    options: { revalidate: 60 * 60 },
+  });
 
   return (
     <>
