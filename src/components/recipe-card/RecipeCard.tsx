@@ -19,7 +19,10 @@ const RecipeCard = ({ recipe }: { recipe: Recipe }) => {
       <RecipeCardLayout
         onClick={() => router.push(`/recipe/${recipe.recipe_id}`)}
       >
-        <ImageContainer imageUrl={recipe.recipe_thumbnail} aspectRatio={0.9} />
+        <ImageContainer
+          imageUrl={recipe.recipe_thumbnail}
+          marginTop={"pt-[90%]"}
+        />
 
         <RecipeTitle>{recipe.recipe_title}</RecipeTitle>
 

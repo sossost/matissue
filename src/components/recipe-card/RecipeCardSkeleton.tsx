@@ -7,8 +7,15 @@ const RecipeCardSkeleton = () => {
   return (
     <>
       <RecipeCardLayout>
-        <ImageContainer imageUrl={"/images/skeleton.png"} aspectRatio={0.9} />
-        <RecipeInfoSkeleton />
+        <ImageContainer
+          imageUrl={"/images/skeleton.png"}
+          marginTop={"pt-[90%]"}
+        />
+        <RecipeTitleSkeleton />
+        <RecipeInfoSkeleton>
+          <RecipeInfoSkeletonItemOne />
+          <RecipeInfoSkeletonItemTwo />
+        </RecipeInfoSkeleton>
       </RecipeCardLayout>
     </>
   );
@@ -28,8 +35,30 @@ const RecipeCardLayout = tw.div`
   md:max-w-none
 `;
 
+const RecipeTitleSkeleton = tw.div`
+  flex
+  h-[20px]
+  w-2/3
+  bg-[#f6f6f6]
+  rounded-[9999px]
+  my-[2px]
+`;
+
 const RecipeInfoSkeleton = tw.div`
   flex
-  h-[23px]
+  justify-between
+  h-[18px]
   w-full
+`;
+
+const RecipeInfoSkeletonItemOne = tw.div`
+  flex
+  h-full
+  w-[40%]
+  bg-[#f6f6f6]
+  rounded-[9999px]
+`;
+
+const RecipeInfoSkeletonItemTwo = tw(RecipeInfoSkeletonItemOne)`
+  w-[20%]
 `;

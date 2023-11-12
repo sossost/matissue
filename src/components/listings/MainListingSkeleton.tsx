@@ -5,7 +5,7 @@ import {
   StyledContentsArea,
   StyledRowTitleBox,
   StyledTitle,
-} from "./MainListingRecipe";
+} from "./styles";
 
 import RecipeCardSkeleton from "../recipe-card/RecipeCardSkeleton";
 
@@ -22,7 +22,7 @@ const MainListingSkeleton = ({ title }: MainListingSkeletonProps) => {
         </StyledRowTitleBox>
 
         <ListingRecipeContainer>
-          {Array(8).map((_, i) => (
+          {Array.from({ length: 8 }).map((_, i) => (
             <RecipeCardSkeleton key={i} />
           ))}
         </ListingRecipeContainer>
