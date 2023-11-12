@@ -214,6 +214,7 @@ const SearchTextWrapper = tw.div`
 const ImageArea = tw.div`
   flex
   items-center
+  justify-center
   py-12
   px-5
   w-1/2
