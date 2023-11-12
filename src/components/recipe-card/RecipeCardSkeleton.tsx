@@ -1,5 +1,6 @@
 import React from "react";
-import styled from "styled-components";
+import tw from "tailwind-styled-components";
+
 import ImageContainer from "../UI/ImageContainer";
 
 const RecipeCardSkeleton = () => {
@@ -15,29 +16,20 @@ const RecipeCardSkeleton = () => {
 
 export default RecipeCardSkeleton;
 
-const RecipeCardLayout = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  max-width: 27rem;
-  overflow: hidden;
-  gap: 0.2rem;
+const RecipeCardLayout = tw.div`
+  flex
+  flex-col
+  w-full
+  max-w-[270px]
+  overflow-hidden
+  gap-[2px]
+  cursor-pointer
 
-  @media (min-width: 768px) {
-    max-width: none;
-  }
-
-  &: hover {
-    cursor: pointer;
-  }
+  md:max-w-none
 `;
 
-const RecipeInfoSkeleton = styled.div`
-  display: flex;
-  height: 2.3rem;
-  width: 100%;
-
-  @media (max-width: 480px) {
-    margin: 0;
-  }
+const RecipeInfoSkeleton = tw.div`
+  flex
+  h-[23px]
+  w-full
 `;

@@ -67,7 +67,7 @@ const MainListingRecipe = ({
 };
 export default MainListingRecipe;
 
-const StyledContainer = tw.div`
+export const StyledContainer = tw.div`
   flex
   relative
   w-full
@@ -81,7 +81,7 @@ const StyledContainer = tw.div`
   lg:pb-10
 `;
 
-const StyledContentsArea = tw.div`
+export const StyledContentsArea = tw.div`
   flex
   flex-col
   gap-3
@@ -92,13 +92,13 @@ const StyledContentsArea = tw.div`
   lg:gap-5
 `;
 
-const StyledTitle = tw.div`
+export const StyledTitle = tw.div`
   text-[18px]
   font-medium
   lg:text-[24px]
 `;
 
-const StyledRowTitleBox = tw.div`
+export const StyledRowTitleBox = tw.div`
   flex
   gap-3
   pt-2
@@ -109,7 +109,7 @@ const StyledRowTitleBox = tw.div`
   lg:items-center
 `;
 
-const ListingRecipeContainer = tw.div`
+export const ListingRecipeContainer = tw.div`
   hidden
 
   lg:grid
