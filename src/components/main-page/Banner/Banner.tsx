@@ -130,7 +130,7 @@ const BannerContainer = tw.div`
 
   lg:p-0
   lg:rounded-none
-  lg:w-min-[1024px]
+  lg:min-w-[1024px]
   lg:h-[400px]
   lg:bg-[#ffea85]
   lg:mx-auto
@@ -140,7 +140,7 @@ const BannerWindow = tw.div`
   relative
   w-full
   h-full
-  w-max-[1200px]
+  max-w-[1200px]
   mx-auto
 `;
 
