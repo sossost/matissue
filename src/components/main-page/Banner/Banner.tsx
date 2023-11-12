@@ -1,9 +1,8 @@
-"use client";
-
 // import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import styled, { css } from "styled-components";
 import BannerSearchBar from "./BannerSearchBar";
+import tw from "tailwind-styled-components";
 // import Link from "next/link";
 // import { useWindow } from "@/src/hooks/useWindow";
 
@@ -122,135 +121,133 @@ const Banner = () => {
 
 export default Banner;
 
-const BannerContainer = styled.div`
-  display: block;
-  width: 100%;
-  padding: 1.5rem 1.5rem 0 1.5rem;
-  color: #4f3d21;
+const BannerContainer = tw.div`
+  block
+  w-full
+  pt-[15px]
+  px-[15px]
+  color-[#4f3d21]
 
-  @media (min-width: 1024px) {
-    display: block;
-    padding: 0;
-    border-radius: 0;
-    min-width: 102.4rem;
-    height: 40rem;
-    background-color: #ffea85;
-    margin: 0 auto;
-  }
+  lg:p-0
+  lg:rounded-none
+  lg:w-min-[1024px]
+  lg:h-[400px]
+  lg:bg-[#ffea85]
+  lg:mx-auto
 `;
 
-const BannerWindow = styled.div`
-  position: relative;
-  width: 100%;
-  max-width: 120rem;
-  margin: 0 auto;
+const BannerWindow = tw.div`
+  relative
+  w-full
+  h-full
+  w-max-[1200px]
+  mx-auto
 `;
 
-const SliderContainer = styled.div`
-  overflow: hidden;
+const SliderContainer = tw.div`
+  h-full
+  overflow-hidden
 `;
 
-const Slider = styled.div<{ translateValue: number }>`
-  display: flex;
-  ${({ translateValue }) =>
-    css`
-      transform: translateX(${translateValue}px);
-    `}
-  transition: transform 0.5s ease-in-out;
+// const Slider = styled.div<{ translateValue: number }>`
+//   display: flex;
+//   ${({ translateValue }) =>
+//     css`
+//       transform: translateX(${translateValue}px);
+//     `}
+//   transition: transform 0.5s ease-in-out;
+// `;
+
+// const BannerWrapper = styled.div`
+//   position: relative;
+//   display: flex;
+//   justify-content: center;
+//   width: 100%;
+//   height: 100%;
+//   margin: 0 auto;
+//   padding: 0;
+//   overflow: hidden;
+//   border-radius: 0.8rem;
+//   flex: 0 0 100%;
+
+//   @media (min-width: 1024px) {
+//     padding: 0 2rem;
+//   }
+// `;
+
+const BannerWrapper2 = tw.div`
+  hidden
+
+  lg:flex
+  lg:py-5
+  lg:justify-center
+  lg:items-center
+  lg:w-full
+  lg:h-full
+  lg:mx-auto
+  lg:p-0
+  lg:overflow-hidden
+  lg:rounded-[8px]
+  lg:relative
 `;
 
-const BannerWrapper = styled.div`
-  position: relative;
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-  margin: 0 auto;
-  padding: 0;
-  overflow: hidden;
-  border-radius: 0.8rem;
-  flex: 0 0 100%;
-
-  @media (min-width: 1024px) {
-    padding: 0 2rem;
-  }
+const SearchArea = tw.div`
+  flex
+  flex-col
+  p-5
+  pb-20
+  w-[45%]
 `;
 
-const BannerWrapper2 = styled.div`
-  display: none;
-
-  @media (min-width: 1024px) {
-    display: flex;
-    padding: 0 2rem;
-    flex: 0 0 100%;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
-    margin: 0 auto;
-    padding: 0;
-    overflow: hidden;
-    border-radius: 0.8rem;
-    position: relative;
-  }
+const SearchTextContainer = tw.div`
+  py-5
+  flex
+  flex-col
+  items-center
 `;
 
-const SearchArea = styled.div`
-  display: flex;
-  margin-top: 8rem;
-  flex-direction: column;
-  padding: 2rem;
-  width: 45%;
-  height: 100%;
+const SearchTextWrapper = tw.div`
+  text-[24px]
+  font-semibold
 `;
 
-const SearchTextContainer = styled.div`
-  padding: 2rem 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+const ImageArea = tw.div`
+  flex
+  items-center
+  py-12
+  px-5
+  w-1/2
+  h-100
 `;
 
-const SearchTextWrapper = styled.div`
-  font-size: 24px;
-  font-weight: 600;
+const ImageWrapper = tw.div`
+  flex
+  object-contain
+  relative
+  w-[450px]
+  h-[280px]
+  right-0
 `;
 
-const ImageArea = styled.div`
-  display: flex;
-  align-items: center;
-  padding: 6rem 2rem;
-  wdith: 50%;
-  height: 40rem;
-`;
+// const IndicatorWrapper = styled.div`
+//   display: none;
+//   @media (min-width: 1024px) {
+//     display: block;
+//     position: absolute;
+//     bottom: 10px;
+//     left: 50%;
+//     transform: translateX(-50%);
+//   }
+// `;
 
-const ImageWrapper = styled.div`
-  display: flex;
-  obejct-fit: contain;
-  position: relative;
-  width: 45rem;
-  height: 28rem;
-  right: 0;
-`;
+// const IndicatorDot = styled.div<{ active: boolean }>`
+//   display: inline-block;
+//   width: 10px;
+//   height: 10px;
+//   border-radius: 50%;
+//   margin: 0 5px;
+//   cursor: pointer;
+//   opacity: 0.7;
 
-const IndicatorWrapper = styled.div`
-  display: none;
-  @media (min-width: 1024px) {
-    display: block;
-    position: absolute;
-    bottom: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-  }
-`;
-
-const IndicatorDot = styled.div<{ active: boolean }>`
-  display: inline-block;
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  margin: 0 5px;
-  cursor: pointer;
-  opacity: 0.7;
-
-  background-color: ${(props) => (props.active ? "#4F3D21" : "white")};
-`;
+//   background-color: ${(props) => (props.active ? "#4F3D21" : "white")};
+// `;
