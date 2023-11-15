@@ -1,7 +1,7 @@
 "use client";
 
 import styled from "styled-components";
-import Logo from "../../components/header/Logo";
+import Logo from "../../components/Layout/header/Logo";
 import { usePathname, useRouter } from "next/navigation";
 
 const AdminLayout = ({ children }: { children: React.ReactNode }) => {

@@ -10,8 +10,8 @@ import { useRecoilValue } from "recoil";
 
 import Logo from "./Logo";
 import SearchBar from "./SearchBar";
-import UserMenu from "./UserMenu";
-import CategoryBar from "./CategoryBar";
+import UserMenu from "./user/UserMenu";
+import CategoryBar from "./category/CategoryBar";
 import HamburgerBtn from "./mobile/HamburgerBtn";
 import SearchBtn from "./mobile/SearchBtn";
 import DarkmodeBtn from "./DarkModeBtn";

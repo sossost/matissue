@@ -14,7 +14,7 @@ import { axiosBase } from "@/src/app/api/axios";
 
 import { toast } from "react-hot-toast";
 
-import LoadingModal from "../../UI/LoadingModal";
+import LoadingModal from "../../../UI/LoadingModal";
 import { useRecoilValue } from "recoil";
 import darkModeAtom from "@/src/store/darkModeAtom";
 import DarkmodeBtn from "../DarkModeBtn";

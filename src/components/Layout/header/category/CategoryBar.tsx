@@ -3,11 +3,11 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import styled from "styled-components";
-import Image from "next/image";
-
-import CategoryModal from "./CategoryModal";
 import { useRecoilValue } from "recoil";
 import darkModeAtom from "@/src/store/darkModeAtom";
+import { FaCaretDown } from "react-icons/fa";
+
+import CategoryModal from "./CategoryModal";
 
 /** 헤더 카테고리바 컴포넌트 */
 const CategoryBar = () => {
@@ -26,7 +26,7 @@ const CategoryBar = () => {
         >
           {isModal && <CategoryModal isModal={isModal} />}
           <IconWrapper isDarkMode={isDarkMode}>
-            <Image src="/images/category/listIcon.svg" alt="list_icon" fill />
+            <FaCaretDown width={14} height={9} color="black" />
           </IconWrapper>
           음식 카테고리
         </CategoryItem>
@@ -119,8 +119,6 @@ const IconWrapper = styled.div<{ isDarkMode: boolean }>`
   @media (min-width: 1024px) {
     display: block;
     position: relative;
-    width: 1.4rem;
-    height: 0.9rem;
     filter: ${(props) =>
       props.isDarkMode
         ? "invert(89%) sepia(27%) saturate(436%) hue-rotate(334deg) brightness(105%) contrast(104%)"

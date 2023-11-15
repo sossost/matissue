@@ -1,15 +1,14 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { axiosBase } from "@/src/app/api/axios";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilValue } from "recoil";
 import { useQueryClient } from "@tanstack/react-query";
 import Cookies from "js-cookie";
 import styled from "styled-components";
-
 import toast from "react-hot-toast";
 
-import LoadingModal from "../UI/LoadingModal";
 import darkModeAtom from "@/src/store/darkModeAtom";
+import LoadingModal from "@/src/components/UI/LoadingModal";
 
 type UserModalProps = {
   isAdmin: boolean;

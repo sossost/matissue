@@ -22,7 +22,7 @@ import {
   usernameValidation,
 } from "@/src/constants/validation.constants";
 
-import Logo from "@/src/components/header/Logo";
+import Logo from "@/src/components/Layout/header/Logo";
 import Button from "@/src/components/UI/Button";
 import LoadingModal from "@/src/components/UI/LoadingModal";
 import BirthDayInput from "@/src/components/auth/BirthDayInput";

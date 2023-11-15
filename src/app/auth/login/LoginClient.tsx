@@ -11,7 +11,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import getCurrentUser from "@/src/app/api/user";
 import darkModeAtom from "@/src/store/darkModeAtom";
 
-import Logo from "@/src/components/header/Logo";
+import Logo from "@/src/components/Layout/header/Logo";
 import Button from "@/src/components/UI/Button";
 import LoadingModal from "@/src/components/UI/LoadingModal";
 

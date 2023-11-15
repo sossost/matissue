@@ -14,7 +14,7 @@ import useVariantSelector from "@/src/hooks/useVariantSelector";
 import { Input } from "@/src/components/common/Input";
 import LoadingModal from "@/src/components/UI/LoadingModal";
 import BirthDayInput from "@/src/components/auth/BirthDayInput";
-import Logo from "@/src/components/header/Logo";
+import Logo from "@/src/components/Layout/header/Logo";
 import Button from "@/src/components/UI/Button";
 
 import { AuthContainer, AuthFormWrapper } from "@/src/styles/auth/auth.style";

@@ -1,6 +1,6 @@
-import Header from "../../components/header/Header";
+import Header from "../../components/Layout/header/Header";
 import { getCurrentUserSS } from "../action/getCurrentUser";
-import Footer from "../../components/footer/Footer";
+import Footer from "../../components/Layout/footer/Footer";
 
 export default async function Layout({
   children,
