@@ -70,8 +70,10 @@ const Banner = () => {
                 <Image
                   src="/images/banner/bannerImage1.png"
                   alt="banner"
+                  priority
                   width={450}
                   height={280}
+                  loading="eager"
                 />
               </ImageWrapper>
             </ImageArea>
@@ -196,7 +198,7 @@ const SearchArea = tw.div`
   flex-col
   p-5
   pb-20
-  w-[45%]
+  w-1/2
 `;
 
 const SearchTextContainer = tw.div`
