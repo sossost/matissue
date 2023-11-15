@@ -1,3 +1,5 @@
+"use client";
+
 import styled from "styled-components";
 import ScrapCardItem from "./ScrapCardItem";
 import { useEffect, useState } from "react";

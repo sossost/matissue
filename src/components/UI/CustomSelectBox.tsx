@@ -1,3 +1,5 @@
+"use client";
+
 import darkModeAtom from "@/src/store/darkModeAtom";
 import React, { useEffect, useRef, useState } from "react";
 import { useRecoilState } from "recoil";

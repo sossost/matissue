@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect } from "react";
 import Image from "next/image";
 
@@ -42,7 +44,7 @@ const RecipeKakaoShareButton: React.FC<ShareModalProps> = ({
         ],
       });
     }
-  }, [shareUrl]);
+  }, [shareUrl, recipe_thumbnail]);
 
   return (
     <>

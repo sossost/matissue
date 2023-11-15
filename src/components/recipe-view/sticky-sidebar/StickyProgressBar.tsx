@@ -1,3 +1,5 @@
+"use client";
+
 import useMovingContentByScrolling from "@/src/hooks/useMovingContentByScrolling";
 import { useEffect, useState } from "react";
 import styled from "styled-components";

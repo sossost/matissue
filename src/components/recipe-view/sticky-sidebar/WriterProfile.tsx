@@ -1,3 +1,5 @@
+"use client";
+
 import styled from "styled-components";
 import Image from "next/image";
 import useMovingContentByScrolling from "@/src/hooks/useMovingContentByScrolling";
@@ -40,7 +42,7 @@ const WriterProfile = ({ user_id, loggedInUserId }: WriterProfileProps) => {
       const isFollowing = fans?.has(loggedInUserId);
       setIsFollowing(isFollowing);
     }
-  }, [loggedInUserId]);
+  }, [loggedInUserId, currentChef?.fans]);
 
   // 상태에 따른 팔로우, 팔로잉 버튼
   const followButtonText =

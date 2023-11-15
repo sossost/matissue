@@ -1,3 +1,5 @@
+"use client";
+
 import styled from "styled-components";
 import Image from "next/image";
 import { getChefByUserId } from "@/src/app/api/user";
@@ -37,7 +39,7 @@ const MiniWriterProfile = ({ user_id, loggedInUserId }: WriterProfileProps) => {
       const isFollowing = fans?.includes(loggedInUserId);
       setIsFollowing(isFollowing);
     }
-  }, [loggedInUserId]);
+  }, [loggedInUserId, currentChef?.fans]);
 
   const followButtonText =
     loggedInUserId === user_id
