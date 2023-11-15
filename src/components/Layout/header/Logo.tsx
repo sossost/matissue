@@ -1,40 +1,34 @@
 "use client";
 
+import tw from "tailwind-styled-components";
 import darkModeAtom from "@/src/store/darkModeAtom";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import { useRecoilValue } from "recoil";
-import styled from "styled-components";
+import Link from "next/link";
 
 const Logo = () => {
-  const router = useRouter();
   const isDarkMode = useRecoilValue(darkModeAtom);
 
   return (
-    <LogoWrapper>
+    <LogoWrapper href="/">
       <Image
-        onClick={() => router.push("/")}
-        style={{ cursor: "pointer" }}
         src={isDarkMode ? "/logoDarkMode.svg" : "/logo.svg"}
         fill
+        sizes="120"
         alt="Logo"
       />
     </LogoWrapper>
   );
 };
 
-const LogoWrapper = styled.div`
-  display: block;
-  position: relative;
-  width: 10.5rem;
-  height: 3.5rem;
-  min-width: 10.5rem;
-  height: 3.5rem;
+const LogoWrapper = tw(Link)`
+  block
+  relative
+  w-[105px]
+  h-[35px]
 
-  @media (min-width: 1024px) {
-    width: 12rem;
-    height: 4rem;
-  }
+  lg:w-[120px]
+  lg:h-[40px]
 `;
 
 export default Logo;
