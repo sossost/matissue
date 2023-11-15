@@ -1,23 +1,13 @@
-"use client";
-
-import { useRouter } from "next/navigation";
-import styled from "styled-components";
 import Image from "next/image";
+import Link from "next/link";
+import tw from "tailwind-styled-components";
 import { Recipe } from "@/src/types";
-import { useEffect, useState } from "react";
-import { getRecipeById } from "@/src/app/api/recipe";
 
 /** 메인 레시피 카드 */
 const MobileRecipeCard = ({ recipe }: { recipe: Recipe }) => {
-  const router = useRouter();
-
-  const handleRecipeClick = () => {
-    router.push(`/recipe/${recipe.recipe_id}`);
-  };
-
   return (
     <>
-      <RecipeCardWrapper onClick={handleRecipeClick}>
+      <RecipeCardWrapper href={`/recipe/${recipe.recipe_id}`}>
         <RecipeImg>
           <ImgWrapper>
             <Image
@@ -25,13 +15,12 @@ const MobileRecipeCard = ({ recipe }: { recipe: Recipe }) => {
               style={{ objectFit: "cover" }}
               src={recipe.recipe_thumbnail}
               alt="게시물 썸네일 이미지"
+              sizes="200"
             />
           </ImgWrapper>
         </RecipeImg>
 
-        <RecipeTitle>
-          <p>{recipe.recipe_title}</p>
-        </RecipeTitle>
+        <RecipeTitle>{recipe.recipe_title}</RecipeTitle>
         <RecipeInfo>
           <RecipeAuthor>
             <p>{recipe.user_nickname}</p>
@@ -70,98 +59,84 @@ const MobileRecipeCard = ({ recipe }: { recipe: Recipe }) => {
 
 export default MobileRecipeCard;
 
-// styled-components
-const RecipeCardWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  max-width: 20rem;
-  overflow: hidden;
-  gap: 0.2rem;
-
-  &: hover {
-    cursor: pointer;
-  }
+const RecipeCardWrapper = tw(Link)`
+  flex
+  flex-col
+  w-full
+  min-w-[200px]
+  gap-[2px]
+  cursor-pointer
 `;
 
-const RecipeImg = styled.div`
-  position: relative;
-  padding-top: 90%;
-  border-radius: 0.8rem;
-  overflow: hidden;
+const RecipeImg = tw.div`
+  relative
+  pt-[90%]
+  rounded-[8px]
+  overflow-hidden
 `;
 
-const ImgWrapper = styled.div`
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  inset: 0;
-  object-fit: cover;
-  border-radius: 0.8rem;
-
-  transition: transform 0.3s ease-in-out;
-
-  &:hover {
-    transform: scale(1.1);
-  }
+const ImgWrapper = tw.div`
+  absolute
+  w-full
+  h-full
+  inset-0
+  object-cover
+  rounded-[8px]
+  transition-transform
+  duration-300 
+  ease-in-out 
+  
+  hover:scale-110
 `;
 
-const RecipeInfo = styled.div`
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
+const RecipeInfo = tw.div`
+  flex
+  justify-between
+  w-full
 
-  @media (max-width: 480px) {
-    margin: 0;
-  }
+  sm:m-0
 `;
 
-const RecipeTitle = styled.div`
-  width: 100%;
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 2rem;
-  margin-top: 0.4rem;
-
-  & p {
-    width: 100%;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
+const RecipeTitle = tw.div`
+  w-full
+  text-[16px]
+  font-medium
+  leading-[20px]
+  mt-1
+  truncate
 `;
 
-const RecipeAuthor = styled.div`
-  font-size: 14px;
-  font-weight: 400;
-  color: #6f6f6f;
+const RecipeAuthor = tw.div`
+  text-[14px]
+  font-regular
+  color-[#6f6f6f]
 `;
 
-const RecipeRank = styled.div`
-  display: flex;
+const RecipeRank = tw.div`
+  flex
 `;
 
-const RecipeRankItem = styled.div`
-  display: flex;
-  align-items: center;
-  text-align: center;
-  font-size: 12px;
-  font-weight: 400;
-  margin-left: 1rem;
+const RecipeRankItem = tw.div`
+  flex
+  items-center
+  text-center
+  text-[12px]
+  font-regular
+  ml-[10px]
 `;
 
-const RecipeRankImg = styled.div`
-  margin-right: 0.5rem;
-  max-width: 1.3rem;
-  max-height: 1.1rem;
+const RecipeRankImg = tw.div`
+  mr-[5px]
+  max-w-[13px]
+  max-h-[11px]
 `;
 
-const HeartCount = styled.span`
-  font-size: 14px;
-  margin-right: 0.2rem;
+const HeartCount = tw.span`
+  text-[14px]
+  mr-1/2
 `;
 
-const Count = styled.span`
-  font-size: 14px;
-  margin-right: 0.2rem;
+const Count = tw.span`
+  text-[14px]
+  mr-1/2
 `;
