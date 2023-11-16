@@ -1,8 +1,6 @@
-"use client";
-
+import tw from "tailwind-styled-components";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
-import styled from "styled-components";
+import Link from "next/link";
 
 const CATEGORY_DATA = [
   {
@@ -48,19 +46,14 @@ const CATEGORY_DATA = [
 ];
 
 const MainMobileCategory = () => {
-  const router = useRouter();
-
   return (
     <CategoryWrapper>
       <CategoryContainer>
         <CategoryList>
           {CATEGORY_DATA.map((item, index) => {
             return (
-              <CategoryItem
-                key={index}
-                onClick={() => router.push(item.routerUrl)}
-              >
-                <IconWrapper>
+              <CategoryItem key={index}>
+                <IconWrapper href={item.routerUrl}>
                   <Image
                     src={item.imgUrl}
                     alt={item.title}
@@ -80,51 +73,48 @@ const MainMobileCategory = () => {
 
 export default MainMobileCategory;
 
-const CategoryWrapper = styled.div`
-  display: block;
-  width: 100%;
-  padding: 3rem 1.5rem 1rem 1.5rem;
+const CategoryWrapper = tw.div`
+  block
+  w-full
+  pt-[30px]
+  pb-[10px]
+  px-[15px]
 
-  @media (min-width: 1024px) {
-    display: none;
-  }
+  lg:hidden
 `;
 
-const CategoryContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  width: 100%;
+const CategoryContainer = tw.div`
+  flex
+  flex-col
+  gap-[10px]
+  w-full
 `;
 
-const CategoryList = styled.ul`
-  display: grid;
-  row-gap: 1rem;
-
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  place-items: center;
-
-  @media (min-width: 768px) {
-    grid-template-columns: repeat(8, minmax(0, 1fr));
-  }
+const CategoryList = tw.ul`
+  grid 
+  grid-rows-1 
+  gap-y-4 
+  grid-cols-4 
+  place-items-center 
+  md:grid-cols-8
 `;
 
-const CategoryItem = styled.li`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  width: 6rem;
-  gap: 0.5rem;
+const CategoryItem = tw.li`
+  flex
+  flex-col
+  justify-center
+  items-center
+  relative
+  w-[60px]
+  g-[5px]
 `;
 
-const IconWrapper = styled.div`
-  background-color: #ffefc8;
-  padding: 1rem;
-  border-radius: 1.5rem;
+const IconWrapper = tw(Link)`
+  bg-[#ffefc8]
+  p-[10px]
+  rounded-[15px]
 `;
 
-const TitleWrapper = styled.div`
-  font-size: 14px;
+const TitleWrapper = tw.div`
+  text-[14px]
 `;
