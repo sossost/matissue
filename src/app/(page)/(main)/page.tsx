@@ -5,17 +5,20 @@ import MainMobileCategory from "@/src/components/main-page/mobile/MainMobileCate
 import MainFridge from "@/src/components/main-page/MainFridge";
 import MainAlone from "@/src/components/main-page/MainAlone";
 import MainVegan from "@/src/components/main-page/MainVegetarian";
-import MainNewest from "@/src/components/main-page/MainNewest";
 import BestRecipes from "./components/BestRecipes";
 import MainListingSkeleton from "@/src/components/listings/MainListingSkeleton";
 import { Suspense } from "react";
+import NewestRecipes from "./components/NewestRecipes";
 
 const Home = async () => {
   return (
     <>
       <Banner />
       <MainContainer>
-        <MainMobileCategory />
+        <Suspense fallback={<></>}>
+          <MainMobileCategory />
+        </Suspense>
+
         <Suspense fallback={<MainListingSkeleton title="베스트 레시피" />}>
           {/* @ts-expect-error Async Server Component */}
           <BestRecipes />
@@ -24,7 +27,11 @@ const Home = async () => {
         <MainFridge />
         <MainAlone />
         <MainVegan />
-        <MainNewest />
+
+        <Suspense fallback={<MainListingSkeleton title="최신 레시피" />}>
+          {/* @ts-expect-error Async Server Component */}
+          <NewestRecipes />
+        </Suspense>
       </MainContainer>
     </>
   );
