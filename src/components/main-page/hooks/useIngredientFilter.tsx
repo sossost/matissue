@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useDeferredValue, useEffect, useState } from "react";
 import Image from "next/image";
 import styled from "styled-components";
 import darkModeAtom from "@/src/store/darkModeAtom";
@@ -49,6 +49,7 @@ const INGREDIENT = [
 const useIngredientFilter = (recipes: Recipe[]) => {
   const [selectedIngredient, setSelectedIngredient] = useState<string>("계란");
   const [filteredRecipes, setFilteredRecipes] = useState<Recipe[]>(recipes);
+  const deferredFilteredRecipes = useDeferredValue(filteredRecipes);
 
   /**  재료 선택 핸들러 */
   const ingredientSelectHandler: React.MouseEventHandler<HTMLButtonElement> = (
@@ -98,7 +99,7 @@ const useIngredientFilter = (recipes: Recipe[]) => {
     );
   };
 
-  return { filteredRecipes, IngredientList };
+  return { deferredFilteredRecipes, IngredientList };
 };
 
 export default useIngredientFilter;

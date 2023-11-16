@@ -21,15 +21,12 @@ export const useBestRecipesQuery = () => {
 };
 
 export const useNewestRecipesQuery = () => {
-  const fallback = [] as Recipe[];
+  const { data = [] } = useQuery<Recipe[]>(
+    [queryKey.newestRecipes],
+    getRecipesByLastest
+  );
 
-  const {
-    data = fallback,
-    isLoading,
-    isError,
-  } = useQuery<Recipe[]>([queryKey.newestRecipes], getRecipesByLastest);
-
-  return { data, isLoading, isError };
+  return data;
 };
 
 export const useSingleRecipesQuery = () => {

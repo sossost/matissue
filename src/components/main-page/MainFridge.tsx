@@ -7,8 +7,6 @@ import darkModeAtom from "@/src/store/darkModeAtom";
 import { useNewestRecipesQuery } from "@/src/hooks/useRecipesQuery";
 import { RecipeContainer } from "@/src/styles/main/main.style";
 
-import LoadingRecipe from "../UI/LoadingRecipe";
-import NonDataCrying from "../UI/NonDataCrying";
 import NonRecipeCrying from "../UI/NonRecipeCrying";
 import LargeRecipeCard from "../recipe-card/main/MainLargeRecipeCard";
 import MainTitleBox from "./MainTitleBox";
@@ -16,21 +14,12 @@ import useIngredientFilter from "./hooks/useIngredientFilter";
 
 const MainFridge = () => {
   const fridgeRecipes = useNewestRecipesQuery();
-  const { filteredRecipes, IngredientList } = useIngredientFilter(
-    fridgeRecipes.data
-  );
+  const { deferredFilteredRecipes, IngredientList } =
+    useIngredientFilter(fridgeRecipes);
 
   const isDarkMode = useRecoilValue(darkModeAtom);
 
-  if (fridgeRecipes.isLoading) {
-    return <LoadingRecipe />;
-  }
-
-  if (fridgeRecipes.isError) {
-    return <NonDataCrying />;
-  }
-
-  if (fridgeRecipes.data.length === 0) {
+  if (fridgeRecipes.length === 0) {
     return <NonRecipeCrying />;
   }
 
@@ -42,7 +31,7 @@ const MainFridge = () => {
       />
       <IngredientList />
       <RecipeContainer>
-        {filteredRecipes?.slice(0, 3).map((item: Recipe) => (
+        {deferredFilteredRecipes.slice(0, 3).map((item: Recipe) => (
           <LargeRecipeCard key={item.recipe_id} recipe={item} />
         ))}
       </RecipeContainer>
