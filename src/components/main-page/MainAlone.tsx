@@ -6,21 +6,18 @@ import {
   StyledContainer,
   StyledContentsArea,
 } from "@/src/styles/main/main.style";
-import { Recipe } from "@/src/types";
 
 import MainMobileListingRecipe from "../listings/MainMobileListingRecipe";
 import NonRecipeCrying from "../UI/NonRecipeCrying";
 import MainTitleBox from "./MainTitleBox";
 import MainAloneRecipeCard from "./MainAloneRecipeCard";
+import { useSingleRecipesQuery } from "@/src/hooks/useRecipesQuery";
 
-interface MainAloneProps {
-  recipes: Recipe[];
-}
+const MainAlone = () => {
+  const { singleRecipes } = useSingleRecipesQuery(1, 20);
+  const shuffledRecipes = useShuffleRecipes(singleRecipes);
 
-const MainAlone = ({ recipes }: MainAloneProps) => {
-  const shuffledRecipes = useShuffleRecipes(recipes);
-
-  if (recipes.length < 5) {
+  if (singleRecipes.length < 5) {
     <NonRecipeCrying />;
   }
 
@@ -42,7 +39,7 @@ const MainAlone = ({ recipes }: MainAloneProps) => {
             ))}
           </>
           <MainMobileListingRecipe
-            recipes={recipes}
+            recipes={singleRecipes}
             url="/recipes/category/honmuk?category=honmuk"
           />
         </RecipeContainer>

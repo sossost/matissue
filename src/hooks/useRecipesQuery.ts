@@ -29,16 +29,13 @@ export const useNewestRecipesQuery = () => {
   return data;
 };
 
-export const useSingleRecipesQuery = () => {
-  const fallback = [] as Recipe[];
+export const useSingleRecipesQuery = (page: number, limit: number) => {
+  const { data: singleRecipes = [] } = useQuery<Recipe[]>(
+    [queryKey.singleRecipes],
+    () => getRequest({ url: `recipes/single?page=${page}&limit=${limit}` })
+  );
 
-  const {
-    data = fallback,
-    isLoading,
-    isError,
-  } = useQuery<Recipe[]>([queryKey.singleRecipes], getRecipesBySingle);
-
-  return { data, isLoading, isError };
+  return { singleRecipes };
 };
 
 export const useVegetarianRecipesQuery = (page: number, limit: number) => {
