@@ -23,7 +23,7 @@ export const useBestRecipesQuery = () => {
 export const useNewestRecipesQuery = (page: number, limit: number) => {
   const { data: newestRecipes = [] } = useQuery<Recipe[]>(
     [queryKey.newestRecipes],
-    () => getRequest({ url: `recipes/newest?page=${page}&limit=${limit}` })
+    () => getRequest({ url: `recipes/latest?page=${page}&limit=${limit}` })
   );
 
   return { newestRecipes };
