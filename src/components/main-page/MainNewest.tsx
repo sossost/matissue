@@ -4,7 +4,7 @@ import { useNewestRecipesQuery } from "@/src/hooks/useRecipesQuery";
 
 import MainListingRecipe from "@/src/components/listings/MainListingRecipe";
 
-const NewestRecipes = () => {
+const MainNewest = () => {
   const { newestRecipes } = useNewestRecipesQuery(1, 100);
 
   return (
@@ -16,4 +16,4 @@ const NewestRecipes = () => {
   );
 };
 
-export default NewestRecipes;
+export default MainNewest;
