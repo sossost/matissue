@@ -2,7 +2,7 @@ import { getRequest } from "@/src/app/api/utils/getRequest";
 
 import MainListingRecipe from "@/src/components/listings/MainListingRecipe";
 
-const BestRecipes = async () => {
+const MainBest = async () => {
   const bestRecipes = await getRequest({
     url: "recipes/popularity?page=1&limit=100",
     options: { revalidate: 60 * 60 },
@@ -13,4 +13,4 @@ const BestRecipes = async () => {
   );
 };
 
-export default BestRecipes;
+export default MainBest;

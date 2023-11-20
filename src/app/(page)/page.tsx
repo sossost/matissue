@@ -3,12 +3,12 @@ import { Suspense } from "react";
 
 import Banner from "@/src/components/main-page/Banner/Banner";
 import MainMobileCategory from "@/src/components/main-page/mobile/MainMobileCategory";
-import BestRecipes from "./components/BestRecipes";
 import MainListingSkeleton from "@/src/components/listings/MainListingSkeleton";
-import NewestRecipes from "./components/NewestRecipes";
 import MainFridge from "@/src/components/main-page/MainFridge";
 import MainVegetarian from "@/src/components/main-page/MainVegetarian";
 import MainAlone from "@/src/components/main-page/MainAlone";
+import MainBest from "@/src/components/main-page/MainBest";
+import MainNewest from "@/src/components/main-page/MainNewest";
 
 const Home = async () => {
   return (
@@ -21,24 +21,17 @@ const Home = async () => {
 
         <Suspense fallback={<MainListingSkeleton title="베스트 레시피" />}>
           {/* @ts-expect-error Async Server Component */}
-          <BestRecipes />
+          <MainBest />
         </Suspense>
 
-        <Suspense>
-          <MainFridge />
-        </Suspense>
+        <MainFridge />
 
-        <Suspense>
-          <MainAlone />
-        </Suspense>
+        <MainAlone />
 
-        <Suspense>
-          <MainVegetarian />
-        </Suspense>
+        <MainVegetarian />
 
         <Suspense fallback={<MainListingSkeleton title="최신 레시피" />}>
-          {/* @ts-expect-error Async Server Component */}
-          <NewestRecipes />
+          <MainNewest />
         </Suspense>
       </MainContainer>
     </>

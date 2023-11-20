@@ -1,12 +1,11 @@
+"use client";
+
 import { useQuery } from "@tanstack/react-query";
 import { Recipe } from "../types";
 import { queryKey } from "../ReactQuery/queryKey";
-import {
-  getRecipesByLastest,
-  getRecipesByPopularity,
-  getRecipesBySingle,
-} from "../app/api/recipe";
+import { getRecipesByPopularity } from "../app/api/recipe";
 import { getRequest } from "../app/api/utils/getRequest";
+import shuffleRecipes from "../utils/shuffleRecipes";
 
 export const useBestRecipesQuery = () => {
   const fallback = [] as Recipe[];
@@ -20,29 +19,31 @@ export const useBestRecipesQuery = () => {
   return { data, isLoading, isError };
 };
 
-export const useNewestRecipesQuery = () => {
-  const { data = [] } = useQuery<Recipe[]>(
+export const useNewestRecipesQuery = (page: number, limit: number) => {
+  const { data: newestRecipes = [] } = useQuery<Recipe[]>(
     [queryKey.newestRecipes],
-    getRecipesByLastest
+    () => getRequest({ url: `recipes/latest?page=${page}&limit=${limit}` })
   );
 
-  return data;
+  return { newestRecipes };
 };
 
 export const useSingleRecipesQuery = (page: number, limit: number) => {
-  const { data: singleRecipes = [] } = useQuery<Recipe[]>(
-    [queryKey.singleRecipes],
-    () => getRequest({ url: `recipes/single?page=${page}&limit=${limit}` })
+  const { data = [] } = useQuery<Recipe[]>([queryKey.singleRecipes], () =>
+    getRequest({ url: `recipes/single?page=${page}&limit=${limit}` })
   );
+
+  const singleRecipes = shuffleRecipes(data);
 
   return { singleRecipes };
 };
 
 export const useVegetarianRecipesQuery = (page: number, limit: number) => {
-  const { data: vegetarianRecipes = [] } = useQuery<Recipe[]>(
-    [queryKey.singleRecipes],
-    () => getRequest({ url: `recipes/vegetarian?page=${page}&limit=${limit}` })
+  const { data = [] } = useQuery<Recipe[]>([queryKey.vegetarianRecipes], () =>
+    getRequest({ url: `recipes/vegetarian?page=${page}&limit=${limit}` })
   );
+
+  const vegetarianRecipes = shuffleRecipes(data);
 
   return { vegetarianRecipes };
 };

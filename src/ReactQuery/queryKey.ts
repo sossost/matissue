@@ -6,6 +6,7 @@ export const queryKey = {
   bestRecipes: "bestRecipes",
   newestRecipes: "newestRecipes",
   singleRecipes: "singleRecipes",
+  vegetarianRecipes: "vegetarianRecipes",
   recipe: "recipe",
   comments: "comments",
   comment: "comment",
