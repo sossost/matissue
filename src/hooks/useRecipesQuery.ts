@@ -40,7 +40,7 @@ export const useSingleRecipesQuery = (page: number, limit: number) => {
 
 export const useVegetarianRecipesQuery = (page: number, limit: number) => {
   const { data: vegetarianRecipes = [] } = useQuery<Recipe[]>(
-    [queryKey.singleRecipes],
+    [queryKey.vegetarianRecipes],
     () => getRequest({ url: `recipes/vegetarian?page=${page}&limit=${limit}` })
   );
 
