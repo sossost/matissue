@@ -46,10 +46,6 @@ const MobileListingRecipe = styled.div`
   align-items: center;
   width: 100%;
 
-  > div {
-    flex-shrink: 0;
-  }
-
   @media (min-width: 1024px) {
     display: none;
   }
