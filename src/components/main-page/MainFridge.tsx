@@ -11,16 +11,12 @@ import NonRecipeCrying from "../UI/NonRecipeCrying";
 import LargeRecipeCard from "../recipe-card/main/MainLargeRecipeCard";
 import MainTitleBox from "./MainTitleBox";
 
-interface MainFridgeProps {
-  recipes: Recipe[];
-}
-
-const MainFridge = ({ recipes }: MainFridgeProps) => {
+const MainFridge = () => {
   const { filteredRecipes, IngredientList } = useIngredientFilter();
 
   const isDarkMode = useRecoilValue(darkModeAtom);
 
-  if (recipes.length === 0) {
+  if (filteredRecipes.length === 0) {
     return <NonRecipeCrying />;
   }
 
