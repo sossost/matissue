@@ -14,6 +14,7 @@ import { useVegetarianRecipesQuery } from "@/src/hooks/useRecipesQuery";
 import MainTitleBox from "./MainTitleBox";
 import LargeRecipeCard from "../recipe-card/main/MainLargeRecipeCard";
 import MainMobileListingRecipe from "../listings/MainMobileListingRecipe";
+import LargeRecipeCardSkeleton from "../recipe-card/main/MainLargeRecipeCardSkeleton";
 
 const MainVegetarian = () => {
   const { vegetarianRecipes } = useVegetarianRecipesQuery(1, 30);
@@ -37,9 +38,19 @@ const MainVegetarian = () => {
         <RecipeSliderWindow>
           {isDesktop ? (
             <VegunRecipeContainer slide={slide}>
-              {shuffledRecipes.slice(0, totalSlide * 3).map((item: Recipe) => (
-                <LargeRecipeCard key={item.recipe_id} recipe={item} />
-              ))}
+              {vegetarianRecipes.length === 0 ? (
+                <>
+                  <LargeRecipeCardSkeleton />
+                  <LargeRecipeCardSkeleton />
+                  <LargeRecipeCardSkeleton />
+                </>
+              ) : (
+                shuffledRecipes
+                  .slice(0, totalSlide * 3)
+                  .map((item: Recipe) => (
+                    <LargeRecipeCard key={item.recipe_id} recipe={item} />
+                  ))
+              )}
             </VegunRecipeContainer>
           ) : (
             <RecipeContainer>
