@@ -1,11 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { Recipe } from "../types";
 import { queryKey } from "../ReactQuery/queryKey";
-import {
-  getRecipesByLastest,
-  getRecipesByPopularity,
-  getRecipesBySingle,
-} from "../app/api/recipe";
+import { getRecipesByPopularity } from "../app/api/recipe";
 import { getRequest } from "../app/api/utils/getRequest";
 
 export const useBestRecipesQuery = () => {
