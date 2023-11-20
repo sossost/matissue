@@ -1,6 +1,6 @@
 interface getRequestProps {
   url: string;
-  options?: NextFetchRequestConfig;
+  options?: RequestInit;
 }
 
 export const getRequest = async ({ url, options }: getRequestProps) => {
