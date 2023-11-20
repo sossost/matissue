@@ -4,21 +4,19 @@ import styled from "styled-components";
 import { Recipe } from "@/src/types";
 import { useRecoilValue } from "recoil";
 import darkModeAtom from "@/src/store/darkModeAtom";
-import { useNewestRecipesQuery } from "@/src/hooks/useRecipesQuery";
 import { RecipeContainer } from "@/src/styles/main/main.style";
+import useIngredientFilter from "./hooks/useIngredientFilter";
 
 import NonRecipeCrying from "../UI/NonRecipeCrying";
 import LargeRecipeCard from "../recipe-card/main/MainLargeRecipeCard";
 import MainTitleBox from "./MainTitleBox";
-import useIngredientFilter from "./hooks/useIngredientFilter";
 
 interface MainFridgeProps {
   recipes: Recipe[];
 }
 
 const MainFridge = ({ recipes }: MainFridgeProps) => {
-  const { deferredFilteredRecipes, IngredientList } =
-    useIngredientFilter(recipes);
+  const { filteredRecipes, IngredientList } = useIngredientFilter();
 
   const isDarkMode = useRecoilValue(darkModeAtom);
 
@@ -34,7 +32,7 @@ const MainFridge = ({ recipes }: MainFridgeProps) => {
       />
       <IngredientList />
       <RecipeContainer>
-        {deferredFilteredRecipes.slice(0, 3).map((item: Recipe) => (
+        {filteredRecipes.slice(0, 3).map((item: Recipe) => (
           <LargeRecipeCard key={item.recipe_id} recipe={item} />
         ))}
       </RecipeContainer>

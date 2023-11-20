@@ -1,12 +1,13 @@
 "use client";
 
-import { useDeferredValue, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import styled from "styled-components";
 import darkModeAtom from "@/src/store/darkModeAtom";
 import { Recipe } from "@/src/types";
 import shuffleRecipes from "@/src/utils/shuffleRecipes";
 import { useRecoilValue } from "recoil";
+import { axiosBase } from "@/src/app/api/axios";
 
 const INGREDIENT = [
   {
@@ -46,10 +47,9 @@ const INGREDIENT = [
   },
 ];
 
-const useIngredientFilter = (recipes: Recipe[]) => {
+const useIngredientFilter = () => {
   const [selectedIngredient, setSelectedIngredient] = useState<string>("계란");
-  const [filteredRecipes, setFilteredRecipes] = useState<Recipe[]>(recipes);
-  const deferredFilteredRecipes = useDeferredValue(filteredRecipes);
+  const [filteredRecipes, setFilteredRecipes] = useState<Recipe[]>([]);
 
   /**  재료 선택 핸들러 */
   const ingredientSelectHandler: React.MouseEventHandler<HTMLButtonElement> = (
@@ -59,18 +59,18 @@ const useIngredientFilter = (recipes: Recipe[]) => {
     setSelectedIngredient(e.currentTarget.id);
   };
 
-  // 레시피 재료에 선택한 재료가 들어간 레시피들 필터링 후 랜덤정렬
   useEffect(() => {
-    const filteredRecipes = recipes.filter((recipe: Recipe) =>
-      recipe.recipe_ingredients.some(
-        (ingredient) => ingredient.name === selectedIngredient
-      )
-    );
+    const fetchRecipesByIngredient = async () => {
+      const response = await axiosBase.get(
+        `recipes/ingredients?value=${selectedIngredient}`
+      );
 
-    const shuffledRecipes = shuffleRecipes(filteredRecipes);
+      const shuffledRecipes = shuffleRecipes(response.data);
 
-    setFilteredRecipes(shuffledRecipes);
-  }, [selectedIngredient, recipes]);
+      setFilteredRecipes(shuffledRecipes);
+    };
+    fetchRecipesByIngredient();
+  }, [selectedIngredient]);
 
   /** 재료 리스트 컴포넌트 */
   const IngredientList = () => {
@@ -99,7 +99,7 @@ const useIngredientFilter = (recipes: Recipe[]) => {
     );
   };
 
-  return { deferredFilteredRecipes, IngredientList };
+  return { filteredRecipes, IngredientList };
 };
 
 export default useIngredientFilter;
