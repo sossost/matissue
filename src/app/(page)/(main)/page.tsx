@@ -24,17 +24,11 @@ const Home = async () => {
           <BestRecipes />
         </Suspense>
 
-        <Suspense>
-          <MainFridge />
-        </Suspense>
+        <MainFridge />
 
-        <Suspense>
-          <MainAlone />
-        </Suspense>
+        <MainAlone />
 
-        <Suspense>
-          <MainVegetarian />
-        </Suspense>
+        <MainVegetarian />
 
         <Suspense fallback={<MainListingSkeleton title="최신 레시피" />}>
           <NewestRecipes />
