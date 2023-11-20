@@ -7,7 +7,7 @@ import { getRecipesByLastest } from "@/src/app/api/recipe";
 
 import MainListingRecipe from "@/src/components/listings/MainListingRecipe";
 
-const NewestRecipes = async () => {
+const NewestRecipes = () => {
   const { data: newestRecipes = [] } = useQuery<Recipe[]>(
     [queryKey.newestRecipes],
     getRecipesByLastest

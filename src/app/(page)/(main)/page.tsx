@@ -37,7 +37,6 @@ const Home = async () => {
         </Suspense>
 
         <Suspense fallback={<MainListingSkeleton title="최신 레시피" />}>
-          {/* @ts-expect-error Async Server Component */}
           <NewestRecipes />
         </Suspense>
       </MainContainer>
