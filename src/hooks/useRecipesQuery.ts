@@ -20,13 +20,13 @@ export const useBestRecipesQuery = () => {
   return { data, isLoading, isError };
 };
 
-export const useNewestRecipesQuery = () => {
-  const { data = [] } = useQuery<Recipe[]>(
+export const useNewestRecipesQuery = (page: number, limit: number) => {
+  const { data: newestRecipes = [] } = useQuery<Recipe[]>(
     [queryKey.newestRecipes],
-    getRecipesByLastest
+    () => getRequest({ url: `recipes/newest?page=${page}&limit=${limit}` })
   );
 
-  return data;
+  return { newestRecipes };
 };
 
 export const useSingleRecipesQuery = (page: number, limit: number) => {
