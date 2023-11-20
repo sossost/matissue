@@ -5,36 +5,27 @@ import styled from "styled-components";
 import { Recipe } from "@/src/types";
 import { useRecoilValue } from "recoil";
 import darkModeAtom from "@/src/store/darkModeAtom";
-import { useVegetarianRecipesQuery } from "@/src/hooks/useRecipesQuery";
 import useRecipeSlide from "./hooks/useRecipeSlide";
 import useMediaQuery from "@/src/hooks/useMediaQuery";
 import useShuffleRecipes from "@/src/hooks/useShuffleRecipes";
 import { RecipeContainer } from "@/src/styles/main/main.style";
 
 import MainTitleBox from "./MainTitleBox";
-import LoadingRecipe from "../UI/LoadingRecipe";
-import NonDataCrying from "../UI/NonDataCrying";
 import LargeRecipeCard from "../recipe-card/main/MainLargeRecipeCard";
 import MainMobileListingRecipe from "../listings/MainMobileListingRecipe";
 
-const MainVegan = () => {
+interface MainVegetarianProps {
+  recipes: Recipe[];
+}
+
+const MainVegetarian = ({ recipes }: MainVegetarianProps) => {
   const isDarkMode = useRecoilValue(darkModeAtom);
   const isDesktop = useMediaQuery();
 
-  const vegetarianRecipes = useVegetarianRecipesQuery();
-
   const { slide, totalSlide, LeftSlideButton, RightSlideButton } =
-    useRecipeSlide(vegetarianRecipes.data.length);
+    useRecipeSlide(recipes.length);
 
-  const shuffledRecipes = useShuffleRecipes(vegetarianRecipes.data);
-
-  if (vegetarianRecipes.isLoading) {
-    return <LoadingRecipe />;
-  }
-
-  if (vegetarianRecipes.isError) {
-    return <NonDataCrying />;
-  }
+  const shuffledRecipes = useShuffleRecipes(recipes);
 
   return (
     <MainVegetarianWrapper isDarkMode={isDarkMode}>
@@ -54,7 +45,7 @@ const MainVegan = () => {
           ) : (
             <RecipeContainer>
               <MainMobileListingRecipe
-                recipes={vegetarianRecipes.data}
+                recipes={recipes}
                 url="/recipes/category/vegetarian?category=vegetarian"
               />
             </RecipeContainer>
@@ -68,7 +59,7 @@ const MainVegan = () => {
   );
 };
 
-export default MainVegan;
+export default MainVegetarian;
 
 const MainVegetarianWrapper = styled.div<{ isDarkMode: boolean }>`
   padding: 2rem;

@@ -1,14 +1,14 @@
 import tw from "tailwind-styled-components";
+import { Suspense } from "react";
 
 import Banner from "@/src/components/main-page/Banner/Banner";
 import MainMobileCategory from "@/src/components/main-page/mobile/MainMobileCategory";
-import MainFridge from "@/src/components/main-page/MainFridge";
-import MainAlone from "@/src/components/main-page/MainAlone";
-import MainVegan from "@/src/components/main-page/MainVegetarian";
 import BestRecipes from "./components/BestRecipes";
 import MainListingSkeleton from "@/src/components/listings/MainListingSkeleton";
-import { Suspense } from "react";
 import NewestRecipes from "./components/NewestRecipes";
+import FridgeRecipes from "./components/FridgeRecipes";
+import AloneRecipes from "./components/AloneRecipes";
+import VegetarianRecipes from "./components/VegetarianRecipes";
 
 const Home = async () => {
   return (
@@ -24,9 +24,20 @@ const Home = async () => {
           <BestRecipes />
         </Suspense>
 
-        <MainFridge />
-        <MainAlone />
-        <MainVegan />
+        <Suspense>
+          {/* @ts-expect-error Async Server Component */}
+          <FridgeRecipes />
+        </Suspense>
+
+        <Suspense>
+          {/* @ts-expect-error Async Server Component */}
+          <AloneRecipes />
+        </Suspense>
+
+        <Suspense>
+          {/* @ts-expect-error Async Server Component */}
+          <VegetarianRecipes />
+        </Suspense>
 
         <Suspense fallback={<MainListingSkeleton title="최신 레시피" />}>
           {/* @ts-expect-error Async Server Component */}
