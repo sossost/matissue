@@ -6,10 +6,9 @@ import MainMobileCategory from "@/src/components/main-page/mobile/MainMobileCate
 import BestRecipes from "./components/BestRecipes";
 import MainListingSkeleton from "@/src/components/listings/MainListingSkeleton";
 import NewestRecipes from "./components/NewestRecipes";
-import AloneRecipes from "./components/AloneRecipes";
-import VegetarianRecipes from "./components/VegetarianRecipes";
 import MainFridge from "@/src/components/main-page/MainFridge";
 import MainVegetarian from "@/src/components/main-page/MainVegetarian";
+import MainAlone from "@/src/components/main-page/MainAlone";
 
 const Home = async () => {
   return (
@@ -30,8 +29,7 @@ const Home = async () => {
         </Suspense>
 
         <Suspense>
-          {/* @ts-expect-error Async Server Component */}
-          <AloneRecipes />
+          <MainAlone />
         </Suspense>
 
         <Suspense>
