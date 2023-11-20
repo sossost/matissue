@@ -39,7 +39,7 @@ const RecipeTitleSkeleton = tw.div`
   flex
   h-[20px]
   w-2/3
-  bg-[#e0e0e0]
+  bg-[#f6f6f6]
   rounded-[9999px]
   my-[2px]
 `;
