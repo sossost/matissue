@@ -12,14 +12,17 @@ import LargeRecipeCard from "../recipe-card/main/MainLargeRecipeCard";
 import MainTitleBox from "./MainTitleBox";
 import useIngredientFilter from "./hooks/useIngredientFilter";
 
-const MainFridge = () => {
-  const fridgeRecipes = useNewestRecipesQuery();
+interface MainFridgeProps {
+  recipes: Recipe[];
+}
+
+const MainFridge = ({ recipes }: MainFridgeProps) => {
   const { deferredFilteredRecipes, IngredientList } =
-    useIngredientFilter(fridgeRecipes);
+    useIngredientFilter(recipes);
 
   const isDarkMode = useRecoilValue(darkModeAtom);
 
-  if (fridgeRecipes.length === 0) {
+  if (recipes.length === 0) {
     return <NonRecipeCrying />;
   }
 
