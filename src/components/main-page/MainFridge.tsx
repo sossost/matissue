@@ -12,7 +12,7 @@ import MainTitleBox from "./MainTitleBox";
 import LargeRecipeCardSkeleton from "../recipe-card/main/MainLargeRecipeCardSkeleton";
 
 const MainFridge = () => {
-  const { filteredRecipes, IngredientList } = useIngredientFilter();
+  const { fridgeRecipes, IngredientList } = useIngredientFilter();
 
   const isDarkMode = useRecoilValue(darkModeAtom);
 
@@ -24,14 +24,14 @@ const MainFridge = () => {
       />
       <IngredientList />
       <RecipeContainer>
-        {filteredRecipes.length === 0 ? (
+        {fridgeRecipes.length === 0 ? (
           <>
             <LargeRecipeCardSkeleton />
             <LargeRecipeCardSkeleton />
             <LargeRecipeCardSkeleton />
           </>
         ) : (
-          filteredRecipes
+          fridgeRecipes
             .slice(0, 3)
             .map((item: Recipe) => (
               <LargeRecipeCard key={item.recipe_id} recipe={item} />

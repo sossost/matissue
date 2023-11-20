@@ -5,9 +5,9 @@ import Image from "next/image";
 import styled from "styled-components";
 import darkModeAtom from "@/src/store/darkModeAtom";
 import { Recipe } from "@/src/types";
-import shuffleRecipes from "@/src/utils/shuffleRecipes";
 import { useRecoilValue } from "recoil";
 import { axiosBase } from "@/src/app/api/axios";
+import shuffleRecipes from "@/src/utils/shuffleRecipes";
 
 const INGREDIENT = [
   {
@@ -59,15 +59,16 @@ const useIngredientFilter = () => {
     setSelectedIngredient(e.currentTarget.id);
   };
 
+  const fridgeRecipes = shuffleRecipes(filteredRecipes);
+
   useEffect(() => {
     const fetchRecipesByIngredient = async () => {
       const response = await axiosBase.get(
         `recipes/ingredients?value=${selectedIngredient}`
       );
+      const recipes = response.data;
 
-      const shuffledRecipes = shuffleRecipes(response.data);
-
-      setFilteredRecipes(shuffledRecipes);
+      setFilteredRecipes(recipes);
     };
     fetchRecipesByIngredient();
   }, [selectedIngredient]);
@@ -99,7 +100,7 @@ const useIngredientFilter = () => {
     );
   };
 
-  return { filteredRecipes, IngredientList };
+  return { fridgeRecipes, IngredientList };
 };
 
 export default useIngredientFilter;

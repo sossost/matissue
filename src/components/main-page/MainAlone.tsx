@@ -1,7 +1,6 @@
 "use client";
 
 import styled, { keyframes } from "styled-components";
-import useShuffleRecipes from "@/src/hooks/useShuffleRecipes";
 import {
   StyledContainer,
   StyledContentsArea,
