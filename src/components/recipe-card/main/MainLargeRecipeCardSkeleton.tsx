@@ -54,13 +54,13 @@ const SkeletonImageContainer = styled.div`
 const SkeletonTextContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 1.2rem;
+  gap: 1rem;
   padding: 1.6rem 1.6rem 2rem 1.6rem;
 `;
 
 const SkeletonTitle = styled.div`
   width: 80%;
-  height: 22px;
+  height: 18px;
   background-color: #e0e0e0;
   animation: ${loading} 1.5s infinite;
 `;
@@ -74,14 +74,14 @@ const SkeletonInfoBox = styled.div`
 
 const SkeletonAuthor = styled.div`
   width: 50%;
-  height: 18px;
+  height: 16px;
   background-color: #e0e0e0;
   animation: ${loading} 1.5s infinite;
 `;
 
 const SkeletonIcons = styled.div`
   width: 30%;
-  height: 18px;
+  height: 16px;
   background-color: #e0e0e0;
   animation: ${loading} 1.5s infinite;
 `;
