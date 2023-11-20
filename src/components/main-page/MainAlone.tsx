@@ -15,7 +15,6 @@ import { useSingleRecipesQuery } from "@/src/hooks/useRecipesQuery";
 
 const MainAlone = () => {
   const { singleRecipes } = useSingleRecipesQuery(1, 20);
-  const shuffledRecipes = useShuffleRecipes(singleRecipes);
 
   if (singleRecipes.length < 5) {
     <NonRecipeCrying />;
@@ -30,14 +29,14 @@ const MainAlone = () => {
         />
         <RecipeContainer>
           <>
-            {shuffledRecipes.length === 0 ? (
+            {singleRecipes.length === 0 ? (
               <>
                 {[...Array(4)].map((_, index) => (
                   <MainAloneRecipeCardSkeleton key={index} index={index} />
                 ))}
               </>
             ) : (
-              shuffledRecipes
+              singleRecipes
                 .slice(0, 4)
                 .map((recipe, index) => (
                   <MainAloneRecipeCard
