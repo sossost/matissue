@@ -37,15 +37,20 @@ const GRID_ROW_TEMPLATE = ["1/3", "1/2", "1/2", "2/3"];
 const GRID_COLUMN_TEMPLATE = ["1/3", "3/4", "4/5", "3/5"];
 
 const RecipeImageWrapperBase = styled.div<{ index: number }>`
-  position: relative;
-  grid-row: ${({ index }) => GRID_ROW_TEMPLATE[index]};
-  grid-column: ${({ index }) => GRID_COLUMN_TEMPLATE[index]};
+  display: none;
 
-  &:hover {
-    transform: scale(1.03);
+  @media (min-width: 1024px) {
+    display: block;
+    position: relative;
+    grid-row: ${({ index }) => GRID_ROW_TEMPLATE[index]};
+    grid-column: ${({ index }) => GRID_COLUMN_TEMPLATE[index]};
+
+    &:hover {
+      transform: scale(1.03);
+    }
+
+    transition: all 0.5s;
   }
-
-  transition: all 0.5s;
 `;
 
 const StyledImageWrapper = styled.div`

@@ -1,37 +1,27 @@
 "use client";
 
 import styled from "styled-components";
-import { useSingleRecipesQuery } from "@/src/hooks/useRecipesQuery";
-import useMediaQuery from "@/src/hooks/useMediaQuery";
 import useShuffleRecipes from "@/src/hooks/useShuffleRecipes";
 import {
   StyledContainer,
   StyledContentsArea,
 } from "@/src/styles/main/main.style";
+import { Recipe } from "@/src/types";
 
 import MainMobileListingRecipe from "../listings/MainMobileListingRecipe";
-import LoadingRecipe from "../UI/LoadingRecipe";
-import NonDataCrying from "../UI/NonDataCrying";
 import NonRecipeCrying from "../UI/NonRecipeCrying";
 import MainTitleBox from "./MainTitleBox";
 import MainAloneRecipeCard from "./MainAloneRecipeCard";
 
-const MainAlone = () => {
-  const isDesktop = useMediaQuery();
+interface MainAloneProps {
+  recipes: Recipe[];
+}
 
-  const singleRecipes = useSingleRecipesQuery();
+const MainAlone = ({ recipes }: MainAloneProps) => {
+  console.log(recipes);
+  const shuffledRecipes = useShuffleRecipes(recipes);
 
-  const shuffledRecipes = useShuffleRecipes(singleRecipes.data);
-
-  if (singleRecipes.isLoading) {
-    return <LoadingRecipe />;
-  }
-
-  if (singleRecipes.isError) {
-    return <NonDataCrying />;
-  }
-
-  if (singleRecipes.data.length < 5) {
+  if (recipes.length < 5) {
     <NonRecipeCrying />;
   }
 
@@ -43,22 +33,19 @@ const MainAlone = () => {
           subTitle="자취생이 해먹을수 있는 새다른 추천 레시피들"
         />
         <RecipeContainer>
-          {isDesktop ? (
-            <>
-              {shuffledRecipes.slice(0, 4).map((recipe, index) => (
-                <MainAloneRecipeCard
-                  key={recipe.recipe_id}
-                  recipe={recipe}
-                  index={index}
-                />
-              ))}
-            </>
-          ) : (
-            <MainMobileListingRecipe
-              recipes={singleRecipes.data}
-              url="/recipes/category/honmuk?category=honmuk"
-            />
-          )}
+          <>
+            {shuffledRecipes.slice(0, 4).map((recipe, index) => (
+              <MainAloneRecipeCard
+                key={recipe.recipe_id}
+                recipe={recipe}
+                index={index}
+              />
+            ))}
+          </>
+          <MainMobileListingRecipe
+            recipes={recipes}
+            url="/recipes/category/honmuk?category=honmuk"
+          />
         </RecipeContainer>
       </StyledContentsArea>
     </StyledContainer>
