@@ -16,7 +16,7 @@ import MainMobileListingRecipe from "../listings/MainMobileListingRecipe";
 import LargeRecipeCardSkeleton from "../recipe-card/main/MainLargeRecipeCardSkeleton";
 
 const MainVegetarian = () => {
-  const { vegetarianRecipes } = useVegetarianRecipesQuery(1, 30);
+  const { vegetarianRecipes, isLoading } = useVegetarianRecipesQuery(1, 30);
 
   const isDarkMode = useRecoilValue(darkModeAtom);
 
@@ -33,7 +33,7 @@ const MainVegetarian = () => {
 
         <RecipeSliderWindow>
           <VegunRecipeContainer slide={slide}>
-            {vegetarianRecipes.length === 0 ? (
+            {isLoading ? (
               <>
                 <LargeRecipeCardSkeleton />
                 <LargeRecipeCardSkeleton />

@@ -5,10 +5,10 @@ import Banner from "@/src/components/main-page/Banner/Banner";
 import MainMobileCategory from "@/src/components/main-page/mobile/MainMobileCategory";
 import MainListingSkeleton from "@/src/components/listings/MainListingSkeleton";
 import MainFridge from "@/src/components/main-page/MainFridge";
-import MainVegetarian from "@/src/components/main-page/MainVegetarian";
-import MainAlone from "@/src/components/main-page/MainAlone";
 import MainBest from "@/src/components/main-page/MainBest";
 import MainNewest from "@/src/components/main-page/MainNewest";
+import MainAlone from "@/src/components/main-page/MainAlone";
+import MainVegetarian from "@/src/components/main-page/MainVegetarian";
 
 const Home = async () => {
   return (
