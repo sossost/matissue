@@ -18,7 +18,6 @@ interface MainAloneProps {
 }
 
 const MainAlone = ({ recipes }: MainAloneProps) => {
-  console.log(recipes);
   const shuffledRecipes = useShuffleRecipes(recipes);
 
   if (recipes.length < 5) {
