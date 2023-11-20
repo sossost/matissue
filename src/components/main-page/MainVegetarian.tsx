@@ -23,8 +23,6 @@ const MainVegetarian = () => {
   const { slide, totalSlide, LeftSlideButton, RightSlideButton } =
     useRecipeSlide(vegetarianRecipes.length);
 
-  const shuffledRecipes = useShuffleRecipes(vegetarianRecipes);
-
   return (
     <MainVegetarianWrapper isDarkMode={isDarkMode}>
       <MainVegetarianContainer>
@@ -42,7 +40,7 @@ const MainVegetarian = () => {
                 <LargeRecipeCardSkeleton />
               </>
             ) : (
-              shuffledRecipes
+              vegetarianRecipes
                 .slice(0, totalSlide * 3)
                 .map((item: Recipe) => (
                   <LargeRecipeCard key={item.recipe_id} recipe={item} />
