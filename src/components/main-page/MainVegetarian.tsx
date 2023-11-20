@@ -9,23 +9,22 @@ import useRecipeSlide from "./hooks/useRecipeSlide";
 import useMediaQuery from "@/src/hooks/useMediaQuery";
 import useShuffleRecipes from "@/src/hooks/useShuffleRecipes";
 import { RecipeContainer } from "@/src/styles/main/main.style";
+import { useVegetarianRecipesQuery } from "@/src/hooks/useRecipesQuery";
 
 import MainTitleBox from "./MainTitleBox";
 import LargeRecipeCard from "../recipe-card/main/MainLargeRecipeCard";
 import MainMobileListingRecipe from "../listings/MainMobileListingRecipe";
 
-interface MainVegetarianProps {
-  recipes: Recipe[];
-}
+const MainVegetarian = () => {
+  const { vegetarianRecipes } = useVegetarianRecipesQuery(1, 30);
 
-const MainVegetarian = ({ recipes }: MainVegetarianProps) => {
   const isDarkMode = useRecoilValue(darkModeAtom);
   const isDesktop = useMediaQuery();
 
   const { slide, totalSlide, LeftSlideButton, RightSlideButton } =
-    useRecipeSlide(recipes.length);
+    useRecipeSlide(vegetarianRecipes.length);
 
-  const shuffledRecipes = useShuffleRecipes(recipes);
+  const shuffledRecipes = useShuffleRecipes(vegetarianRecipes);
 
   return (
     <MainVegetarianWrapper isDarkMode={isDarkMode}>
@@ -45,7 +44,7 @@ const MainVegetarian = ({ recipes }: MainVegetarianProps) => {
           ) : (
             <RecipeContainer>
               <MainMobileListingRecipe
-                recipes={recipes}
+                recipes={vegetarianRecipes}
                 url="/recipes/category/vegetarian?category=vegetarian"
               />
             </RecipeContainer>

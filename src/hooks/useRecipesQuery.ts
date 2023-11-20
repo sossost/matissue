@@ -5,8 +5,8 @@ import {
   getRecipesByLastest,
   getRecipesByPopularity,
   getRecipesBySingle,
-  getRecipesByVegetarian,
 } from "../app/api/recipe";
+import { getRequest } from "../app/api/utils/getRequest";
 
 export const useBestRecipesQuery = () => {
   const fallback = [] as Recipe[];
@@ -41,14 +41,11 @@ export const useSingleRecipesQuery = () => {
   return { data, isLoading, isError };
 };
 
-export const useVegetarianRecipesQuery = () => {
-  const fallback = [] as Recipe[];
+export const useVegetarianRecipesQuery = (page: number, limit: number) => {
+  const { data: vegetarianRecipes = [] } = useQuery<Recipe[]>(
+    [queryKey.singleRecipes],
+    () => getRequest({ url: `recipes/vegetarian?page=${page}&limit=${limit}` })
+  );
 
-  const {
-    data = fallback,
-    isLoading,
-    isError,
-  } = useQuery<Recipe[]>([queryKey.singleRecipes], getRecipesByVegetarian);
-
-  return { data, isLoading, isError };
+  return { vegetarianRecipes };
 };

@@ -9,6 +9,7 @@ import NewestRecipes from "./components/NewestRecipes";
 import AloneRecipes from "./components/AloneRecipes";
 import VegetarianRecipes from "./components/VegetarianRecipes";
 import MainFridge from "@/src/components/main-page/MainFridge";
+import MainVegetarian from "@/src/components/main-page/MainVegetarian";
 
 const Home = async () => {
   return (
@@ -34,8 +35,7 @@ const Home = async () => {
         </Suspense>
 
         <Suspense>
-          {/* @ts-expect-error Async Server Component */}
-          <VegetarianRecipes />
+          <MainVegetarian />
         </Suspense>
 
         <Suspense fallback={<MainListingSkeleton title="최신 레시피" />}>
