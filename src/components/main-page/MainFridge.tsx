@@ -7,18 +7,14 @@ import darkModeAtom from "@/src/store/darkModeAtom";
 import { RecipeContainer } from "@/src/styles/main/main.style";
 import useIngredientFilter from "./hooks/useIngredientFilter";
 
-import NonRecipeCrying from "../UI/NonRecipeCrying";
 import LargeRecipeCard from "../recipe-card/main/MainLargeRecipeCard";
 import MainTitleBox from "./MainTitleBox";
+import LargeRecipeCardSkeleton from "../recipe-card/main/MainLargeRecipeCardSkeleton";
 
 const MainFridge = () => {
   const { filteredRecipes, IngredientList } = useIngredientFilter();
 
   const isDarkMode = useRecoilValue(darkModeAtom);
-
-  if (filteredRecipes.length === 0) {
-    return <NonRecipeCrying />;
-  }
 
   return (
     <MainFridgeContainer isDarkMode={isDarkMode}>
@@ -28,9 +24,19 @@ const MainFridge = () => {
       />
       <IngredientList />
       <RecipeContainer>
-        {filteredRecipes.slice(0, 3).map((item: Recipe) => (
-          <LargeRecipeCard key={item.recipe_id} recipe={item} />
-        ))}
+        {filteredRecipes.length === 0 ? (
+          <>
+            <LargeRecipeCardSkeleton />
+            <LargeRecipeCardSkeleton />
+            <LargeRecipeCardSkeleton />
+          </>
+        ) : (
+          filteredRecipes
+            .slice(0, 3)
+            .map((item: Recipe) => (
+              <LargeRecipeCard key={item.recipe_id} recipe={item} />
+            ))
+        )}
       </RecipeContainer>
     </MainFridgeContainer>
   );
