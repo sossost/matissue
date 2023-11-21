@@ -1,6 +1,6 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
 import { Recipe } from "../types";
 import { queryKey } from "../ReactQuery/queryKey";
 import { getRecipesByPopularity } from "../app/api/recipe";
@@ -23,7 +23,7 @@ export const useBestRecipesQuery = () => {
 };
 
 export const useNewestRecipesQuery = (page: number, limit: number) => {
-  const { data: newestRecipes = [] } = useQuery<Recipe[]>({
+  const { data: newestRecipes = [] } = useSuspenseQuery<Recipe[]>({
     queryKey: [queryKey.newestRecipes],
     queryFn: () =>
       getRequest({ url: `recipes/latest?page=${page}&limit=${limit}` }),
