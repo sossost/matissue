@@ -54,8 +54,8 @@ const MobileUserModal = (props: MobileUserModalProps) => {
       .post(`users/logout`)
       .then((res) => {
         Cookies.remove("session-id");
-        queryClient.removeQueries(["currentUser"]);
-        queryClient.removeQueries(["currentUserRecipes"]);
+        queryClient.removeQueries({ queryKey: ["currentUser"] });
+        queryClient.removeQueries({ queryKey: ["currentUserRecipes"] });
         router.refresh();
         props.setIsModal(false);
         toast.success("로그아웃 되었습니다.");

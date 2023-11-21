@@ -47,7 +47,7 @@ const RecipeCards = ({
     try {
       await axiosBase.delete(`recipes/${id}`);
       console.log("레시피 삭제 요청이 성공적으로 전송되었습니다.");
-      client.invalidateQueries(["currentRecipe"]);
+      client.invalidateQueries({ queryKey: ["currentRecipe"] });
       // setIsModalOpen(false);
     } catch (error) {
       console.error(

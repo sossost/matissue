@@ -27,11 +27,11 @@ const Following = ({
   initialCurrentUser,
 }: FollowingProps) => {
   // currentUser : 현재 로그인한 유저 정보
-  const { data: currentUser } = useQuery<User>(
-    ["currentUser"],
-    () => getCurrentUser(),
-    { initialData: initialCurrentUser }
-  );
+  const { data: currentUser } = useQuery<User>({
+    queryKey: ["currentUser"],
+    queryFn: getCurrentUser,
+    initialData: initialCurrentUser,
+  });
   const loggedInUserId: string = currentUser.user_id;
 
   // 로그인된 유저가 자신의 유저페이지에 접근하는 경우 마이페이지로 이동

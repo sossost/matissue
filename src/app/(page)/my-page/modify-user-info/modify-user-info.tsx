@@ -43,9 +43,9 @@ type LabelForFileProps = {
 };
 
 const ModifyUserInfo = () => {
-  const { data: currentUser } = useQuery<User>(["currentUser"]); //비동기적으로 실행, 서버에서 온 값
+  const { data: currentUser } = useQuery<User>({ queryKey: ["currentUser"] }); //비동기적으로 실행, 서버에서 온 값
   const [userData, setUserData] = useState<any>(); //얘가 먼저 실행되서 밸류 값 undefined, 우리가 갖고 있던 값
-  const queryClient = useQueryClient();
+
   const defaultImage =
     "https://eliceproject.s3.ap-northeast-2.amazonaws.com/dongs.png";
   const isDarkMode = useRecoilValue(darkModeAtom);

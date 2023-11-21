@@ -28,15 +28,13 @@ const UserRecipeCardList = ({
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 375);
 
   // currentChef에 게시글 작성자 정보가 담김
-  const { data: currentChef } = useQuery<User>(
-    ["currentChef", userProfileId],
-    () => getChefByUserId(userProfileId),
-    {
-      refetchOnWindowFocus: false,
-      retry: 0,
-      initialData: initialCurrentChef,
-    }
-  );
+  const { data: currentChef } = useQuery<User>({
+    queryKey: ["currentChef", userProfileId],
+    queryFn: () => getChefByUserId(userProfileId),
+    refetchOnWindowFocus: false,
+    retry: 0,
+    initialData: initialCurrentChef,
+  });
 
   useEffect(() => {
     function handleResize() {

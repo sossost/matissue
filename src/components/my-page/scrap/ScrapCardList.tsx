@@ -31,9 +31,10 @@ type ScrapItemProps = {
 /** 스크랩 리스트 컴포넌트 */
 const ScrapCardList: React.FC = () => {
   const [parsedMemo, setParsedMemo] = useState<ScrapItemProps[]>([]);
-  const { data: currentUser } = useQuery(["currentUser"], () =>
-    getCurrentUser()
-  );
+  const { data: currentUser } = useQuery({
+    queryKey: ["currentUser"],
+    queryFn: () => getCurrentUser(),
+  });
   const [currentPage, setCurrentPage] = useState<number>(1);
   const scrapsPerPage = 16;
   const [isLoading, setIsLoading] = useState<boolean>(false);

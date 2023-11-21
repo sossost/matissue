@@ -34,7 +34,7 @@ const AdminRecipeItem = (props: AdminRecipeItemProps) => {
       axiosBase
         .delete(`recipes/${recipe_id}`)
         .then((res) => {
-          client.invalidateQueries(["recipes"]);
+          client.invalidateQueries({ queryKey: ["recipes"] });
           toast.success("레시피가 성공적으로 삭제되었습니다.");
         })
         .catch((err: any) => {

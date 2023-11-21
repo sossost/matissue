@@ -11,6 +11,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { useRecoilValue } from "recoil";
 import darkModeAtom from "@/src/store/darkModeAtom";
+import { queryKey } from "@/src/ReactQuery/queryKey";
 
 type MemoItemProps = {
   created_at: string;
@@ -31,15 +32,16 @@ type ScrapItemProps = {
 
 const ProfileCard = () => {
   // 캐시에 저장된 현재 유저정보를 가져옴
-  const { data: currentUser } = useQuery<User>(["currentUser"], () =>
-    getCurrentUser()
-  );
+  const { data: currentUser } = useQuery<User>({
+    queryKey: ["currentUser"],
+    queryFn: getCurrentUser,
+  });
 
   // 캐시에 저장된 현재 유저가 작성한 레시피들을 가져옴
-  const { data: currentUserRecipes } = useQuery<Recipe[]>(
-    ["currentUserRecipes"],
-    () => getRecipeByCurrentId()
-  );
+  const { data: currentUserRecipes } = useQuery<Recipe[]>({
+    queryKey: ["currentUserRecipes"],
+    queryFn: () => getRecipeByCurrentId(),
+  });
 
   const [parsedMemo, setParsedMemo] = useState<ScrapItemProps[]>([]);
   const isDarkMode = useRecoilValue(darkModeAtom);

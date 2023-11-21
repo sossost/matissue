@@ -27,15 +27,14 @@ const UserProfileCard = ({
   initialCurrentChef,
 }: UserProfileProps) => {
   // currentChef에 프로필 유저 정보가 담김
-  const { data: currentChef } = useQuery<User>(
-    ["currentChef", userProfileId],
-    () => getChefByUserId(userProfileId),
-    {
-      refetchOnWindowFocus: false,
-      retry: 0,
-      initialData: initialCurrentChef,
-    }
-  );
+  const { data: currentChef } = useQuery<User>({
+    queryKey: ["currentChef", userProfileId],
+    queryFn: () => getChefByUserId(userProfileId),
+
+    refetchOnWindowFocus: false,
+    retry: 0,
+    initialData: initialCurrentChef,
+  });
 
   const client = useQueryClient();
   const isHeaderVisible = useMovingContentByScrolling();
@@ -93,7 +92,9 @@ const UserProfileCard = ({
             );
             toast.success("팔로우가 완료되었습니다!");
             // 요청 성공 시 query key를 무효화해서 현재 프로필 데이터 최신화
-            client.invalidateQueries(["currentChef", userProfileId]);
+            client.invalidateQueries({
+              queryKey: ["currentChef", userProfileId],
+            });
 
             // 팔로우 -> 팔로잉으로 변경
             setIsFollowing(true);
@@ -116,7 +117,7 @@ const UserProfileCard = ({
       );
 
       // 요청 성공 시 query key를 무효화해서 현재 프로필 데이터 최신화
-      client.invalidateQueries(["currentChef", userProfileId]);
+      client.invalidateQueries({ queryKey: ["currentChef", userProfileId] });
 
       toast.success("팔로우가 취소되었습니다!");
     } catch (error) {

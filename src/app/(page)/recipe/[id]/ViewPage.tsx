@@ -163,7 +163,7 @@ const RecipeDetail = (props: RecipeDataProps) => {
         setCount((prevCount) => prevCount + 1);
         toast.success("맛이슈와 함께라면 언제든 좋아요!");
       }
-      client.invalidateQueries(["currentRecipe"]);
+      client.invalidateQueries({ queryKey: ["currentRecipe"] });
     } catch (error) {
       console.log("좋아요 요청 실패와 관련한 오류는..🧐", error);
       toast.error("좋아요 요청에 실패했습니다 ㅠ.ㅠ");

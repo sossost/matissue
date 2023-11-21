@@ -43,8 +43,8 @@ const AccountDeletion = ({ id }: { id: string }) => {
 
       toast.success("더 맛있는 이슈로 찾아뵙겠습니다.");
       Cookies.remove("session-id");
-      queryClient.removeQueries(["currentUser"]);
-      queryClient.removeQueries(["currentUserRecipes"]);
+      queryClient.removeQueries({ queryKey: ["currentUser"] });
+      queryClient.removeQueries({ queryKey: ["currentUserRecipes"] });
 
       router.push("/");
     } catch (error: any) {

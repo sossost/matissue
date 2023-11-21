@@ -19,7 +19,9 @@ const AdminRecipeClient = () => {
     data: recipes,
     isLoading,
     isError,
-  } = useQuery<Recipe[]>(["recipes"], () => getAllRecipes(), {
+  } = useQuery<Recipe[]>({
+    queryKey: ["recipes"],
+    queryFn: getAllRecipes,
     retry: 0,
     initialData: [],
   });

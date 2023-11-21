@@ -20,10 +20,10 @@ type WriterProfileProps = {
 /** 작성자 프로필 컴포넌트 */
 const MiniWriterProfile = ({ user_id, loggedInUserId }: WriterProfileProps) => {
   // currentChef에 user 정보가 담김
-  const { data: currentChef, isLoading } = useQuery(
-    ["currentChef", user_id],
-    () => getChefByUserId(user_id)
-  );
+  const { data: currentChef, isLoading } = useQuery({
+    queryKey: ["currentChef", user_id],
+    queryFn: () => getChefByUserId(user_id),
+  });
 
   const client = useQueryClient();
   const [isFollowing, setIsFollowing] = useState(false);
@@ -78,7 +78,7 @@ const MiniWriterProfile = ({ user_id, loggedInUserId }: WriterProfileProps) => {
             );
             toast.success("팔로우가 완료되었습니다!");
             // 요청 성공 시 query key를 무효화해서 현재 작성자 데이터 최신화
-            client.invalidateQueries(["currentChef", user_id]);
+            client.invalidateQueries({ queryKey: ["currentChef", user_id] });
 
             // 팔로우 -> 팔로잉으로 변경
             setIsFollowing(true);
@@ -101,7 +101,7 @@ const MiniWriterProfile = ({ user_id, loggedInUserId }: WriterProfileProps) => {
       );
 
       // 요청 성공 시 query key를 무효화해서 현재 작성자 데이터 최신화
-      client.invalidateQueries(["currentChef", user_id]);
+      client.invalidateQueries({ queryKey: ["currentChef", user_id] });
 
       toast.success("팔로우가 취소되었습니다!");
     } catch (error) {

@@ -6,7 +6,9 @@ import { User } from "@/src/types";
 import ConfirmModal from "@/src/components/UI/ConfirmModal";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  const { data: currentUser, isLoading } = useQuery<User>(["currentUser"]);
+  const { data: currentUser, isLoading } = useQuery<User>({
+    queryKey: ["currentUser"],
+  });
 
   const router = useRouter();
 

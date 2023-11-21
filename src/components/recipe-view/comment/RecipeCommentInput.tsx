@@ -39,7 +39,7 @@ const RecipeCommentInput = ({ recipe_id }: CommentProps) => {
       const response = await axiosBase.post(`/recipes/comment/${recipe_id}`, {
         comment_text: commentText,
       });
-      client.invalidateQueries(["currentRecipe"]);
+      client.invalidateQueries({ queryKey: ["currentRecipe"] });
       toast.success("댓글 작성이 완료되었습니다");
     } catch (error) {
       console.log("댓글 작성 실패", error);

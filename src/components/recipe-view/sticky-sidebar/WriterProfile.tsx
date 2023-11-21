@@ -81,7 +81,7 @@ const WriterProfile = ({ user_id, loggedInUserId }: WriterProfileProps) => {
             );
             toast.success("팔로우가 완료되었습니다!");
             // 요청 성공 시 query key를 무효화해서 현재 작성자 데이터 최신화
-            client.invalidateQueries(["currentChef", user_id]);
+            client.invalidateQueries({ queryKey: ["currentChef", user_id] });
 
             // 팔로우 -> 팔로잉으로 변경
             setIsFollowing(true);
@@ -104,7 +104,7 @@ const WriterProfile = ({ user_id, loggedInUserId }: WriterProfileProps) => {
       );
 
       // 요청 성공 시 query key를 무효화해서 현재 작성자 데이터 최신화
-      client.invalidateQueries(["currentChef", user_id]);
+      client.invalidateQueries({ queryKey: ["currentChef", user_id] });
 
       toast.success("팔로우가 취소되었습니다!");
     } catch (error) {

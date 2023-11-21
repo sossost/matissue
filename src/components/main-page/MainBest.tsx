@@ -5,7 +5,6 @@ import MainListingRecipe from "@/src/components/listings/MainListingRecipe";
 const MainBest = async () => {
   const bestRecipes = await getRequest({
     url: "recipes/popularity?page=1&limit=100",
-    options: { next: { revalidate: 60 * 60 } },
   });
 
   return (

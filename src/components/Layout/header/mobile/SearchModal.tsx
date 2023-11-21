@@ -1,6 +1,5 @@
 "use client";
 
-import { whiteBrownToggle } from "@/src/constants/darkMode.constants";
 import darkModeAtom from "@/src/store/darkModeAtom";
 import Image from "next/image";
 import { useRouter } from "next/navigation";

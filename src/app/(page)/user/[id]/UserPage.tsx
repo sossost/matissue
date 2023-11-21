@@ -22,9 +22,10 @@ const UserProfile = ({
   initialCurrentChef,
 }: UserProfileProps) => {
   // 캐시에 저장된 현재 로그인한 유저 정보 가져옴
-  const { data: currentUser } = useQuery<User>(["currentUser"], () =>
-    getCurrentUser()
-  );
+  const { data: currentUser } = useQuery<User>({
+    queryKey: ["currentUser"],
+    queryFn: getCurrentUser,
+  });
   const loggedInUserId: string | undefined = currentUser?.user_id;
 
   // 로그인된 유저가 자신의 유저페이지에 접근하는 경우 마이페이지로 이동
@@ -34,15 +35,13 @@ const UserProfile = ({
   }
 
   // 검색된 유저가 작성한 레시피 데이터를 리액트쿼리 캐시로 관리
-  const { data: ProfileUserRecipes } = useQuery(
-    ["ProfileUserRecipes"],
-    () => getRecipesByUserId(userProfileId),
-    {
-      refetchOnWindowFocus: false,
-      retry: 0,
-      initialData: initialProfileUserRecipes,
-    }
-  );
+  const { data: ProfileUserRecipes } = useQuery({
+    queryKey: ["ProfileUserRecipes"],
+    queryFn: () => getRecipesByUserId(userProfileId),
+    refetchOnWindowFocus: false,
+    retry: 0,
+    initialData: initialProfileUserRecipes,
+  });
 
   return (
     <Container>

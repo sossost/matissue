@@ -20,9 +20,10 @@ const ScrapModal = ({
   setIsSaved,
   recipe,
 }: ScrapModalProps) => {
-  const { data: currentUser } = useQuery(["currentUser"], () =>
-    getCurrentUser()
-  );
+  const { data: currentUser } = useQuery({
+    queryKey: ["currentUser"],
+    queryFn: () => getCurrentUser(),
+  });
 
   // 스크랩 카드에 필요한 정보만 객체 분해 할당
   const {

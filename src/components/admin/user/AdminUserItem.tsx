@@ -24,9 +24,10 @@ const AdminUserItem = (props: AdminUserItemProps) => {
   const client = useQueryClient();
 
   // useMutation 훅을 사용하여 API 호출 처리
-  const mutation = useMutation((newUsername: string) =>
-    axiosBase.patch("users", { ...props.user, username: newUsername })
-  );
+  const mutation = useMutation({
+    mutationFn: (newUsername: string) =>
+      axiosBase.patch("users", { ...props.user, username: newUsername }),
+  });
 
   const editHandler = () => {
     console.log(user_id);
@@ -35,7 +36,7 @@ const AdminUserItem = (props: AdminUserItemProps) => {
       mutation.mutate(newUsername, {
         onSuccess: (data) => {
           // 성공 시 동작
-          client.invalidateQueries(["users"]);
+          client.invalidateQueries({ queryKey: ["users"] });
           toast.success("유저 정보가 성공적으로 변경되었습니다.");
         },
         onError: (error) => {

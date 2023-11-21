@@ -17,7 +17,9 @@ type User = {
 };
 
 const ChangePassword = () => {
-  const { data: currentUserInfo } = useQuery<User>(["currentUser"]);
+  const { data: currentUserInfo } = useQuery<User>({
+    queryKey: ["currentUser"],
+  });
   const [password, setPassword] = useState({
     password: "",
     confirmPassword: "",
@@ -66,7 +68,6 @@ const ChangePassword = () => {
       password: password.password,
       user_id: currentUserInfo?.user_id,
     };
-    console.log(modifyUserInfo);
     try {
       const response = await axiosBase.patch("users", modifyUserInfo);
       toast.success("비밀번호가 변경되었습니다.");

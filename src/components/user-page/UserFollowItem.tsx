@@ -67,12 +67,11 @@ const UserFollowItem = ({
             );
             toast.success("팔로우가 완료되었습니다!");
             // 요청 성공 시 현재 로그인 유저 데이터 최신화
-            client.invalidateQueries(["currentUser"]);
+            client.invalidateQueries({ queryKey: ["currentUser"] });
             // 요청 성공 시 현재 프로필 쉐프 데이터 최신화
-            client.invalidateQueries([
-              "currentChef",
-              initialCurrentChef.user_id,
-            ]);
+            client.invalidateQueries({
+              queryKey: ["currentChef", initialCurrentChef.user_id],
+            });
           } catch (error) {
             console.log("팔로우 요청 실패와 관련한 오류는..🧐", error);
             toast.error("팔로우 요청에 실패했습니다 ㅠ.ㅠ");
@@ -92,9 +91,11 @@ const UserFollowItem = ({
       );
 
       // 요청 성공 시 현재 로그인 유저 데이터 최신화
-      client.invalidateQueries(["currentUser"]);
+      client.invalidateQueries({ queryKey: ["currentUser"] });
       // 요청 성공 시 현재 프로필 쉐프 데이터 최신화
-      client.invalidateQueries(["currentChef", initialCurrentChef.user_id]);
+      client.invalidateQueries({
+        queryKey: ["currentChef", initialCurrentChef.user_id],
+      });
 
       toast.success("팔로우가 취소되었습니다!");
     } catch (error) {

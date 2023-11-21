@@ -14,7 +14,10 @@ const AdminUserClient = () => {
     data: users,
     isLoading,
     isError,
-  } = useQuery<User[]>(["users"], () => getAllUsers(1, 30));
+  } = useQuery<User[]>({
+    queryKey: ["users"],
+    queryFn: () => getAllUsers(1, 30),
+  });
 
   if (isLoading) {
     return <LoadingModal />;
@@ -24,7 +27,7 @@ const AdminUserClient = () => {
     return <NotFound />;
   }
 
-  if (users === null) {
+  if (!users) {
     return <NotFound />;
   }
 
