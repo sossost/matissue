@@ -6,18 +6,24 @@ import MainMobileCategory from "@/src/components/main-page/mobile/MainMobileCate
 import MainListingSkeleton from "@/src/components/listings/MainListingSkeleton";
 import MainFridge from "@/src/components/main-page/MainFridge";
 import MainBest from "@/src/components/main-page/MainBest";
-import MainNewest from "@/src/components/main-page/MainNewest";
 import MainAlone from "@/src/components/main-page/MainAlone";
 import MainVegetarian from "@/src/components/main-page/MainVegetarian";
+import dynamic from "next/dynamic";
 
 const Home = async () => {
+  const MainNewest = dynamic(
+    () => import("@/src/components/main-page/MainNewest"),
+    {
+      loading: () => <MainListingSkeleton title="최신 레시피" />,
+      ssr: false,
+    }
+  );
+
   return (
     <>
       <Banner />
       <MainContainer>
-        <Suspense fallback={<></>}>
-          <MainMobileCategory />
-        </Suspense>
+        <MainMobileCategory />
 
         <Suspense fallback={<MainListingSkeleton title="베스트 레시피" />}>
           {/* @ts-expect-error Async Server Component */}
@@ -30,9 +36,7 @@ const Home = async () => {
 
         <MainVegetarian />
 
-        <Suspense fallback={<MainListingSkeleton title="최신 레시피" />}>
-          <MainNewest />
-        </Suspense>
+        <MainNewest />
       </MainContainer>
     </>
   );
