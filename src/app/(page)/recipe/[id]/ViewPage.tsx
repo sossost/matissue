@@ -42,20 +42,20 @@ type RecipeDataProps = {
 /** 레시피 조회 페이지 컴포넌트 */
 const RecipeDetail = (props: RecipeDataProps) => {
   // currentRecipe : 현재 레시피 정보
-  const { data: recipe } = useQuery<Recipe>(
-    ["currentRecipe", props.recipe_id],
-    () => getRecipeById(props.recipe_id),
-    {
-      refetchOnWindowFocus: false,
-      retry: 0,
-      initialData: props.recipe,
-    }
-  );
+  const { data: recipe } = useQuery<Recipe>({
+    queryKey: ["currentRecipe", props.recipe_id],
+    queryFn: () => getRecipeById(props.recipe_id),
+
+    refetchOnWindowFocus: false,
+    retry: 0,
+    initialData: props.recipe,
+  });
 
   // currentUser : 현재 로그인 된 유저정보
-  const { data: currentUser } = useQuery<User>(["currentUser"], () =>
-    getCurrentUser()
-  );
+  const { data: currentUser } = useQuery<User>({
+    queryKey: ["currentUser"],
+    queryFn: getCurrentUser,
+  });
   const loggedInUserId: string | undefined = currentUser?.user_id;
 
   // 현재의 QueryClient 인스턴스인 client를 사용하여 React Query 기능 활용
@@ -97,15 +97,14 @@ const RecipeDetail = (props: RecipeDataProps) => {
   } = recipe;
 
   // currentChef : 현재 게시글의 작성자 정보
-  const { data: currentChef } = useQuery(
-    ["currentChef", user_id],
-    () => getChefByUserId(user_id),
-    {
-      refetchOnWindowFocus: false,
-      retry: 0,
-      initialData: props.initialCurrentChef,
-    }
-  );
+  const { data: currentChef } = useQuery({
+    queryKey: ["currentChef", user_id],
+    queryFn: () => getChefByUserId(user_id),
+
+    refetchOnWindowFocus: false,
+    retry: 0,
+    initialData: props.initialCurrentChef,
+  });
 
   const router = useRouter();
 
@@ -197,7 +196,7 @@ const RecipeDetail = (props: RecipeDataProps) => {
       await axiosBase.delete(`recipes/${recipe_id}`);
       toast.success("게시글이 삭제되었습니다!");
       router.push("/recipes/category/newest?category=newest");
-      client.invalidateQueries(["currentUserRecipes"]);
+      client.invalidateQueries({ queryKey: ["currentUserRecipes"] });
     } catch (error) {
       console.log("게시글 삭제 실패와 관련한 오류는..🧐", error);
       toast.error("게시글 삭제에 실패했습니다 ㅠ.ㅠ");

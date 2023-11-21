@@ -22,18 +22,16 @@ const Header = ({ initialCurrentUser }: { initialCurrentUser: User }) => {
   const isDarkMode = useRecoilValue(darkModeAtom);
 
   // 로그인된 유저정보를 받아옴
-  const { data: currentUser, isLoading } = useQuery<User>(
-    ["currentUser"],
-    () => getCurrentUser(),
-    {
-      refetchOnWindowFocus: false,
-      retry: 0,
-      // 서버사이드에서 미리 받아온 유저정보를 기본값으로 넣어서 새로고침시 유저메뉴 바로띄움
-      initialData: initialCurrentUser,
-      // 5분마다 유저정보를 요청해서 세션만료시 로그아웃
-      refetchInterval: 300000,
-    }
-  );
+  const { data: currentUser, isLoading } = useQuery<User>({
+    queryKey: ["currentUser"],
+    queryFn: () => getCurrentUser(),
+    refetchOnWindowFocus: false,
+    retry: 0,
+    // 서버사이드에서 미리 받아온 유저정보를 기본값으로 넣어서 새로고침시 유저메뉴 바로띄움
+    initialData: initialCurrentUser,
+    // 5분마다 유저정보를 요청해서 세션만료시 로그아웃
+    refetchInterval: 300000,
+  });
 
   return (
     <HeaderLayout isHeaderVisible={isHeaderVisible} isDarkMode={isDarkMode}>

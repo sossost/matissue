@@ -54,9 +54,10 @@ const RecipeComment = ({
   const StyledLoginConfirmModal = styled(LoginConfirmModal)``;
 
   // 캐시에 저장된 현재 유저정보를 가져옴
-  const { data: currentUser } = useQuery<User>(["currentUser"], () =>
-    getCurrentUser()
-  );
+  const { data: currentUser } = useQuery<User>({
+    queryKey: ["currentUser"],
+    queryFn: () => getCurrentUser(),
+  });
   const loggedInUserId: string | undefined = currentUser?.user_id;
 
   // 좋아요 버튼, 카운트 상태 관리
@@ -99,7 +100,7 @@ const RecipeComment = ({
         comment_text: editedCommentText,
       });
       toast.success("댓글 수정이 완료되었습니다");
-      client.invalidateQueries(["currentRecipe"]);
+      client.invalidateQueries({ queryKey: ["currentRecipe"] });
     } catch (error) {
       console.log("댓글 수정 실패와 관련한 오류는...🧐", error);
       toast.error("댓글 수정에 실패했습니다 ㅠ.ㅠ");

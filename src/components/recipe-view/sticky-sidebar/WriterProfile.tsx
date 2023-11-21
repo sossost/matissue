@@ -21,10 +21,10 @@ type WriterProfileProps = {
 /** 작성자 프로필 컴포넌트 */
 const WriterProfile = ({ user_id, loggedInUserId }: WriterProfileProps) => {
   // currentChef : 게시글 작성자 정보
-  const { data: currentChef, isLoading } = useQuery(
-    ["currentChef", user_id],
-    () => getChefByUserId(user_id)
-  );
+  const { data: currentChef, isLoading } = useQuery({
+    queryKey: ["currentChef", user_id],
+    queryFn: () => getChefByUserId(user_id),
+  });
 
   const client = useQueryClient();
   const isHeaderVisible = useMovingContentByScrolling();
