@@ -13,7 +13,7 @@ import MainAloneRecipeCard from "./MainAloneRecipeCard";
 import { useSingleRecipesQuery } from "@/src/hooks/useRecipesQuery";
 
 const MainAlone = () => {
-  const { singleRecipes, isLoading } = useSingleRecipesQuery(1, 20);
+  const { singleRecipes, isLoading, isError } = useSingleRecipesQuery(1, 20);
 
   if (singleRecipes.length < 5) {
     <NonRecipeCrying />;
@@ -28,7 +28,7 @@ const MainAlone = () => {
         />
         <RecipeContainer>
           <>
-            {isLoading ? (
+            {isLoading || isError ? (
               <>
                 {[...Array(4)].map((_, index) => (
                   <MainAloneRecipeCardSkeleton key={index} index={index} />

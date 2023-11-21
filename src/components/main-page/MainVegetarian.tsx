@@ -6,7 +6,6 @@ import { Recipe } from "@/src/types";
 import { useRecoilValue } from "recoil";
 import darkModeAtom from "@/src/store/darkModeAtom";
 import useRecipeSlide from "./hooks/useRecipeSlide";
-import useShuffleRecipes from "@/src/hooks/useShuffleRecipes";
 import { RecipeContainer } from "@/src/styles/main/main.style";
 import { useVegetarianRecipesQuery } from "@/src/hooks/useRecipesQuery";
 
@@ -16,7 +15,10 @@ import MainMobileListingRecipe from "../listings/MainMobileListingRecipe";
 import LargeRecipeCardSkeleton from "../recipe-card/main/MainLargeRecipeCardSkeleton";
 
 const MainVegetarian = () => {
-  const { vegetarianRecipes, isLoading } = useVegetarianRecipesQuery(1, 30);
+  const { vegetarianRecipes, isLoading, isError } = useVegetarianRecipesQuery(
+    1,
+    30
+  );
 
   const isDarkMode = useRecoilValue(darkModeAtom);
 
@@ -33,7 +35,7 @@ const MainVegetarian = () => {
 
         <RecipeSliderWindow>
           <VegunRecipeContainer slide={slide}>
-            {isLoading ? (
+            {isLoading || isError ? (
               <>
                 <LargeRecipeCardSkeleton />
                 <LargeRecipeCardSkeleton />

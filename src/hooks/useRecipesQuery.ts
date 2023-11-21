@@ -40,7 +40,11 @@ export const useNewestRecipesQuery = (page: number, limit: number) => {
 };
 
 export const useSingleRecipesQuery = (page: number, limit: number) => {
-  const { data = [], isLoading } = useQuery<Recipe[]>({
+  const {
+    data = [],
+    isLoading,
+    isError,
+  } = useQuery<Recipe[]>({
     queryKey: [queryKey.singleRecipes],
     queryFn: () =>
       getRequest({ url: `recipes/single?page=${page}&limit=${limit}` }),
@@ -48,11 +52,15 @@ export const useSingleRecipesQuery = (page: number, limit: number) => {
 
   const singleRecipes = shuffleRecipes(data);
 
-  return { singleRecipes, isLoading };
+  return { singleRecipes, isLoading, isError };
 };
 
 export const useVegetarianRecipesQuery = (page: number, limit: number) => {
-  const { data = [], isLoading } = useQuery<Recipe[]>({
+  const {
+    data = [],
+    isLoading,
+    isError,
+  } = useQuery<Recipe[]>({
     queryKey: [queryKey.vegetarianRecipes],
     queryFn: () =>
       getRequest({ url: `recipes/vegetarian?page=${page}&limit=${limit}` }),
@@ -60,5 +68,5 @@ export const useVegetarianRecipesQuery = (page: number, limit: number) => {
 
   const vegetarianRecipes = shuffleRecipes(data);
 
-  return { vegetarianRecipes, isLoading };
+  return { vegetarianRecipes, isLoading, isError };
 };
