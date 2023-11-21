@@ -37,7 +37,7 @@ const RecipeCardLayout = tw.div`
 
 const RecipeTitleSkeleton = tw.div`
   flex
-  h-[20px]
+  h-[21px]
   w-2/3
   bg-[#f6f6f6]
   rounded-[9999px]
@@ -47,7 +47,7 @@ const RecipeTitleSkeleton = tw.div`
 const RecipeInfoSkeleton = tw.div`
   flex
   justify-between
-  h-[18px]
+  h-[20px]
   w-full
 `;
 
