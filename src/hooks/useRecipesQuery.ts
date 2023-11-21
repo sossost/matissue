@@ -26,7 +26,14 @@ export const useNewestRecipesQuery = (page: number, limit: number) => {
   const { data: newestRecipes = [] } = useSuspenseQuery<Recipe[]>({
     queryKey: [queryKey.newestRecipes],
     queryFn: () =>
-      getRequest({ url: `recipes/latest?page=${page}&limit=${limit}` }),
+      getRequest({
+        url: `recipes/latest?page=${page}&limit=${limit}`,
+        options: {
+          next: {
+            revalidate: 0,
+          },
+        },
+      }),
   });
 
   return { newestRecipes };
