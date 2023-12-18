@@ -6,6 +6,7 @@ import ReactQuery from "../context/ReactQueryContext";
 import Script from "next/script";
 import StyledTheme from "../context/ThemeContext";
 import ModalContext from "../context/ModalContext";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 export const metadata = {
   title: "맛이슈",
@@ -51,6 +52,7 @@ export default async function RootLayout({
                 <ModalContext />
                 {children}
               </StyledTheme>
+              <ReactQueryDevtools initialIsOpen={true} />
             </ReactQuery>
           </Recoil>
         </body>
