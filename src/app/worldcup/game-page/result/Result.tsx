@@ -4,13 +4,11 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import Image from "next/image";
 import { getRecipeById } from "@/src/app/api/recipe";
-import Logo from "@/src/components/header/Logo";
 import { useSearchParams } from "next/navigation";
 import Button from "@/src/components/UI/Button";
 import LoadingModal from "@/src/components/UI/LoadingModal";
 import { toast } from "react-hot-toast";
 import Link from "next/link";
-import WorldcupKakaoShareButton from "@/src/utils/worldcupKakaoShare";
 import {
   EmailIcon,
   EmailShareButton,
@@ -23,6 +21,8 @@ import {
 } from "react-share";
 import { useRecoilState } from "recoil";
 import darkModeAtom from "@/src/store/darkModeAtom";
+import Logo from "@/src/components/Layout/header/Logo";
+import WorldcupKakaoShareButton from "../../worldcupKakaoShare";
 
 type StyledComponentProps = {
   isAnimateOut?: boolean;

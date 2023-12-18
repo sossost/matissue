@@ -11,9 +11,9 @@ import {
   MBTIState,
 } from "@/src/store/mbtiAtom";
 import Button from "@/src/components/UI/Button";
-import Logo from "@/src/components/header/Logo";
 import styled from "styled-components";
 import darkModeAtom from "@/src/store/darkModeAtom";
+import Logo from "@/src/components/Layout/header/Logo";
 
 type QuestionType = {
   ques: string;

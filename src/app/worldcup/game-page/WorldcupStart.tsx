@@ -7,9 +7,9 @@ import Image from "next/image";
 import { getAllRecipes } from "@/src/app/api/recipe";
 import Link from "next/link";
 import LoadingModal from "@/src/components/UI/LoadingModal";
-import Logo from "@/src/components/header/Logo";
 import { useRecoilState } from "recoil";
 import darkModeAtom from "@/src/store/darkModeAtom";
+import Logo from "@/src/components/Layout/header/Logo";
 
 type StyledComponentProps = {
   isAnimateOut?: boolean;

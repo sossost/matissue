@@ -6,8 +6,6 @@ import { MBTIState } from "@/src/store/mbtiAtom";
 import { useRecoilState } from "recoil";
 import Image from "next/image";
 import Button from "@/src/components/UI/Button";
-import Logo from "@/src/components/header/Logo";
-import KakaoShareButton from "@/src/utils/kakaoShare";
 import {
   FacebookShareButton,
   FacebookIcon,
@@ -22,6 +20,8 @@ import { toast } from "react-hot-toast";
 import { Recipe } from "@/src/types";
 import styled from "styled-components";
 import darkModeAtom from "@/src/store/darkModeAtom";
+import Logo from "@/src/components/Layout/header/Logo";
+import KakaoShareButton from "../../worldcup/kakaoShare";
 
 type ResultData = {
   [key: string]: {
