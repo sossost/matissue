@@ -1,34 +1,45 @@
-import {
-  getAllRecipes,
-  getRecipesByCategory,
-  getRecipesByLastest,
-  getRecipesByPopularity,
-  getRecipesBySingle,
-  getRecipesByVegetarian,
-} from "@/src/app/api/recipe";
+"use client";
+
+import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { Recipe } from "@/src/types";
 import ListingRecipe from "@/src/components/listings/ListingRecipe";
 
-const CategoryRecipeListPage = async ({ searchParams }: any) => {
-  if (searchParams.category === "best") {
-    return <ListingRecipe recipes={await getRecipesByPopularity()} />;
-  }
-  if (searchParams.category === "newest") {
-    return <ListingRecipe recipes={await getRecipesByLastest()} />;
-  }
-  if (searchParams.category === "honmuk") {
-    return <ListingRecipe recipes={await getRecipesBySingle()} />;
-  }
-  if (searchParams.category === "vegetarian") {
-    return <ListingRecipe recipes={await getRecipesByVegetarian()} />;
-  } else if (searchParams.category) {
-    return (
-      <ListingRecipe
-        recipes={await getRecipesByCategory(searchParams.category)}
-      />
-    );
-  } else {
-    return <ListingRecipe recipes={await getAllRecipes()} />;
-  }
+const CategoryRecipeListPage = () => {
+  const [recipes, setRecipes] = useState<Recipe[]>([]);
+
+  const searchParams = useSearchParams();
+  const category = searchParams.get("category");
+
+  useEffect(() => {
+    const fetchRecipes = async () => {
+      let url = "";
+
+      switch (category) {
+        case "best":
+          url = `${process.env.NEXT_PUBLIC_API_URL}recipes/popularity`;
+          break;
+        case "newest":
+          url = `${process.env.NEXT_PUBLIC_API_URL}recipes/latest`;
+          break;
+        case "honmuk":
+          url = `${process.env.NEXT_PUBLIC_API_URL}recipes/single`;
+          break;
+        case "vegetarian":
+          url = `${process.env.NEXT_PUBLIC_API_URL}recipes/vegetarian`;
+          break;
+      }
+
+      const response = await fetch(url, { cache: "no-store" });
+      const data = await response.json();
+
+      setRecipes(data);
+    };
+
+    fetchRecipes();
+  }, [category]);
+
+  return <ListingRecipe recipes={recipes} />;
 };
 
 export default CategoryRecipeListPage;
